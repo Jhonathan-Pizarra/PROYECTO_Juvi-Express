@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/pages/login/login_page.dart';
+import 'package:juvi_express/src/pages/register/register_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,7 +37,9 @@ class _MyAppState extends State<MyApp> {
       ),
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/', page: ()=> LoginPage())
+        GetPage(name: '/', page: ()=> LoginPage()),
+        GetPage(name: '/register', page: ()=> RegisterPage()),
+        
       ],
       navigatorKey: Get.key,
     );

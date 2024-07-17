@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:juvi_express/src/pages/login/login_controller.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginController con = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -87,12 +89,15 @@ class LoginPage extends StatelessWidget {
         SizedBox(
           width: 7,
         ),
-        Text(
-          "Regístrate aquí",
-          style: TextStyle(
-            color: Colors.amber,
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
+        GestureDetector(
+          onTap: () => con.goToRegisterPage(),
+          child: Text(
+            "Regístrate aquí",
+            style: TextStyle(
+              color: Colors.amber,
+              fontWeight: FontWeight.bold,
+              fontSize: 17,
+            ),
           ),
         ),
       ],
@@ -154,10 +159,10 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
-  }*/
+  }
+*/
 
-
-   Widget _textFieldEmail() {
+  Widget _textFieldEmail() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10), // Agregar margen vertical
       child: Theme(
@@ -173,10 +178,41 @@ class LoginPage extends StatelessWidget {
           ),
         ),
         child: TextField(
+          controller: con.emailController,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             hintText: "Correo electrónico",
             prefixIcon: Icon(Icons.email),
+            contentPadding: EdgeInsets.symmetric(vertical: 15), // Ajustar el padding vertical
+          ),
+          style: TextStyle(fontSize: 14), // Ajustar el tamaño del texto
+        ),
+      ),
+    );
+  }
+
+  Widget _textFieldPassword() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 5), // Agregar margen vertical
+      child: Theme(
+        data: ThemeData(
+          primaryColor: Colors.amber, // Cambiar el color principal
+          inputDecorationTheme: InputDecorationTheme(
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.amber),
+            ),
+            prefixIconColor: MaterialStateColor.resolveWith(
+              (states) => states.contains(MaterialState.focused) ? Colors.amber : Colors.grey,
+            ),
+          ),
+        ),
+        child: TextField(
+          controller: con.passwordController,
+          keyboardType: TextInputType.text,
+          obscureText: true,
+          decoration: InputDecoration(
+            hintText: "Contraseña",
+            prefixIcon: Icon(Icons.lock),
             contentPadding: EdgeInsets.symmetric(vertical: 15), // Ajustar el padding vertical
           ),
           style: TextStyle(fontSize: 14), // Ajustar el tamaño del texto
@@ -208,7 +244,7 @@ class LoginPage extends StatelessWidget {
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
       child: ElevatedButton(
-        onPressed: () => {},
+        onPressed: () => con.login(),
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: 15),
           backgroundColor: Colors.amber,
@@ -218,36 +254,6 @@ class LoginPage extends StatelessWidget {
           style: TextStyle(
             color: Colors.black,
           ),
-        ),
-      ),
-    );
-  }
-
-
-  Widget _textFieldPassword() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 5), // Agregar margen vertical
-      child: Theme(
-        data: ThemeData(
-          primaryColor: Colors.amber, // Cambiar el color principal
-          inputDecorationTheme: InputDecorationTheme(
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.amber),
-            ),
-            prefixIconColor: MaterialStateColor.resolveWith(
-              (states) => states.contains(MaterialState.focused) ? Colors.amber : Colors.grey,
-            ),
-          ),
-        ),
-        child: TextField(
-          keyboardType: TextInputType.text,
-          obscureText: true,
-          decoration: InputDecoration(
-            hintText: "Contraseña",
-            prefixIcon: Icon(Icons.lock),
-            contentPadding: EdgeInsets.symmetric(vertical: 15), // Ajustar el padding vertical
-          ),
-          style: TextStyle(fontSize: 14), // Ajustar el tamaño del texto
         ),
       ),
     );
