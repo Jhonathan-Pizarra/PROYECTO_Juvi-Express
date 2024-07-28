@@ -2,6 +2,7 @@
 
 import 'package:get/get.dart';
 import 'package:juvi_express/src/enviroment/enviroment.dart';
+import 'package:juvi_express/src/models/response_api.dart';
 import 'package:juvi_express/src/models/user.dart';
 
 class UsersProvider extends GetConnect {
@@ -18,5 +19,30 @@ class UsersProvider extends GetConnect {
     );
 
     return response;
+  }
+
+  Future<ResponseApi> login (String email, String password) async {
+    Response response = await post(
+      '$url/login',
+      {
+        'email': email,
+        'password': password
+
+      },
+      headers: {
+        'Content-Type': "application/json"
+      }
+    );
+
+    if (response.body == null) {
+
+      Get.snackbar('Error', 'No se pudo ejecutar la petición');
+      return ResponseApi();
+      
+    }
+
+    ResponseApi responseApi = ResponseApi.fromJson(response.body);
+
+    return responseApi;
   }
 }
