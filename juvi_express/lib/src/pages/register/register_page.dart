@@ -42,7 +42,7 @@ class RegisterPage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _imageUser(),
+            _imageUser(context),
             //_imageCover(),
             //SizedBox(width: 1), // Espacio entre la imagen y el texto
           ],
@@ -51,17 +51,21 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  Widget _imageUser(){
+  Widget _imageUser(BuildContext context){
     return Container(
       margin: EdgeInsets.only(top: 30),
       alignment: Alignment.topCenter,
       child: GestureDetector(
-        onTap: () => {},
-        child: CircleAvatar(
-          backgroundImage: AssetImage('assets/img/user1.png'),
+        onTap: () => con.showAlertDialog(context),
+        child: GetBuilder<RegisterController>(
+          builder: (value) => CircleAvatar(
+          backgroundImage: con.imageFile != null ?
+          FileImage(con.imageFile!)
+          : AssetImage('assets/img/user1.png') as ImageProvider,
           radius: 60,
           backgroundColor: Colors.white,
-        ),
+          ),
+        )
       ),
 
     );
@@ -110,7 +114,7 @@ class RegisterPage extends StatelessWidget {
             _textFieldPhone(),
             _textFieldPassword(),
             _textFieldConfirmPassword(),
-            _buttonSignUp()
+            _buttonSignUp(context)
           ],
         ),
       ),
@@ -340,12 +344,12 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  Widget _buttonSignUp(){
+  Widget _buttonSignUp(BuildContext context){
     return Container(
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
       child: ElevatedButton(
-        onPressed: () => con.register(),
+        onPressed: () => con.register(context),
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: 15),
           backgroundColor: Colors.amber,

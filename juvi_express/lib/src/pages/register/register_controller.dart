@@ -1,7 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:juvi_express/src/models/response_api.dart';
 import 'package:juvi_express/src/models/user.dart';
 import 'package:juvi_express/src/providers/users_provider.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class RegisterController extends GetxController {
 
@@ -14,7 +21,10 @@ class RegisterController extends GetxController {
 
   UsersProvider usersProvider = UsersProvider();
 
-  void register() async {
+  ImagePicker picker = ImagePicker();
+  File? imageFile;
+
+  void register(BuildContext context) async {
     String email = emailController.text.trim();
     String name = namelController.text;
     String lastName = lastNameController.text;
@@ -30,6 +40,9 @@ class RegisterController extends GetxController {
 
     if (isValidForm(email, name, lastName, phone, password, confirmPassword)) {
       
+      ProgressDialog progressDialog = ProgressDialog(context: context);
+      progressDialog.show(max: 100, msg: "Registradno...");
+
       User user = User(
         email: email,
         name: name,
@@ -38,12 +51,27 @@ class RegisterController extends GetxController {
         password: password
       );
 
-      Response response = await usersProvider.create(user);
+      Stream stream = await usersProvider.createWithImage(user, imageFile!);
+      stream.listen((res){
+        progressDialog.close();
+        ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
 
-      print("Respuesta: ${response.body}");
+        if(responseApi.success == true){
 
-      Get.snackbar(
-          'Formulario válido', "Estas listo para eviar la peticion http");
+          GetStorage().write('user', responseApi.data);
+          goToHomePage();
+
+        }else{
+          Get.snackbar("Registro Fallido", responseApi.message ?? '');
+        }
+
+      });
+
+      //Response response = await usersProvider.create(user);
+
+      //print("Respuesta: ${response.body}");
+
+      //Get.snackbar('Formulario válido', "Estas listo para eviar la peticion http");
     }
   }
 
@@ -89,7 +117,55 @@ class RegisterController extends GetxController {
       return false;
     }
 
+    if(imageFile == null){
+      Get.snackbar("Formulario no válido", "Debe seleccionar una imagen de perfil");
+      return false;
+    }
+
     return true;
   }
 
+  Future selectImage(ImageSource imageSource) async {
+    XFile? image = await picker.pickImage(source: imageSource);
+
+    if (image != null) {
+      imageFile = File(image.path);
+      update();
+    }
+
+  }
+
+  void showAlertDialog(BuildContext context){
+    Widget galleryButton = ElevatedButton(
+      onPressed: () {
+        Get.back();
+        selectImage(ImageSource.gallery);
+      }, 
+      child: Text('Galeria')
+      );
+      Widget cameraButton = ElevatedButton(
+        onPressed: () {
+        Get.back();
+        selectImage(ImageSource.camera);
+      }, 
+        child: Text('Camara')
+        );
+
+        AlertDialog alertDialog = AlertDialog(
+          title: Text('Selecciona una opcion'),
+          actions: [
+            galleryButton,
+            cameraButton
+          ],
+        );
+
+        showDialog(context: context, builder: (BuildContext context){
+          return alertDialog;
+        });
+  }
+
+  void goToHomePage(){
+    Get.offNamedUntil('/home',(route) => false);
+  }
+  
 }
