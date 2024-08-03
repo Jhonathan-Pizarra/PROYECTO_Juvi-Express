@@ -4,6 +4,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:juvi_express/src/models/user.dart';
 import 'package:juvi_express/src/pages/admin/orders/list/admin_orders_list_page.dart';
 import 'package:juvi_express/src/pages/client/products/list/client_products_list_page.dart';
+import 'package:juvi_express/src/pages/client/profile/info/client_profile_info_page.dart';
+import 'package:juvi_express/src/pages/client/profile/update/client_profile_update_page.dart';
 import 'package:juvi_express/src/pages/delivery/orders/list/delivery_orders_page.dart';
 import 'package:juvi_express/src/pages/home/home_page.dart';
 import 'package:juvi_express/src/pages/login/login_page.dart';
@@ -38,13 +40,19 @@ class _MyAppState extends State<MyApp> {
       title: "Juvi-Express",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.amber, // Color principal de la aplicación
-        inputDecorationTheme: InputDecorationTheme(
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.amber), // Color del borde cuando está enfocado
-          ),
-        ),
+      primaryColor: Colors.amber,
+      colorScheme: const ColorScheme(
+        primary: Colors.amber,
+        secondary: Colors.amberAccent,
+        brightness: Brightness.light,
+        onPrimary: Colors.grey,
+        surface: Colors.white,
+        onSurface: Colors.grey,
+        error: Colors.grey,
+        onError: Colors.grey,
+        onSecondary: Colors.grey,
       ),
+    ),
       initialRoute: userSession.id != null ? userSession.roles!.length > 1 ? '/roles': '/client/products/list': '',
       getPages: [
         GetPage(name: '/', page: ()=> LoginPage()),
@@ -54,6 +62,9 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/admin/orders/list', page: ()=> AdminOrdersListPage()),
         GetPage(name: '/delivery/orders/list', page: ()=> DeliveryOrdersPage()),
         GetPage(name: '/client/products/list', page: ()=> ClientProductsListPage()),
+        //Usr Profile
+        GetPage(name: '/client/profile/info', page: ()=> ClientProfileInfoPage()),
+        GetPage(name: '/client/profile/update', page: ()=> ClientProfileUpdatePage()),
         
       ],
       navigatorKey: Get.key,
@@ -61,6 +72,8 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+
+//Version 1
 /*
 theme: ThemeData(
         primaryColor: Colors.amber,
@@ -77,4 +90,33 @@ theme: ThemeData(
           onSecondary: Colors.amber,
           //background: Colors.grey,
         )
-        */
+*/
+
+//Version 2
+/*
+ theme: ThemeData(
+      primaryColor: Colors.amber,
+      colorScheme: const ColorScheme(
+        primary: Colors.amber,
+        secondary: Colors.amberAccent,
+        brightness: Brightness.light,
+        onPrimary: Colors.grey,
+        surface: Colors.grey,
+        onSurface: Colors.grey,
+        error: Colors.grey,
+        onError: Colors.grey,
+        onSecondary: Colors.grey,
+      ),
+    ),
+*/ 
+
+/*
+theme: ThemeData(
+        primaryColor: Colors.amber, // Color principal de la aplicación
+        inputDecorationTheme: InputDecorationTheme(
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.amber), // Color del borde cuando está enfocado
+          ),
+        ),
+      ),
+*/

@@ -25,7 +25,6 @@ class UsersProvider extends GetConnect {
     return response;
   }
 
-  
   Future<Stream> createWithImage(User user, File image) async {
     Uri uri = Uri.http(Enviroment.API_URL_OLD, '/api/users/createWithImage');
     final request = http.MultipartRequest('POST', uri);
@@ -39,8 +38,41 @@ class UsersProvider extends GetConnect {
     final response = await request.send();
     return response.stream.transform(utf8.decoder);
   }
-  
 
+  //Actualizar datos sin imgange
+  Future<ResponseApi> update (User user) async {
+    Response response = await put(
+      '$url/updateWithoutImage',
+      user.toJson(),
+      headers: {
+        'Content-Type': "application/json"
+      }
+    );
+
+    if (response.body == null) {
+      Get.snackbar('Error', 'No se pudo actualizar el usuario');
+      return ResponseApi();
+    }
+
+    ResponseApi responseApi = ResponseApi.fromJson(response.body);
+    return responseApi;
+
+  }
+
+  Future<Stream> updateWithImage(User user, File image) async {
+    Uri uri = Uri.http(Enviroment.API_URL_OLD, '/api/users/update');
+    final request = http.MultipartRequest('PUT', uri);
+    request.files.add(http.MultipartFile(
+      'image',
+      http.ByteStream(image.openRead().cast()),
+      await image.length(),
+      filename: basename(image.path)
+    ));
+    request.fields['user'] = json.encode(user);
+    final response = await request.send();
+    return response.stream.transform(utf8.decoder);
+  }
+  
   //Code: metodo que nos permite registrar usuario con imagen
   Future<ResponseApi> createUserWithImageGetX(User user, File image) async {
     FormData form = FormData({

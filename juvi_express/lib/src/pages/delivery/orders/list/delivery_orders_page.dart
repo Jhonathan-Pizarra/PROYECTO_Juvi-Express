@@ -12,6 +12,7 @@ class DeliveryOrdersPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Text('Delivery Orders List'),
+        
       ),
     );
   }
