@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:juvi_express/src/models/user.dart';
+import 'package:juvi_express/src/pages/admin/orders/list/admin_orders_list_page.dart';
+import 'package:juvi_express/src/pages/client/products/list/client_products_list_page.dart';
+import 'package:juvi_express/src/pages/delivery/orders/list/delivery_orders_page.dart';
 import 'package:juvi_express/src/pages/home/home_page.dart';
 import 'package:juvi_express/src/pages/login/login_page.dart';
 import 'package:juvi_express/src/pages/register/register_page.dart';
+import 'package:juvi_express/src/pages/roles/roles_page.dart';
 
 User userSession = User.fromJson(GetStorage().read('user') ?? {});
 
@@ -41,11 +45,15 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      initialRoute: userSession.id != null ? '/home': '/',
+      initialRoute: userSession.id != null ? userSession.roles!.length > 1 ? '/roles': '/client/products/list': '',
       getPages: [
         GetPage(name: '/', page: ()=> LoginPage()),
         GetPage(name: '/register', page: ()=> RegisterPage()),
         GetPage(name: '/home', page: ()=> HomePage()),
+        GetPage(name: '/roles', page: ()=> RolesPage()),
+        GetPage(name: '/admin/orders/list', page: ()=> AdminOrdersListPage()),
+        GetPage(name: '/delivery/orders/list', page: ()=> DeliveryOrdersPage()),
+        GetPage(name: '/client/products/list', page: ()=> ClientProductsListPage()),
         
       ],
       navigatorKey: Get.key,

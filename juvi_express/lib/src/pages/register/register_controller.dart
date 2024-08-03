@@ -165,7 +165,7 @@ class RegisterController extends GetxController {
   }
 
   void goToHomePage(){
-    Get.offNamedUntil('/home',(route) => false);
+    Get.offNamedUntil('/client/products/list',(route) => false);
   }
   
 }
