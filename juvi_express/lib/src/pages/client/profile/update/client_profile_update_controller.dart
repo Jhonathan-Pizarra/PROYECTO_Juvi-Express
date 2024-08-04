@@ -16,7 +16,7 @@ class ClientProfileUpdateController extends GetxController {
   User user = User.fromJson(GetStorage().read('user'));
   
   //TextEditingController emailController = TextEditingController();
-  TextEditingController namelController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   //TextEditingController passwordController = TextEditingController();
@@ -30,7 +30,7 @@ class ClientProfileUpdateController extends GetxController {
   ClientProfileInfoController clientProfileInfoController = Get.find();
 
   ClientProfileUpdateController(){
-    namelController.text = user.name ?? '';
+    nameController.text = user.name ?? '';
     lastNameController.text = user.lastname ?? '';
     phoneController.text = user.phone ?? '';
 
@@ -134,7 +134,7 @@ class ClientProfileUpdateController extends GetxController {
     }
 
   void updateInfo(BuildContext context) async {
-  String name = namelController.text;
+  String name = nameController.text;
   String lastName = lastNameController.text;
   String phone = phoneController.text;
   

@@ -13,7 +13,7 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 class RegisterController extends GetxController {
 
   TextEditingController emailController = TextEditingController();
-  TextEditingController namelController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -26,7 +26,7 @@ class RegisterController extends GetxController {
 
   void register(BuildContext context) async {
     String email = emailController.text.trim();
-    String name = namelController.text;
+    String name = nameController.text;
     String lastName = lastNameController.text;
     String phone = phoneController.text;
     String password = passwordController.text.trim();

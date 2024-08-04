@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:get_storage/get_storage.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -12,6 +13,8 @@ import 'package:juvi_express/src/models/user.dart';
 class UsersProvider extends GetConnect {
 
   String url = Enviroment.API_URL + "api/users";
+
+  User userSession = User.fromJson(GetStorage().read('user') ?? {});
 
   Future<Response> create (User user) async {
     Response response = await post(
@@ -45,12 +48,18 @@ class UsersProvider extends GetConnect {
       '$url/updateWithoutImage',
       user.toJson(),
       headers: {
-        'Content-Type': "application/json"
+        'Content-Type': "application/json",
+        'Authorization': userSession.sessionToken ?? ''
       }
     );
 
     if (response.body == null) {
       Get.snackbar('Error', 'No se pudo actualizar el usuario');
+      return ResponseApi();
+    }
+
+    if (response.statusCode == 401) {
+      Get.snackbar('Error', 'No está autorizado para completar esta operación');
       return ResponseApi();
     }
 
@@ -62,6 +71,7 @@ class UsersProvider extends GetConnect {
   Future<Stream> updateWithImage(User user, File image) async {
     Uri uri = Uri.http(Enviroment.API_URL_OLD, '/api/users/update');
     final request = http.MultipartRequest('PUT', uri);
+    request.headers['Authorization'] = userSession.sessionToken ?? '';
     request.files.add(http.MultipartFile(
       'image',
       http.ByteStream(image.openRead().cast()),

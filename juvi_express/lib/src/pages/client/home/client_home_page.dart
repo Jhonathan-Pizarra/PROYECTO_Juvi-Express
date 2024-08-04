@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/pages/admin/orders/list/admin_orders_list_page.dart';
+import 'package:juvi_express/src/pages/client/home/client_home_controller.dart';
 import 'package:juvi_express/src/pages/client/products/list/client_prducts_list_controller.dart';
 import 'package:juvi_express/src/pages/client/profile/info/client_profile_info_page.dart';
 import 'package:juvi_express/src/pages/delivery/orders/list/delivery_orders_page.dart';
 import 'package:juvi_express/src/pages/register/register_page.dart';
 import 'package:juvi_express/src/utils/custom_animated_bottom_bar.dart';
 
-class ClientProductsListPage extends StatelessWidget {
+class ClientHomePage extends StatelessWidget {
 
-  ClientPrductsListController con = Get.put(ClientPrductsListController());
+  ClientHomeController con = Get.put(ClientHomeController());
 
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-      body: Center(
-        child: Text("CLIENT PRODUCT LIST"), 
-      )
-    );
-    /*
     return Scaffold(
       bottomNavigationBar: _bottonBar(),
       body: Obx(() => IndexedStack( 
@@ -32,10 +26,8 @@ class ClientProductsListPage extends StatelessWidget {
         ],
       )
     ));
-    */
   }
 
-/*
   Widget _bottonBar(){
     return Obx(()=> CustomAnimatedBottomBar(
       containerHeight: 70, 
@@ -66,5 +58,4 @@ class ClientProductsListPage extends StatelessWidget {
       ],
     ));
   }
-  */
 }

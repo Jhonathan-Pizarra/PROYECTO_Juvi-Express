@@ -208,7 +208,7 @@ class ClientProfileUpdatePage extends StatelessWidget {
           ),
         ),
         child: TextField(
-          controller: con.namelController,
+          controller: con.nameController,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             hintText: "Nombre",

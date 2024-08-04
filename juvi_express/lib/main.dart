@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:juvi_express/src/models/user.dart';
+import 'package:juvi_express/src/pages/admin/home/admin_home_page.dart';
 import 'package:juvi_express/src/pages/admin/orders/list/admin_orders_list_page.dart';
+import 'package:juvi_express/src/pages/client/home/client_home_page.dart';
 import 'package:juvi_express/src/pages/client/products/list/client_products_list_page.dart';
 import 'package:juvi_express/src/pages/client/profile/info/client_profile_info_page.dart';
 import 'package:juvi_express/src/pages/client/profile/update/client_profile_update_page.dart';
@@ -53,19 +55,21 @@ class _MyAppState extends State<MyApp> {
         onSecondary: Colors.grey,
       ),
     ),
-      initialRoute: userSession.id != null ? userSession.roles!.length > 1 ? '/roles': '/client/products/list': '',
+      initialRoute: userSession.id != null ? userSession.roles!.length > 1 ? '/roles': '/client/home': '',
       getPages: [
         GetPage(name: '/', page: ()=> LoginPage()),
         GetPage(name: '/register', page: ()=> RegisterPage()),
         GetPage(name: '/home', page: ()=> HomePage()),
         GetPage(name: '/roles', page: ()=> RolesPage()),
-        GetPage(name: '/admin/orders/list', page: ()=> AdminOrdersListPage()),
+        GetPage(name: '/admin/home', page: ()=> AdminHomePage()),
         GetPage(name: '/delivery/orders/list', page: ()=> DeliveryOrdersPage()),
         GetPage(name: '/client/products/list', page: ()=> ClientProductsListPage()),
         //Usr Profile
         GetPage(name: '/client/profile/info', page: ()=> ClientProfileInfoPage()),
         GetPage(name: '/client/profile/update', page: ()=> ClientProfileUpdatePage()),
-        
+        //User Home
+        GetPage(name: '/client/home', page: ()=> ClientHomePage()),
+
       ],
       navigatorKey: Get.key,
     );
