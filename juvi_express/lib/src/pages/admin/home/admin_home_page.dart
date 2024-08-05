@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:juvi_express/src/pages/admin/categories/create/admin_categories_create_page.dart';
 import 'package:juvi_express/src/pages/admin/home/admin_home_controller.dart';
 import 'package:juvi_express/src/pages/admin/orders/list/admin_orders_list_page.dart';
+import 'package:juvi_express/src/pages/admin/products/create/admin_products_create_page.dart';
 import 'package:juvi_express/src/pages/client/home/client_home_controller.dart';
 import 'package:juvi_express/src/pages/client/products/list/client_prducts_list_controller.dart';
 import 'package:juvi_express/src/pages/client/profile/info/client_profile_info_page.dart';
@@ -23,7 +24,8 @@ class AdminHomePage extends StatelessWidget {
         children: [
           AdminOrdersListPage(),
           AdminCategoriesCreatePage(),
-          DeliveryOrdersPage(),
+          AdminProductsCreatePage(),
+          //DeliveryOrdersPage(),
           ClientProfileInfoPage()
           //egisterPage()
         ],

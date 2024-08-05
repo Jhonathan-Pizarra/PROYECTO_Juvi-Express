@@ -109,7 +109,7 @@ class AdminCategoriesCreatePage extends StatelessWidget {
         ),
         child: TextField(
           controller: con.nameController,
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: TextInputType.text,
           decoration: InputDecoration(
             hintText: "Nombre",
             prefixIcon: Icon(Icons.category),

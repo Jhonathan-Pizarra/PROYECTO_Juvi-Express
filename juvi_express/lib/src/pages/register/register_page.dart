@@ -214,7 +214,7 @@ class RegisterPage extends StatelessWidget {
         ),
         child: TextField(
           controller: con.nameController,
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: TextInputType.text,
           decoration: InputDecoration(
             hintText: "Nombre",
             prefixIcon: Icon(Icons.person),
@@ -243,7 +243,7 @@ class RegisterPage extends StatelessWidget {
         ),
         child: TextField(
           controller: con.lastNameController,
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: TextInputType.text,
           decoration: InputDecoration(
             hintText: "Apellido",
             prefixIcon: Icon(Icons.person_outline),
