@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:juvi_express/src/models/user.dart';
 import 'package:juvi_express/src/pages/admin/home/admin_home_page.dart';
 import 'package:juvi_express/src/pages/client/home/client_home_page.dart';
+import 'package:juvi_express/src/pages/client/orders/create/client_orders_create_page.dart';
 import 'package:juvi_express/src/pages/client/products/list/client_products_list_page.dart';
 import 'package:juvi_express/src/pages/client/profile/info/client_profile_info_page.dart';
 import 'package:juvi_express/src/pages/client/profile/update/client_profile_update_page.dart';
@@ -68,6 +69,8 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/client/profile/update', page: ()=> ClientProfileUpdatePage()),
         //User Home
         GetPage(name: '/client/home', page: ()=> ClientHomePage()),
+        
+        GetPage(name: '/client/orders/create', page: ()=> ClientOrdersCreatePage()),
 
       ],
       navigatorKey: Get.key,

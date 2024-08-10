@@ -8,16 +8,20 @@ class ClientProductsDetailPage extends StatelessWidget {
 
   Product? product;
   late ClientProductsDetailController con;
+  var counter = 0.obs;
+  var price = 0.0.obs;
   // = Get.put(ClientProductsDetailController());
 
   ClientProductsDetailPage({required this.product}){
 
-    con = Get.put(ClientProductsDetailController(product!));
+    //con = Get.put(ClientProductsDetailController());
+    con = Get.put(ClientProductsDetailController());
 
   }
 
   @override
   Widget build(BuildContext context) {
+    con.checkIfProductsWasAdded(product!, price, counter);
     return Obx(() => Scaffold(
       bottomNavigationBar: Container(
         child: _buttonsAddToBag(),
@@ -29,7 +33,7 @@ class ClientProductsDetailPage extends StatelessWidget {
           _textNameProduct(),
           _textDescriptionProduct(),
           _textPriceProduct()
-        ]
+        ],
       ),
     ));
   }
@@ -143,7 +147,7 @@ class ClientProductsDetailPage extends StatelessWidget {
           child: Row(
             children: [
               ElevatedButton(
-                onPressed: () => con.addItem(),
+                onPressed: () => con.removeItem(product!, price, counter),
                 child: Text(
                   '-',
                   style: TextStyle(
@@ -163,9 +167,9 @@ class ClientProductsDetailPage extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: () => con.addItem(),
+                onPressed: () {},
                 child: Text(
-                  '${con.counter.value}',
+                  '${counter.value}',
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 18
@@ -177,7 +181,7 @@ class ClientProductsDetailPage extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: () => con.addItem(),
+                onPressed: () => con.addItem(product!, price, counter),
                 child: Text(
                   '+',
                   style: TextStyle(
@@ -198,9 +202,9 @@ class ClientProductsDetailPage extends StatelessWidget {
               ),
               Spacer(),
               ElevatedButton(
-                onPressed: () => con.addItem(),
+                onPressed: () => con.addToBag(product!, price, counter),
                 child: Text(
-                  'Agregar   \$${con.price.value}',
+                  'Agregar   \$${price.value}',
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 15,
