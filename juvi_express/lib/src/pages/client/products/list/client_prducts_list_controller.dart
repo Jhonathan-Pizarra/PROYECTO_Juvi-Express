@@ -53,5 +53,6 @@ class ClientPrductsListController extends GetxController {
     );
   }
 
-  
+
+
 }

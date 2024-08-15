@@ -43,7 +43,16 @@ dependencies:
   modal_bottom_sheet: ^3.0.0
   flutter_image_slideshow: ^0.1.6
   fluttertoast: ^8.2.6
-  
+  google_maps_flutter: ^2.9.0
+  geolocator: ^8.2.0
+  geocoding: ^2.0.4
+  geolocator_android: ^3.2.1
+  geolocator_apple: ^2.3.7
+  #location: ^7.0.0
+  #location: ^4.2.0
+  #location: ^5.0.0
+
+
 
 dev_dependencies:
   flutter_test:

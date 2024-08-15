@@ -61,7 +61,7 @@ class ClientOrdersCreatePage extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.6,
             margin: EdgeInsets.symmetric(horizontal: 30),
             child: ElevatedButton(
-              onPressed: (){},
+              onPressed: ()=> con.goToAddressList(),
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.all(15)
               ),
