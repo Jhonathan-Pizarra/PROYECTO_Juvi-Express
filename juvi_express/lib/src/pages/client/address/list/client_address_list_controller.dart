@@ -3,12 +3,13 @@ import 'package:get_storage/get_storage.dart';
 import 'package:juvi_express/src/models/address.dart';
 import 'package:juvi_express/src/models/user.dart';
 import 'package:juvi_express/src/providers/address_provider.dart';
+import 'package:juvi_express/src/providers/orders_provider.dart';
 
 class ClientAddressListController extends GetxController {
 
   List<Address> address = [];
   AddressProvider addressProvider = AddressProvider();
-  //OrdersProvider ordersProvider = OrdersProvider();
+  OrdersProvider ordersProvider = OrdersProvider();
   User user = User.fromJson(GetStorage().read('user') ?? {});
   var radioValue = 0.obs;
 
@@ -38,8 +39,11 @@ class ClientAddressListController extends GetxController {
   }
 
   void goToAddressCreate(){
-
     Get.toNamed('/client/address/create');
-
   }
+
+  void createOrder() async {
+    Get.toNamed('/client/payments/create');
+  }
+
 }

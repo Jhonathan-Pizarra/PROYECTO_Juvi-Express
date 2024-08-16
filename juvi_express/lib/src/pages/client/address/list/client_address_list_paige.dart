@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/models/address.dart';
-import 'package:juvi_express/src/pages/client/address/list/create_address_list_controller.dart';
+import 'package:juvi_express/src/pages/client/address/list/client_address_list_controller.dart';
 import 'package:juvi_express/src/widgets/no_data_widget.dart';
 
 class ClientAddressListPaige extends StatelessWidget {
@@ -14,7 +14,7 @@ class ClientAddressListPaige extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //bottomNavigationBar: _buttonNext(context),
+      bottomNavigationBar: _buttonNext(context),
       appBar: AppBar(
         iconTheme: IconThemeData(
             color: Colors.black
@@ -132,6 +132,27 @@ class ClientAddressListPaige extends StatelessWidget {
         Icons.add,
         color: Colors.black,
       )
+    );
+  }
+
+
+  Widget _buttonNext(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 50,
+      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+      child: ElevatedButton(
+          onPressed: () => con.createOrder(),
+          style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: 15)
+          ),
+          child: Text(
+            'CONTINUAR',
+            style: TextStyle(
+                color: Colors.black
+            ),
+          )
+      ),
     );
   }
 
