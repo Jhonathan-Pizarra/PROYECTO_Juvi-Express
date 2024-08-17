@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/models/product.dart';
+import 'package:juvi_express/src/models/user.dart';
 import 'package:juvi_express/src/pages/admin/orders/detail/admin_orders_detail_controller.dart';
 import 'package:juvi_express/src/utils/relative_time_util.dart';
 import 'package:juvi_express/src/widgets/no_data_widget.dart';
@@ -22,7 +23,7 @@ class AdminOrdersDetailPage extends StatelessWidget {
             _dataDate(),
             _dataClient(),
             _dataAddress(),
-            //_dataDelivery(),
+            _dataDelivery(),
             _totalToPay(context),
           ],
         ),
@@ -118,7 +119,7 @@ class AdminOrdersDetailPage extends StatelessWidget {
           ),
         )
         : Container(),
-        //con.order.status == 'PAGADO' ? _dropDownDeliveryMen(con.users) : Container(),
+        con.order.status == 'PAGADO' ? _dropDownDeliveryMen(con.users) : Container(),
         Container(
           margin: EdgeInsets.only(left: con.order.status == 'PAGADO' ? 30 : 37, top: 15),
           child: Row(
@@ -137,8 +138,8 @@ class AdminOrdersDetailPage extends StatelessWidget {
               ? Container(
                 margin: EdgeInsets.symmetric(horizontal: 30),
                 child: ElevatedButton(
-                    onPressed: () {},
-                    //onPressed: () => con.updateOrder(),
+                    //onPressed: () {},
+                    onPressed: () => con.updateOrder(),
                     style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.all(15)
                     ),
@@ -191,6 +192,80 @@ class AdminOrdersDetailPage extends StatelessWidget {
         trailing: Icon(Icons.timer),
       ),
     );
+  }
+
+
+  Widget _dataDelivery() {
+    return con.order.status != 'PAGADO'
+    ? Container(
+      margin: EdgeInsets.symmetric(horizontal: 20),
+      child: ListTile(
+        title: Text('Repartidor asignado'),
+        subtitle: Text('${con.order.delivery?.name ?? ''} ${con.order.delivery?.lastname ?? ''} - ${con.order.delivery?.phone ?? ''}'),
+        trailing: Icon(Icons.delivery_dining),
+      ),
+    )
+    : Container();
+  }
+
+   Widget _dropDownDeliveryMen(List<User> users) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 35),
+      margin: EdgeInsets.only(top: 15),
+      child: DropdownButton(
+        underline: Container(
+          alignment: Alignment.centerRight,
+          child: Icon(
+            Icons.arrow_drop_down_circle,
+            color: Colors.amber,
+          ),
+        ),
+        elevation: 3,
+        isExpanded: true,
+        hint: Text(
+          'Seleccionar repartidor',
+          style: TextStyle(
+
+              fontSize: 15
+          ),
+        ),
+        items: _dropDownItems(users),
+        value: con.idDelivery.value == '' ? null : con.idDelivery.value,
+        onChanged: (option) {
+          print('Opcion seleccionada ${option}');
+          con.idDelivery.value = option.toString();
+        },
+      ),
+    );
+  }
+
+  List<DropdownMenuItem<String>> _dropDownItems(List<User> users) {
+    List<DropdownMenuItem<String>> list = [];
+    users.forEach((user) {
+      list.add(DropdownMenuItem(
+        child: Row(
+          children: [
+            Container(
+              height: 35,
+              width: 35,
+              child: FadeInImage(
+                image: user.image != null
+                    ? NetworkImage(user.image!)
+                    : AssetImage('assets/img/no-image.png') as ImageProvider,
+                fit: BoxFit.cover,
+                fadeInDuration: Duration(milliseconds: 50),
+                placeholder: AssetImage('assets/img/no-image.png'),
+              ),
+            ),
+            SizedBox(width: 15),
+            Text(user.name ?? ''),
+          ],
+        ),
+        value: user.id,
+      ));
+    });
+
+    return list;
   }
 
 

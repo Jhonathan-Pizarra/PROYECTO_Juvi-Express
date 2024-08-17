@@ -123,4 +123,24 @@ class UsersProvider extends GetConnect {
 
     return responseApi;
   }
+
+  Future<List<User>> findDeliveryMen() async {
+    Response response = await get(
+        '$url/findDeliveryMen',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': userSession.sessionToken ?? ''
+        }
+    ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
+
+    if (response.statusCode == 401) {
+      Get.snackbar('Peticion denegada', 'Tu usuario no tiene permitido leer esta informacion');
+      return [];
+    }
+
+    List<User> users = User.fromJsonList(response.body);
+
+    return users;
+  }
+  
 }
