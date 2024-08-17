@@ -2,23 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/models/product.dart';
 import 'package:juvi_express/src/models/user.dart';
+import 'package:juvi_express/src/pages/client/orders/detail/client_orders_detail_controller.dart';
 import 'package:juvi_express/src/pages/delivery/orders/detail/delivery_orders_detail_controller.dart';
 import 'package:juvi_express/src/utils/relative_time_util.dart';
 import 'package:juvi_express/src/widgets/no_data_widget.dart';
 
-class DeliveryOrdersDetailPage extends StatelessWidget {
-  DeliveryOrdersDetailController con = Get.put(DeliveryOrdersDetailController());
+class ClientOrdersDetailPage extends StatelessWidget {
+  ClientOrdersDetailController con = Get.put(ClientOrdersDetailController());
 
+  @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
       bottomNavigationBar: Container(
         color: Color.fromRGBO(245, 245, 245, 1),
-        height: MediaQuery.of(context).size.height * 0.4,
+        height: con.order.status == 'EN CAMINO'
+            ? MediaQuery.of(context).size.height * 0.4
+            : MediaQuery.of(context).size.height * 0.35,
         // padding: EdgeInsets.only(top: 5),
         child: Column(
           children: [
             _dataDate(),
-            _dataClient(),
+            _dataDelivery(),
             _dataAddress(),
             _totalToPay(context),
           ],
@@ -45,12 +49,12 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
     ));
   }
 
-  Widget _dataClient() {
+  Widget _dataDelivery() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: Text('Cliente y Telefono'),
-        subtitle: Text('${con.order.client?.name ?? ''} ${con.order.client?.lastname ?? ''} - ${con.order.client?.phone ?? ''}'),
+        title: Text('Repartidor y Telefono'),
+        subtitle: Text('${con.order.delivery?.name ?? 'No Asignado'} ${con.order.delivery?.lastname ?? ''} - ${con.order.delivery?.phone ?? '###'}'),
         trailing: Icon(Icons.person),
       ),
     );
@@ -133,9 +137,9 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
       children: [
         Divider(height: 1, color: Colors.grey[300]),
         Container(
-          margin: EdgeInsets.only(left: con.order.status == 'PAGADO' ? 30 : 37, top: 15),
+          margin: EdgeInsets.only(left: con.order.status == 'EN CAMINO' ? 30 : 37, top: 15),
           child: Row(
-            mainAxisAlignment: con.order.status == 'PAGADO'
+            mainAxisAlignment: con.order.status == 'EN CAMINO'
                 ? MainAxisAlignment.center
                 : MainAxisAlignment.start,
             children: [
@@ -146,9 +150,7 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
                     fontSize: 17
                 ),
               ),
-              con.order.status == 'DESPACHADO'
-              ? _buttonUpdateOrder()
-              : con.order.status == 'EN CAMINO'
+              con.order.status == 'EN CAMINO'
                 ? _buttonGoToOrderMap()
                 : Container()
             ],
@@ -159,41 +161,22 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buttonUpdateOrder() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30),
-      child: ElevatedButton(
-          onPressed: () => con.updateOrder(),
-          style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.all(15),
-          ),
-          child: Text(
-            'INICIAR ENTREGA',
-            style: TextStyle(
-                color: Colors.black
-            ),
-          )
-      ),
-    );
-  }
-
   Widget _buttonGoToOrderMap() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 30),
       child: ElevatedButton(
           onPressed: () => con.goToOrderMap(),
           style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.all(15),
+              padding: EdgeInsets.all(15)
           ),
           child: Text(
-            'VOLVER AL MAPA',
+            'RASTREAR PEDIDO',
             style: TextStyle(
-                color: Colors.black
+                color: Colors.white
             ),
           )
       ),
     );
   }
 
-  
 }

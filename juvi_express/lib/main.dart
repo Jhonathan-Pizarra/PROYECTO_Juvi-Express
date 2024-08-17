@@ -8,6 +8,8 @@ import 'package:juvi_express/src/pages/client/address/create/client_address_crea
 import 'package:juvi_express/src/pages/client/address/list/client_address_list_paige.dart';
 import 'package:juvi_express/src/pages/client/home/client_home_page.dart';
 import 'package:juvi_express/src/pages/client/orders/create/client_orders_create_page.dart';
+import 'package:juvi_express/src/pages/client/orders/detail/client_orders_detail_page.dart';
+import 'package:juvi_express/src/pages/client/orders/map/client_orders_map_page.dart';
 import 'package:juvi_express/src/pages/client/payments/create/client_payments_create_page.dart';
 import 'package:juvi_express/src/pages/client/products/list/client_products_list_page.dart';
 import 'package:juvi_express/src/pages/client/profile/info/client_profile_info_page.dart';
@@ -94,6 +96,8 @@ class _MyAppState extends State<MyApp> {
         //GetPage(name: '/delivery/orders/list', page: ()=> DeliveryOrdersPage()),
         GetPage(name: '/delivery/orders/map', page: () => DeliveryOrdersMapPage()),
 
+        GetPage(name: '/client/orders/detail', page: () => ClientOrdersDetailPage()),
+        GetPage(name: '/client/orders/map', page: () => ClientOrdersMapPage()),
 
       ],
       navigatorKey: Get.key,

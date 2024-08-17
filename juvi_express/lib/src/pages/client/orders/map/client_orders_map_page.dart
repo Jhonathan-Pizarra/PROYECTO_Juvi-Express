@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:juvi_express/src/pages/client/address/map/client_address_map_controller.dart';
+import 'package:juvi_express/src/pages/client/orders/map/client_orders_map_controller.dart';
 import 'package:juvi_express/src/pages/delivery/orders/map/delivery_orders_map_controller.dart';
 
-class DeliveryOrdersMapPage extends StatelessWidget {
-  DeliveryOrdersMapController con = Get.put(DeliveryOrdersMapController());
+class ClientOrdersMapPage extends StatelessWidget {
+  ClientOrdersMapController con = Get.put(ClientOrdersMapController());
 
+ 
   @override
-   Widget build(BuildContext context) {
-    return GetBuilder<DeliveryOrdersMapController> (
+  Widget build(BuildContext context) {
+    return GetBuilder<ClientOrdersMapController> (
       builder: (value) => Scaffold(
       backgroundColor: Colors.grey[900],
       body: Stack(
         children: [
           Container(
-              height: MediaQuery.of(context).size.height * 0.6,
+              height: MediaQuery.of(context).size.height * 0.67,
               child: _googleMaps()
           ),
           SafeArea(
@@ -54,57 +56,9 @@ class DeliveryOrdersMapPage extends StatelessWidget {
     );
   }
 
-
-  Widget _buttonAccept(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.only(left: 30, right: 30),
-      child: ElevatedButton(
-        //onPressed: con.isClose == true ? () => {} : null,
-        onPressed: con.isClose == true ? () => con.updateToDelivered() : null,
-        child: Text(
-          'ENTREGAR PEDIDO',
-          style: TextStyle(
-            color: Colors.black
-          ),
-        ),
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15)
-          ),
-          padding: EdgeInsets.all(15)
-        ),
-
-      ),
-    );
-  }
-
-  Widget _iconCenterMyLocation() {
-    return GestureDetector(
-      onTap: () => con.centerPosition(),
-      child: Container(
-        alignment: Alignment.centerRight,
-        margin: EdgeInsets.symmetric(horizontal: 5),
-        child: Card(
-          shape: CircleBorder(),
-          color: Colors.white,
-          elevation: 4,
-          child: Container(
-            padding: EdgeInsets.all(10),
-            child: Icon(
-              Icons.location_searching,
-              color: Colors.grey[600],
-              size: 20,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _cardOrderInfo(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: MediaQuery.of(context).size.height * 0.33,
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.grey[900],
@@ -134,16 +88,13 @@ class DeliveryOrdersMapPage extends StatelessWidget {
               Icons.location_on
           ),
           Divider(color: Colors.grey, endIndent: 30, indent: 30),
-          _clientInfo(),
-          _buttonAccept(context)
+          _deliveryInfo(),
         ],
       ),
     );
   }
 
-  
-
-  Widget _clientInfo() {
+  Widget _deliveryInfo() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 35, vertical: 20),
       child: Row(
@@ -151,7 +102,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
           _imageClient(),
           SizedBox(width: 15),
           Text(
-            '${con.order.client?.name ?? ''} ${con.order.client?.lastname ?? ''}',
+            '${con.order.delivery?.name ?? ''} ${con.order.delivery?.lastname ?? ''}',
             style: TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -166,7 +117,6 @@ class DeliveryOrdersMapPage extends StatelessWidget {
               color: Colors.grey[200]
             ),
             child: IconButton(
-              //onPressed: () => {},
               onPressed: () => con.callNumber(),
               icon: Icon(Icons.phone, color: Colors.black),
             ),
@@ -184,8 +134,8 @@ class DeliveryOrdersMapPage extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: FadeInImage(
-          image: con.order.client!.image != null
-              ? NetworkImage(con.order.client!.image!)
+          image: con.order.delivery!.image != null
+              ? NetworkImage(con.order.delivery!.image!)
               : AssetImage('assets/img/no-image.png') as ImageProvider,
           fit: BoxFit.cover,
           fadeInDuration: Duration(milliseconds: 50),
@@ -195,8 +145,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
     );
   }
 
-
-Widget _listTileAddress(String title, String subtitle, IconData iconData) {
+  Widget _listTileAddress(String title, String subtitle, IconData iconData) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
@@ -218,6 +167,30 @@ Widget _listTileAddress(String title, String subtitle, IconData iconData) {
     );
   }
 
+  Widget _iconCenterMyLocation() {
+    return GestureDetector(
+      onTap: () => con.centerPosition(),
+      child: Container(
+        alignment: Alignment.centerRight,
+        margin: EdgeInsets.symmetric(horizontal: 5),
+        child: Card(
+          shape: CircleBorder(),
+          color: Colors.white,
+          elevation: 4,
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Icon(
+              Icons.location_searching,
+              color: Colors.grey[600],
+              size: 20,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+
   Widget _googleMaps() {
     return GoogleMap(
       initialCameraPosition: con.initialPosition,
@@ -227,19 +200,6 @@ Widget _listTileAddress(String title, String subtitle, IconData iconData) {
       myLocationEnabled: false,
       markers: Set<Marker>.of(con.markers.values),
       polylines: con.polylines,
-    );
-  }
-  
-  Widget _iconMyLocation() {
-    return Container(
-      margin: EdgeInsets.only(bottom: 40),
-      child: Center(
-        child: Image.asset(
-          'assets/img/miLocation.png',
-          width: 65,
-          height: 65,
-        ),
-      ),
     );
   }
 
