@@ -33,7 +33,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
               ],
             ),
           ),
-          // _buttonAccept(context)
+          //_buttonAccept(context)
         ],
       ),
     ));

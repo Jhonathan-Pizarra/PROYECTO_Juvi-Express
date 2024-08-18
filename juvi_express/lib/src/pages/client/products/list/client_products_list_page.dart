@@ -3,12 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/models/category.dart';
 import 'package:juvi_express/src/models/product.dart';
-import 'package:juvi_express/src/pages/client/products/list/client_prducts_list_controller.dart';
+import 'package:juvi_express/src/pages/client/products/list/client_products_list_controller.dart';
 import 'package:juvi_express/src/widgets/no_data_widget.dart';
 
 class ClientProductsListPage extends StatelessWidget {
 
-  ClientPrductsListController con = Get.put(ClientPrductsListController());
+  ClientProductsListController con = Get.put(ClientProductsListController());
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,8 @@ class ClientProductsListPage extends StatelessWidget {
         body: TabBarView(
           children: con.categories.map((Category category) {
               return FutureBuilder(
-                future: con.getProducts(category.id ?? '1'), 
+                //future: con.getProducts(category.id ?? '1'), 
+                future: con.getProducts(category.id ?? '1', con.productName.value),
                 builder: (context, AsyncSnapshot<List<Product>> snapshot) {
                   if (snapshot.hasData) {
                     if (snapshot.data!.length > 0) {

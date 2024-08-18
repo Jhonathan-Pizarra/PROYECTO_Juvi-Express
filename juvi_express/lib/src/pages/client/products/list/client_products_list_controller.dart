@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -8,16 +10,34 @@ import 'package:juvi_express/src/providers/categories_provider.dart';
 import 'package:juvi_express/src/providers/products_provider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class ClientPrductsListController extends GetxController {
+class ClientProductsListController extends GetxController {
 
   CategoriesProvider categoriesProvider = CategoriesProvider();
   ProductsProvider productsProvider = ProductsProvider();
 
-  //List<Product> selectedProducts = [];
+  List<Product> selectedProducts = [];
   List<Category> categories = <Category>[].obs;
+  var items = 0.obs;
 
-  ClientPrductsListController(){
+  var productName = ''.obs;
+  Timer? searchOnStoppedTyping;
+
+
+  ClientProductsListController() {
     getCategories();
+    if (GetStorage().read('shopping_bag') != null) {
+      if (GetStorage().read('shopping_bag') is List<Product>) {
+        selectedProducts = GetStorage().read('shopping_bag');
+      }
+      else {
+        selectedProducts = Product.fromJsonList(GetStorage().read('shopping_bag'));
+      }
+
+      selectedProducts.forEach((p) {
+        items.value = items.value + (p.quantity!);
+      });
+
+    }
   }
 
   void getCategories() async {
@@ -26,7 +46,14 @@ class ClientPrductsListController extends GetxController {
     categories.addAll(result);
   }
 
-  Future<List<Product>> getProducts(String idCategory) async {
+  Future<List<Product>> getProducts(String idCategory, String productName) async {
+
+    if (productName.isEmpty) {
+      return await productsProvider.findByCategory(idCategory);
+    }
+    else {
+      return await productsProvider.findByNameAndCategory(idCategory, productName);
+    }
 
     /*
     if (productName.isEmpty) {
@@ -36,7 +63,7 @@ class ClientPrductsListController extends GetxController {
       //return await productsProvider.findByNameAndCategory(idCategory, productName);
     }
     */
-    return await productsProvider.findByCategory(idCategory);
+    //return await productsProvider.findByCategory(idCategory);
 
 
   }

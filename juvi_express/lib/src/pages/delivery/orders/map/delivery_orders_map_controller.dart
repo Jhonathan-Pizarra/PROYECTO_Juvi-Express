@@ -14,10 +14,16 @@ import 'package:juvi_express/src/models/order.dart';
 import 'package:juvi_express/src/models/response_api.dart';
 import 'package:juvi_express/src/providers/orders_provider.dart';
 import 'package:juvi_express/src/enviroment/enviroment.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 //import 'package:location/location.dart';
 //import 'package:location/location.dart' as location;
 
 class DeliveryOrdersMapController extends GetxController {
+
+  Socket socket = io('${Enviroment.API_URL}orders/delivery', <String, dynamic> {
+    'transports': ['websocket'],
+    'autoConnect': false
+  });
 
   CameraPosition initialPosition = CameraPosition(
     target: LatLng(-0.2718095, -78.5423117),
@@ -55,7 +61,7 @@ class DeliveryOrdersMapController extends GetxController {
     print('Order: ${order.toJson()}');
 
     checkGPS(); // VERIFICAR SI EL GPS ESTA ACTIVO
-    //connectAndListen();
+    connectAndListen();
   }
 
   Future setLocationDraggableInfo() async {
@@ -78,6 +84,7 @@ class DeliveryOrdersMapController extends GetxController {
 
   }
 
+  /*
   void selectRefPoint(BuildContext context){
 
     if (addressLatLng != Null) {
@@ -89,7 +96,7 @@ class DeliveryOrdersMapController extends GetxController {
      Navigator.pop(context, data);
     }
 
-  }
+  }*/
 
   void checkGPS() async {
 
@@ -176,7 +183,8 @@ class DeliveryOrdersMapController extends GetxController {
 
       animateCameraPosition(position?.latitude ?? -0.2718095, position?.longitude ?? -78.5423117);
 
-
+      emitPosition();
+      isCloseToDeliveryPosition();
 
       });
 
@@ -191,7 +199,7 @@ void updateToDelivered() async {
       ResponseApi responseApi = await ordersProvider.updateToDelivered(order);
       Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
       if (responseApi.success == true) {
-        //emitToDelivered();
+        emitToDelivered();
         Get.offNamedUntil('/delivery/home', (route) => false);
       }
     }
@@ -267,7 +275,7 @@ void addMarker(
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    //socket.disconnect();
+    socket.disconnect();
     positionSubscribe?.cancel();
   }
 
@@ -331,6 +339,53 @@ void addMarker(
     String number = order.client?.phone ?? ''; //set the number here
     await FlutterPhoneDirectCaller.callNumber(number);
   }
+
+
+  void connectAndListen() {
+    socket.connect();
+    socket.onConnect((data) {
+      print('ESTE DISPISITIVO SE CONECTO A SOCKET IO');
+    });
+  }
+
+
+  void emitPosition() {
+    if (position != null) {
+      socket.emit('position', {
+        'id_order': order.id,
+        'lat': position!.latitude,
+        'lng': position!.longitude,
+      });
+    }
+  }
+
+  void isCloseToDeliveryPosition() {
+
+      if (position != null) {
+        distanceBetween = Geolocator.distanceBetween(
+            position!.latitude,
+            position!.longitude,
+            order.address!.lat!,
+            order.address!.lng!
+        );
+
+        print('distanceBetween ${distanceBetween}');
+
+        if (distanceBetween <= 200 && isClose == false) {
+          isClose = true;
+          update();
+        }
+
+      }
+
+  }
+
+  void emitToDelivered() {
+    socket.emit('delivered', {
+      'id_order': order.id,
+    });
+  }
+
 
 
 }

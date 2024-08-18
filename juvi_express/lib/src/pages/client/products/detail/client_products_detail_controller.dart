@@ -4,12 +4,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:juvi_express/src/models/product.dart';
+import 'package:juvi_express/src/pages/client/products/list/client_products_list_controller.dart';
 
 class ClientProductsDetailController extends GetxController{
 
   List<Product> selectedProducts = [];
-
-  //ClientProductsListController productsListController = Get.find();
+  ClientProductsListController productsListController = Get.find();
 
   void checkIfProductsWasAdded(Product product, var price, var counter) {
     price.value = product.price ?? 0.0;
@@ -38,14 +38,14 @@ class ClientProductsDetailController extends GetxController{
     if(counter.value > 0 ){
 
       //Valida si el prod fue agregado con getstorage
-    int index = selectedProducts.indexWhere((p)=> p.id == product?.id );
+    int index = selectedProducts.indexWhere((p)=> p.id == product.id );
 
     if (index == -1) { //NO HA SIDO AGREGADO
       if (product.quantity == null ) {
         if(counter.value > 0){
           product.quantity = counter.value;
         }else{
-          product?.quantity = 1;
+          product.quantity = 1;
         }
       }
       selectedProducts.add(product);
