@@ -8,7 +8,7 @@ import 'package:juvi_express/src/models/user.dart';
 class CategoriesProvider extends GetConnect {
 
   
-  String url = Enviroment.API_URL + "api/categories";
+  String url = Enviroment.API_URL + 'api/categories';
 
   User userSession = User.fromJson(GetStorage().read('user') ?? {});
 

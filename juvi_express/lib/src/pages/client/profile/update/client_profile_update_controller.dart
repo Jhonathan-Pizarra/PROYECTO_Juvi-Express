@@ -30,6 +30,7 @@ class ClientProfileUpdateController extends GetxController {
   ClientProfileInfoController clientProfileInfoController = Get.find();
 
   ClientProfileUpdateController(){
+    print('USER SESION: ${GetStorage().read('user')}');
     nameController.text = user.name ?? '';
     lastNameController.text = user.lastname ?? '';
     phoneController.text = user.phone ?? '';

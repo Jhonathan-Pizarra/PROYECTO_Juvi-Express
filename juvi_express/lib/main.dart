@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:juvi_express/src/models/user.dart';
 import 'package:juvi_express/src/pages/admin/home/admin_home_page.dart';
 import 'package:juvi_express/src/pages/admin/orders/detail/admin_orders_detail_page.dart';
+import 'package:juvi_express/src/pages/admin/orders/list/admin_orders_list_page.dart';
 import 'package:juvi_express/src/pages/client/address/create/client_address_create_page.dart';
 import 'package:juvi_express/src/pages/client/address/list/client_address_list_paige.dart';
 import 'package:juvi_express/src/pages/client/home/client_home_page.dart';
@@ -65,39 +66,40 @@ class _MyAppState extends State<MyApp> {
         onSecondary: Colors.grey,
       ),
     ),
-      initialRoute: userSession.id != null ? userSession.roles!.length > 1 ? '/roles': '/client/home': '',
+      //initialRoute: '/client/payments/create',
+      initialRoute: userSession.id != null ? userSession.roles!.length > 1 ? '/roles': '/client/home': '/',
+      
       getPages: [
         GetPage(name: '/', page: ()=> LoginPage()),
         GetPage(name: '/register', page: ()=> RegisterPage()),
         GetPage(name: '/home', page: ()=> HomePage()),
         GetPage(name: '/roles', page: ()=> RolesPage()),
-        GetPage(name: '/admin/home', page: ()=> AdminHomePage()),
-        GetPage(name: '/client/products/list', page: ()=> ClientProductsListPage()),
-        //Usr Profile
-        GetPage(name: '/client/profile/info', page: ()=> ClientProfileInfoPage()),
-        GetPage(name: '/client/profile/update', page: ()=> ClientProfileUpdatePage()),
-        //User Home
-        GetPage(name: '/client/home', page: ()=> ClientHomePage()),
-        
-        GetPage(name: '/client/orders/create', page: ()=> ClientOrdersCreatePage()),
-        //Address
-        GetPage(name: '/client/address/create', page: ()=> ClientAddressCreatePage()),
-        GetPage(name: '/client/address/list', page: ()=> ClientAddressListPaige()),
-        //Client Payments
-        GetPage(name: '/client/paymets/create', page: ()=> ClientPaymentsCreatePage()),
+       
         //Admin Orders
+        GetPage(name: '/admin/home', page: ()=> AdminHomePage()),
+        GetPage(name: '/admin/orders/list', page: () => AdminOrdersListPage()),
         GetPage(name: '/admin/orders/detail', page: ()=> AdminOrdersDetailPage()),
 
         //Delivery
-        GetPage(name: '/delivery/orders/detail', page: () => DeliveryOrdersDetailPage()),
-        //GetPage(name: '/delivery/orders/map', page: () => DeliveryOrdersMapPage()),
         GetPage(name: '/delivery/home', page: () => DeliveryHomePage()),
         GetPage(name: '/delivery/orders/list', page: ()=> DeliveryOrdersListPage()),
-        //GetPage(name: '/delivery/orders/list', page: ()=> DeliveryOrdersPage()),
+        GetPage(name: '/delivery/orders/detail', page: () => DeliveryOrdersDetailPage()),
         GetPage(name: '/delivery/orders/map', page: () => DeliveryOrdersMapPage()),
 
+        //Client
+        GetPage(name: '/client/home', page: ()=> ClientHomePage()),
+        GetPage(name: '/client/products/list', page: ()=> ClientProductsListPage()),
+        GetPage(name: '/client/profile/info', page: ()=> ClientProfileInfoPage()),
+        GetPage(name: '/client/profile/update', page: ()=> ClientProfileUpdatePage()),
+        
+        GetPage(name: '/client/orders/create', page: ()=> ClientOrdersCreatePage()),
         GetPage(name: '/client/orders/detail', page: () => ClientOrdersDetailPage()),
         GetPage(name: '/client/orders/map', page: () => ClientOrdersMapPage()),
+        GetPage(name: '/client/address/create', page: ()=> ClientAddressCreatePage()),
+        GetPage(name: '/client/address/list', page: ()=> ClientAddressListPaige()),
+        
+        //Payments
+        //GetPage(name: '/client/payments/create', page: () => ClientPaymentsCreatePage()),
 
       ],
       navigatorKey: Get.key,

@@ -61,8 +61,8 @@ class ClientProfileInfoPage extends StatelessWidget {
       margin: EdgeInsets.only(top: 30),
       alignment: Alignment.topCenter,
       child: CircleAvatar(
-          backgroundImage: con.user.value.image != null ?
-          NetworkImage(con.user.value.image!)
+          backgroundImage: con.user.value.image != null 
+          ? NetworkImage(con.user.value.image!)
           : AssetImage('assets/img/user1.png') as ImageProvider,
           radius: 60,
           backgroundColor: Colors.white,
@@ -187,6 +187,7 @@ class ClientProfileInfoPage extends StatelessWidget {
         ),
     );
   }
+
   Widget _buttonSignOut(){
     return SafeArea(
       child: Container(

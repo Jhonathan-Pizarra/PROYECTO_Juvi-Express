@@ -6,8 +6,6 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:geolocator_android/geolocator_android.dart';
-import 'package:geolocator_apple/geolocator_apple.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:juvi_express/src/models/order.dart';
@@ -194,19 +192,19 @@ class DeliveryOrdersMapController extends GetxController {
     }
   }
 
-void updateToDelivered() async {
-    if (distanceBetween <= 200) {
-      ResponseApi responseApi = await ordersProvider.updateToDelivered(order);
-      Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
-      if (responseApi.success == true) {
-        emitToDelivered();
-        Get.offNamedUntil('/delivery/home', (route) => false);
+  void updateToDelivered() async {
+      if (distanceBetween <= 200) {
+        ResponseApi responseApi = await ordersProvider.updateToDelivered(order);
+        Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
+        if (responseApi.success == true) {
+          emitToDelivered();
+          Get.offNamedUntil('/delivery/home', (route) => false);
+        }
+      }
+      else {
+        Get.snackbar('Operacion no permitida', 'Debes estar mas cerca a la posicion de entrega del pedidio');
       }
     }
-    else {
-      Get.snackbar('Operacion no permitida', 'Debes estar mas cerca a la posicion de entrega del pedidio');
-    }
-  }
 
   Future animateCameraPosition(double lat, double lng) async {
     GoogleMapController controller = await mapController.future;
@@ -250,34 +248,26 @@ void updateToDelivered() async {
     mapController.complete(controller);
   }
 
-void addMarker(
-    String markerId,
-    double lat,
-    double lng,
-    String title,
-    String content,
-    BitmapDescriptor iconMarker
-  ) {
-    MarkerId id = MarkerId(markerId);
-    Marker marker = Marker(
-        markerId: id,
-        icon: iconMarker,
-        position: LatLng(lat, lng),
-        infoWindow: InfoWindow(title: title, snippet: content)
-    );
+  void addMarker(
+      String markerId,
+      double lat,
+      double lng,
+      String title,
+      String content,
+      BitmapDescriptor iconMarker
+    ) {
+      MarkerId id = MarkerId(markerId);
+      Marker marker = Marker(
+          markerId: id,
+          icon: iconMarker,
+          position: LatLng(lat, lng),
+          infoWindow: InfoWindow(title: title, snippet: content)
+      );
 
-    markers[id] = marker;
+      markers[id] = marker;
 
-    update();
-  }
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-    socket.disconnect();
-    positionSubscribe?.cancel();
-  }
+      update();
+    }
 
   void saveLocation() async {
     if (position != null) {
@@ -340,14 +330,12 @@ void addMarker(
     await FlutterPhoneDirectCaller.callNumber(number);
   }
 
-
   void connectAndListen() {
     socket.connect();
     socket.onConnect((data) {
       print('ESTE DISPISITIVO SE CONECTO A SOCKET IO');
     });
   }
-
 
   void emitPosition() {
     if (position != null) {
@@ -386,6 +374,12 @@ void addMarker(
     });
   }
 
-
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    socket.disconnect();
+    positionSubscribe?.cancel();
+  }
 
 }

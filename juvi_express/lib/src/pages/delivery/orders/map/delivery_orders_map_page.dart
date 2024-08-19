@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:juvi_express/src/pages/client/address/map/client_address_map_controller.dart';
 import 'package:juvi_express/src/pages/delivery/orders/map/delivery_orders_map_controller.dart';
 
 class DeliveryOrdersMapPage extends StatelessWidget {
   DeliveryOrdersMapController con = Get.put(DeliveryOrdersMapController());
 
-  @override
+   @override
    Widget build(BuildContext context) {
     return GetBuilder<DeliveryOrdersMapController> (
       builder: (value) => Scaffold(
@@ -196,27 +195,27 @@ class DeliveryOrdersMapPage extends StatelessWidget {
   }
 
 
-Widget _listTileAddress(String title, String subtitle, IconData iconData) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
-      child: ListTile(
-        title: Text(
-          title,
-          style: TextStyle(
-            fontSize: 13,
-            color: Colors.white
-          ),
-        ),
-        subtitle: Text(
-          subtitle,
-          style: TextStyle(
+  Widget _listTileAddress(String title, String subtitle, IconData iconData) {
+      return Container(
+        margin: EdgeInsets.symmetric(horizontal: 20),
+        child: ListTile(
+          title: Text(
+            title,
+            style: TextStyle(
+              fontSize: 13,
               color: Colors.white
+            ),
           ),
+          subtitle: Text(
+            subtitle,
+            style: TextStyle(
+                color: Colors.white
+            ),
+          ),
+          trailing: Icon(iconData, color: Colors.white,),
         ),
-        trailing: Icon(iconData, color: Colors.white,),
-      ),
-    );
-  }
+      );
+    }
 
   Widget _googleMaps() {
     return GoogleMap(

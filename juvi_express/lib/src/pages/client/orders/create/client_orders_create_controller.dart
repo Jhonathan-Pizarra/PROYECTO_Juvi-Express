@@ -23,10 +23,10 @@ class ClientOrdersCreateController extends GetxController {
           selectedProducts.clear();
           selectedProducts.addAll(result);
         }
+
+        getTotal();
         
       }
-
-      getTotal();
 
     }
 
@@ -44,19 +44,23 @@ class ClientOrdersCreateController extends GetxController {
     });
   }
 
-    void removeItem(Product product){
+  void removeItem(Product product){
 
-      if(product.quantity! > 1){
+    if(product.quantity! > 1){
 
-        int index = selectedProducts.indexWhere((p) => p.id == product.id);
-        selectedProducts.remove(product);
-        product.quantity = product.quantity! - 1;
-        selectedProducts.insert(index, product);
-        GetStorage().write('shopping_bag', selectedProducts);
-        getTotal();
-      }
-    
+      int index = selectedProducts.indexWhere((p) => p.id == product.id);
+      selectedProducts.remove(product);
+      product.quantity = product.quantity! - 1;
+      selectedProducts.insert(index, product);
+      GetStorage().write('shopping_bag', selectedProducts);
+      getTotal();
+      productsListController.items.value = 0;
+      selectedProducts.forEach((p) {
+      productsListController.items.value = productsListController.items.value + p.quantity!;
+      });
     }
+  
+  }
 
   void deleteItem(Product product) {
     selectedProducts.remove(product);
@@ -74,15 +78,15 @@ class ClientOrdersCreateController extends GetxController {
     }
   }
 
-    void getTotal() {
-      total.value = 0.0;
-      selectedProducts.forEach((product) {
-        total.value = total.value + (product.quantity! * product.price!);
-      });
-    }
+  void getTotal() {
+    total.value = 0.0;
+    selectedProducts.forEach((product) {
+      total.value = total.value + (product.quantity! * product.price!);
+    });
+  }
 
-    void goToAddressList() {
-      Get.toNamed('/client/address/list');
-    }
+  void goToAddressList() {
+    Get.toNamed('/client/address/list');
+  }
   
 }

@@ -10,7 +10,6 @@ class AdminCategoriesCreateController extends GetxController {
   
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  
   CategoriesProvider categoriesProvider = CategoriesProvider();
 
 

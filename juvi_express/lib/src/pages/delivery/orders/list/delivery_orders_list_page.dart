@@ -8,8 +8,7 @@ import 'package:juvi_express/src/widgets/no_data_widget.dart';
 class DeliveryOrdersListPage extends StatelessWidget {
 
   DeliveryOrdersListController con = Get.put(DeliveryOrdersListController());
-  //RestaurantOrdersListController con = Get.put(RestaurantOrdersListController());
-
+  
   @override
   Widget build(BuildContext context) {
 

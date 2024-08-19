@@ -34,7 +34,28 @@ class ClientAddressListController extends GetxController {
     return address;
   }
 
+  void createOrder() async {
+      Address a = Address.fromJson(GetStorage().read('address') ?? {});
+      print("Llegó aqui?");
+      List<Product> products = Product.fromJsonList(GetStorage().read('shopping_bag'));
+      print("LLegó acá?? + ${products}");
+      Order order = Order(
+        idClient: user.id,
+        idAddress: a.id,
+        products: products
+      );
 
+      ResponseApi responseApi = await ordersProvider.create(order);
+      //Get.toNamed('/client/payments/create');
+      //Get.snackbar('Orden creada', responseApi.message ?? '');
+      print("Llegó aqui x2?");
+      Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
+      if (responseApi.success == true) {
+        print("Llegó aqui x3?");
+        Get.toNamed('/client/payments/create');
+      }
+  }
+    
   void handleRadioValueChange(int? value) {
     radioValue.value = value!;
     print('VALOR SELECCIONADO ${value}');
@@ -46,22 +67,5 @@ class ClientAddressListController extends GetxController {
     Get.toNamed('/client/address/create');
   }
 
-  void createOrder() async {
-    Address a = Address.fromJson(GetStorage().read('address') ?? {});
-    List<Product> products = Product.fromJsonList(GetStorage().read('shopping_bag'));
-    Order order = Order(
-      idClient: user.id,
-      idAddress: a.id,
-      products: products
-    );
-
-    ResponseApi responseApi = await ordersProvider.create(order);
-    //Get.toNamed('/client/payments/create');
-    //Get.snackbar('Orden creada', responseApi.message ?? '');
-    Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
-    if (responseApi.success == true) {
-      Get.toNamed('/client/payments/create');
-    }
-  }
 
 }

@@ -1,11 +1,32 @@
 import 'dart:convert';
 
-Product productFromJson(String str) => Product.fromJson(json.decode(str));
+Product productFromJson(String str) {
+  try {
+    final jsonData = json.decode(str);
+    print('JSON Decodificado: $jsonData');
+    if (jsonData is Map<String, dynamic>) {
+      return Product.fromJson(jsonData);
+    } else {
+      throw FormatException('El JSON decodificado no es un Map<String, dynamic>');
+    }
+  } catch (e) {
+    print('Error al decodificar el JSON: $e');
+    rethrow;
+  }
+}
 
-String productToJson(Product data) => json.encode(data.toJson());
+String productToJson(Product data) {
+  try {
+    final jsonData = data.toJson();
+    print('Datos JSON: $jsonData');
+    return json.encode(jsonData);
+  } catch (e) {
+    print('Error al codificar los datos a JSON: $e');
+    rethrow;
+  }
+}
 
 class Product {
-
   String? id;
   String? name;
   String? description;
@@ -28,31 +49,44 @@ class Product {
     this.quantity,
   });
 
-
-
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
-    id: json["id"],
-    name: json["name"],
-    description: json["description"],
-    image1: json["image1"],
-    image2: json["image2"],
-    image3: json["image3"],
-    idCategory: json["id_category"],
-    price: json["price"].toDouble(),
-    quantity: json["quantity"],
-  );
-
-  static List<Product> fromJsonList(List<dynamic> jsonList) {
-    List<Product> toList = [];
-
-    jsonList.forEach((item) {
-      Product product = Product.fromJson(item);
-      toList.add(product);
-    });
-
-    return toList;
+  factory Product.fromJson(Map<String, dynamic> json) {
+    print('Datos JSON en fromJson: $json');
+    return Product(
+      id: json["id"] as String?,
+      name: json["name"] as String?,
+      description: json["description"] as String?,
+      image1: json["image1"] as String?,
+      image2: json["image2"] as String?,
+      image3: json["image3"] as String?,
+      idCategory: json["id_category"] as String?,
+      price: (json["price"] as num?)?.toDouble(),
+      quantity: json["quantity"] as int?,
+    );
   }
 
+  static List<Product> fromJsonList(List<dynamic> jsonList) {
+    if (jsonList is List) {
+      print('Lista JSON en fromJsonList: $jsonList');
+      List<Product> toList = [];
+      
+      for (var item in jsonList) {
+        if (item is Map<String, dynamic>) {
+          try {
+            Product product = Product.fromJson(item);
+            toList.add(product);
+          } catch (e) {
+            print('Error al convertir item a Product: $e');
+          }
+        } else {
+          print('Item en la lista no es un Map<String, dynamic>: $item');
+        }
+      }
+      
+      return toList;
+    } else {
+      throw FormatException('jsonList no es una lista');
+    }
+  }
 
   Map<String, dynamic> toJson() => {
     "id": id,
@@ -66,5 +100,3 @@ class Product {
     "quantity": quantity,
   };
 }
-
-

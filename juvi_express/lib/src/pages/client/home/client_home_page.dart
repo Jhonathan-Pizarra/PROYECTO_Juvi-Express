@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:juvi_express/src/pages/admin/orders/list/admin_orders_list_page.dart';
 import 'package:juvi_express/src/pages/client/home/client_home_controller.dart';
 import 'package:juvi_express/src/pages/client/orders/list/client_orders_list_page.dart';
-import 'package:juvi_express/src/pages/client/products/list/client_products_list_controller.dart';
 import 'package:juvi_express/src/pages/client/products/list/client_products_list_page.dart';
 import 'package:juvi_express/src/pages/client/profile/info/client_profile_info_page.dart';
-import 'package:juvi_express/src/pages/delivery/orders/list/delivery_orders_list_page.dart';
-import 'package:juvi_express/src/pages/register/register_page.dart';
 import 'package:juvi_express/src/utils/custom_animated_bottom_bar.dart';
 
 class ClientHomePage extends StatelessWidget {
@@ -22,11 +18,8 @@ class ClientHomePage extends StatelessWidget {
         index: con.indexTab.value,
         children: [
           ClientProductsListPage(),
-          //AdminOrdersListPage(),
-          //DeliveryOrdersPage(),
           ClientOrdersListPage(),
           ClientProfileInfoPage()
-          //egisterPage()
         ],
       )
     ));

@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/models/order.dart';
 import 'package:juvi_express/src/pages/client/orders/list/client_orders_list_controller.dart';
-import 'package:juvi_express/src/pages/delivery/orders/list/delivery_orders_list_controller.dart';
 import 'package:juvi_express/src/utils/relative_time_util.dart';
 import 'package:juvi_express/src/widgets/no_data_widget.dart';
 
 class ClientOrdersListPage extends StatelessWidget {
 
   ClientOrdersListController con = Get.put(ClientOrdersListController());
-  //RestaurantOrdersListController con = Get.put(RestaurantOrdersListController());
-
+  
   @override
   Widget build(BuildContext context) {
 

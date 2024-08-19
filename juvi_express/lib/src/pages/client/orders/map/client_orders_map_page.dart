@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:juvi_express/src/pages/client/address/map/client_address_map_controller.dart';
 import 'package:juvi_express/src/pages/client/orders/map/client_orders_map_controller.dart';
-import 'package:juvi_express/src/pages/delivery/orders/map/delivery_orders_map_controller.dart';
 
 class ClientOrdersMapPage extends StatelessWidget {
   ClientOrdersMapController con = Get.put(ClientOrdersMapController());

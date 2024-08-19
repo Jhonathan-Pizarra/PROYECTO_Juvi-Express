@@ -82,6 +82,36 @@ class UsersProvider extends GetConnect {
     final response = await request.send();
     return response.stream.transform(utf8.decoder);
   }
+
+  /*
+  Future<ResponseApi> updateNotificationToken(String id, String token) async {
+    Response response = await put(
+        '$url/updateNotificationToken',
+        {
+          'id': id,
+          'token': token
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': userSession.sessionToken ?? ''
+        }
+    ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
+
+    if (response.body == null) {
+      Get.snackbar('Error', 'No se pudo actualizar la informacion');
+      return ResponseApi();
+    }
+
+    if (response.statusCode == 401) {
+      Get.snackbar('Error', 'No estas autorizado para realizar esta peticion');
+      return ResponseApi();
+    }
+
+    ResponseApi responseApi = ResponseApi.fromJson(response.body);
+
+    return responseApi;
+  }
+  */
   
   //Code: metodo que nos permite registrar usuario con imagen
   Future<ResponseApi> createUserWithImageGetX(User user, File image) async {

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:juvi_express/src/models/product.dart';
 import 'package:juvi_express/src/pages/client/orders/create/client_orders_create_controller.dart';
 import 'package:juvi_express/src/widgets/no_data_widget.dart';
@@ -34,7 +32,10 @@ class ClientOrdersCreatePage extends StatelessWidget {
           return _cardProduct(product);
         }).toList(),
       )
-      : NoDataWidget(text: "No hay ningún producto agregado",)
+      : Center(
+          child:
+          NoDataWidget(text: 'No hay ningun producto agregado aun')
+      ),
     ));
   }
 
@@ -160,6 +161,7 @@ class ClientOrdersCreatePage extends StatelessWidget {
       ],
     );
   }
+
 
   Widget _cardProduct(Product product){
     return Container(

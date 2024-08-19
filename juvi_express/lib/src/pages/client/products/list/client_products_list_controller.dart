@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:juvi_express/src/models/category.dart';
@@ -22,7 +22,6 @@ class ClientProductsListController extends GetxController {
   var productName = ''.obs;
   Timer? searchOnStoppedTyping;
 
-
   ClientProductsListController() {
     getCategories();
     if (GetStorage().read('shopping_bag') != null) {
@@ -40,6 +39,37 @@ class ClientProductsListController extends GetxController {
     }
   }
 
+  /*
+  ClientProductsListController() {
+    getCategories();
+    if (GetStorage().read('shopping_bag') != null) {
+      if (GetStorage().read('shopping_bag') is List<Product>) {
+        selectedProducts = GetStorage().read('shopping_bag');
+      }
+      else {
+        selectedProducts = Product.fromJsonList(GetStorage().read('shopping_bag'));
+      }
+
+      selectedProducts.forEach((p) {
+        items.value = items.value + (p.quantity!);
+      });
+
+    }
+  }
+  */
+
+  void onChangeText(String text) {
+    const duration = Duration(milliseconds: 800);
+    if (searchOnStoppedTyping != null) {
+      searchOnStoppedTyping?.cancel();
+    }
+
+    searchOnStoppedTyping = Timer(duration, () {
+      productName.value = text;
+      print('TEXTO COMPLETO: ${text}');
+    });
+  }
+
   void getCategories() async {
     var result = await categoriesProvider.getAll();
     categories.clear();
@@ -55,24 +85,13 @@ class ClientProductsListController extends GetxController {
       return await productsProvider.findByNameAndCategory(idCategory, productName);
     }
 
-    /*
-    if (productName.isEmpty) {
-      //return await productsProvider.findByCategory(idCategory);
-    }
-    else {
-      //return await productsProvider.findByNameAndCategory(idCategory, productName);
-    }
-    */
-    //return await productsProvider.findByCategory(idCategory);
-
-
   }
 
   void goToOrderCreate(){
     Get.toNamed('/client/orders/create');
   }
 
-  void openBottomSheet(BuildContext context, Product product){
+  void openBottomSheet(BuildContext context, Product product) async{
 
     showMaterialModalBottomSheet(
       context: context, 

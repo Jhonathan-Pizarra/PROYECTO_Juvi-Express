@@ -39,8 +39,9 @@ class ClientAddressMapPage extends StatelessWidget {
           style: TextStyle(color: Colors.black),
         ),
         style: ElevatedButton.styleFrom(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30)
+            ),
             padding: EdgeInsets.all(15)),
       ),
     );
@@ -73,7 +74,9 @@ class ClientAddressMapPage extends StatelessWidget {
       onMapCreated: con.onMapCreate,
       myLocationButtonEnabled: false,
       myLocationEnabled: false,
-      onCameraMove: (position) => {con.initialPosition = position},
+      onCameraMove: (position) => {
+        con.initialPosition = position
+      },
       onCameraIdle: () async {
         await con.setLocationDraggableInfo(); // EMPEZAR A OBTNER LA LAT Y LNG DE LA POSICION CENTRAL DEL MAPA
       },

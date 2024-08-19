@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/models/product.dart';
-import 'package:juvi_express/src/models/user.dart';
 import 'package:juvi_express/src/pages/delivery/orders/detail/delivery_orders_detail_controller.dart';
 import 'package:juvi_express/src/utils/relative_time_util.dart';
 import 'package:juvi_express/src/widgets/no_data_widget.dart';
@@ -9,6 +8,7 @@ import 'package:juvi_express/src/widgets/no_data_widget.dart';
 class DeliveryOrdersDetailPage extends StatelessWidget {
   DeliveryOrdersDetailController con = Get.put(DeliveryOrdersDetailController());
 
+  @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
       bottomNavigationBar: Container(

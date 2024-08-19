@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:juvi_express/src/models/user.dart';
 import 'package:juvi_express/src/pages/client/profile/update/client_profile_update_controller.dart';
 
 class ClientProfileUpdatePage extends StatelessWidget {
 
   ClientProfileUpdateController con = Get.put(ClientProfileUpdateController());
-  //User user = User.fromJson(GetStorage().read('user'));
 
   @override
   Widget build(BuildContext context) {
@@ -278,8 +275,6 @@ class ClientProfileUpdatePage extends StatelessWidget {
       ),
     );
   }
-
-
 
 
   Widget _buttonUpdate(BuildContext context){

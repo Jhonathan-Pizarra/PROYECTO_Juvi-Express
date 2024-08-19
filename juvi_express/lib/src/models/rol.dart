@@ -1,8 +1,11 @@
 import 'dart:convert';
 
-Rol responseApiFromJson(String str) => Rol.fromJson(json.decode(str));
+//Rol responseApiFromJson(String str) => Rol.fromJson(json.decode(str));
 
-String responseApiToJson(Rol data) => json.encode(data.toJson());
+//String responseApiToJson(Rol data) => json.encode(data.toJson());
+Rol rolFromJson(String str) => Rol.fromJson(json.decode(str));
+
+String rolToJson(Rol data) => json.encode(data.toJson());
 
 class Rol {
     String? id;

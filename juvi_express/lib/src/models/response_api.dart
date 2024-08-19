@@ -7,7 +7,7 @@ String responseApiToJson(ResponseApi data) => json.encode(data.toJson());
 class ResponseApi {
     bool? success;
     String? message;
-    dynamic? data;
+    dynamic data;
 
     ResponseApi({
         this.success,

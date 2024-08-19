@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/models/category.dart';
 import 'package:juvi_express/src/models/product.dart';
@@ -72,51 +71,97 @@ class ClientProductsListPage extends StatelessWidget {
   Widget _cardProduct(BuildContext context, Product product){
     return GestureDetector(
       onTap: () => con.openBottomSheet(context, product),
-      child: Container(
-        //margin: EdgeInsets.only(top: 5, left: 10, right: 10),
-        child: ListTile(
-          title: Text(
-            product.name ?? '',
-            style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold
-              ),
-            ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(product.description ?? '',
-              maxLines: 2,
-              ),
-              Text(
-                '\$${product.price.toString()}'
-              )
-            ],
-          ),
-          leading: Container(
-            height: 70,
-            width: 60,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: FadeInImage(
-                image: product.image1 != null 
-                ? NetworkImage(product.image1!)
-                : AssetImage('assets/img/no-image.png') as ImageProvider,
-                fit: BoxFit.cover,
-                fadeInDuration: Duration(milliseconds: 50),
-                placeholder: AssetImage('assets/img/no-image.png'),
+      child: Column(
+        children: [
+          Container(
+            //margin: EdgeInsets.only(top: 5, left: 10, right: 10),
+            child: ListTile(
+              title: Text(
+                product.name ?? '',
+                style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold
+                  ),
                 ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(product.description ?? '',
+                  maxLines: 2,
+                  ),
+                  Text(
+                    '\$${product.price.toString()}'
+                  )
+                ],
+              ),
+              leading: Container(
+                height: 70,
+                width: 60,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: FadeInImage(
+                    image: product.image1 != null 
+                    ? NetworkImage(product.image1!)
+                    : AssetImage('assets/img/no-image.png') as ImageProvider,
+                    fit: BoxFit.cover,
+                    fadeInDuration: Duration(milliseconds: 50),
+                    placeholder: AssetImage('assets/img/no-image.png'),
+                    ),
+                ),
+              ),
             ),
           ),
-        ),
+          Divider(height: 1, color: Colors.grey[300], indent: 37, endIndent: 37,)
+        ],
       ),
     );
   }
 
-  Widget _iconShoppingBar(){
-    return IconButton(
-      onPressed: () => con.goToOrderCreate(),
-      icon: Icon(Icons.shopping_bag_outlined)
+
+  Widget _iconShoppingBag() {
+    return SafeArea(
+      child: Container(
+        margin: EdgeInsets.only(left: 10),
+        child: con.items.value > 0
+        ? Stack(
+          children: [
+            IconButton(
+                onPressed: () => con.goToOrderCreate(),
+                icon: Icon(
+                  Icons.shopping_bag_outlined,
+                  size: 33,
+                )
+            ),
+
+            Positioned(
+                right: 4,
+                top: 12,
+                child: Container(
+                  width: 16,
+                  height: 16,
+                  alignment: Alignment.center,
+                  child: Text(
+                    '${con.items.value}',
+                    style: TextStyle(
+                      fontSize: 12
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(30))
+                  ),
+                )
+            )
+          ],
+        )
+        : IconButton(
+            onPressed: () => con.goToOrderCreate(),
+            icon: Icon(
+              Icons.shopping_bag_outlined,
+              size: 30,
+            )
+        ),
+      ),
     );
   }
 
@@ -132,7 +177,7 @@ class ClientProductsListPage extends StatelessWidget {
               child: _textFieldSearch(context),
             ),
             SizedBox(width: 10),
-            _iconShoppingBar() // Icono de la bolsa de compras en la parte derecha
+            _iconShoppingBag() // Icono de la bolsa de compras en la parte derecha
           ],
         ),
       ),
@@ -143,6 +188,7 @@ class ClientProductsListPage extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
       child: TextField(
+        onChanged: con.onChangeText,
         decoration: InputDecoration(
           hintText: 'Buscar producto',
           suffixIcon: Icon(Icons.search, color: Colors.grey,),

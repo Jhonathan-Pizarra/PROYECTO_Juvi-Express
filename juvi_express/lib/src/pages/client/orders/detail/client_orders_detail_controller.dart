@@ -21,14 +21,14 @@ class ClientOrdersDetailController extends GetxController{
     getTotal();
   } 
 
-
+  /*
   void updateOrder() async {
       ResponseApi responseApi = await ordersProvider.updateToOnTheWay(order);
       Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
       if (responseApi.success == true) {
         goToOrderMap();
       }
-  }
+  }*/
 
   void goToOrderMap() {
     Get.toNamed('/client/orders/map', arguments: {

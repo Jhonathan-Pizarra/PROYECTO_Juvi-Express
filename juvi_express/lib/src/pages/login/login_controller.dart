@@ -9,6 +9,8 @@ import 'package:juvi_express/src/providers/users_provider.dart';
 
 
 class LoginController extends GetxController{
+
+  User user = User.fromJson(GetStorage().read('user') ?? {});
   
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -70,15 +72,10 @@ class LoginController extends GetxController{
     Get.offNamedUntil('/client/home', (route) => false);
   }
 
-  void goToHomePage(){
-    Get.offNamedUntil('/home',(route) => false);
-  }
-
   void goToRolesPage(){
     Get.offNamedUntil('/roles',(route) => false);
   }
   
-
   bool isValidForm(String email, String password){
 
     if (email.isEmpty) {

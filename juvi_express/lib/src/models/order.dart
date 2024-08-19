@@ -44,6 +44,7 @@ class Order {
     idDelivery: json["id_delivery"],
     idAddress: json["id_address"],
     status: json["status"],
+    //products: json["products"],
     products: json["products"] != null ? List<Product>.from(json["products"].map((model) => model is Product ? model : Product.fromJson(model))) : [],
     lat: json["lat"],
     lng: json["lng"],

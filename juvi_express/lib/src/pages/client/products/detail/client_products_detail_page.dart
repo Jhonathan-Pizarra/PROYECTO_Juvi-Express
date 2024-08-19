@@ -12,11 +12,13 @@ class ClientProductsDetailPage extends StatelessWidget {
   var price = 0.0.obs;
   // = Get.put(ClientProductsDetailController());
 
+  /*
   ClientProductsDetailPage({required this.product}){
-
-    //con = Get.put(ClientProductsDetailController());
     con = Get.put(ClientProductsDetailController());
+  }*/
 
+  ClientProductsDetailPage({@required this.product}) {
+    con = Get.put(ClientProductsDetailController());
   }
 
   @override

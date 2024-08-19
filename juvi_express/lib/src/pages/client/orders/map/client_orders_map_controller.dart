@@ -6,12 +6,9 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:geolocator_android/geolocator_android.dart';
-import 'package:geolocator_apple/geolocator_apple.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:juvi_express/src/models/order.dart';
-import 'package:juvi_express/src/models/response_api.dart';
 import 'package:juvi_express/src/providers/orders_provider.dart';
 import 'package:juvi_express/src/enviroment/enviroment.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -48,6 +45,13 @@ class ClientOrdersMapController extends GetxController {
   //double distanceBetween = 0.0;
   //bool isClose = false;
 
+  ClientOrdersMapController() {
+    print('Order: ${order.toJson()}');
+
+    checkGPS(); // VERIFICAR SI EL GPS ESTA ACTIVO
+    connectAndListen();
+  }
+
   Future<BitmapDescriptor> createMarkerFromAssets(String path) async {
     ImageConfiguration configuration = ImageConfiguration();
     BitmapDescriptor descriptor = await BitmapDescriptor.fromAssetImage(
@@ -57,12 +61,6 @@ class ClientOrdersMapController extends GetxController {
     return descriptor;
   }
 
-  ClientOrdersMapController() {
-    print('Order: ${order.toJson()}');
-
-    checkGPS(); // VERIFICAR SI EL GPS ESTA ACTIVO
-    connectAndListen();
-  }
 
   Future setLocationDraggableInfo() async {
 
@@ -90,7 +88,7 @@ class ClientOrdersMapController extends GetxController {
       Map<String, dynamic> data = {
       'address': addressName.value,
       'lat': addressLatLng!.latitude,
-      'lng':  addressLatLng!.longitude,
+      'lng': addressLatLng!.longitude,
      };
      Navigator.pop(context, data);
     }
@@ -241,15 +239,6 @@ void updateToDelivered() async {
     update();
   }
 
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-    socket.disconnect();
-    positionSubscribe?.cancel();
-  }
-
-  
   //Dibujar ruta
   Future<void> setPolylines(LatLng from, LatLng to) async {
 
@@ -334,5 +323,15 @@ void updateToDelivered() async {
       Get.offNamedUntil('/client/home', (route) => false);
     });
   }
+
+  
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    socket.disconnect();
+    positionSubscribe?.cancel();
+  }
+
 
 }

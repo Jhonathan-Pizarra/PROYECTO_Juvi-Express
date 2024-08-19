@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/models/address.dart';
 import 'package:juvi_express/src/pages/client/address/list/client_address_list_controller.dart';

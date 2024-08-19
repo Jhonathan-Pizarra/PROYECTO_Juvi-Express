@@ -18,7 +18,6 @@ class AdminProductsCreateController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
-  
   CategoriesProvider categoriesProvider = CategoriesProvider();
 
   ImagePicker picker = ImagePicker();
@@ -45,7 +44,9 @@ class AdminProductsCreateController extends GetxController {
     String name = nameController.text;
     String description = descriptionController.text;
     String price = priceController.text;
-
+    print('DESCRIPTION: ${description}');
+    print('PRICE: ${price}');
+    print('ID CATEGORY: ${idCategory}');
     ProgressDialog progressDialog = ProgressDialog(context: context);
 
     if (isValidForm(name, description, price)) {
@@ -63,12 +64,13 @@ class AdminProductsCreateController extends GetxController {
       images.add(imageFile1!);
       images.add(imageFile2!);
       images.add(imageFile3!);
+
       Stream stream = await productsProvider.create(product, images);
       stream.listen((res) {
         progressDialog.close();
 
         ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
-        Get.snackbar('Formulario no válido', responseApi.message ?? '');
+        Get.snackbar('Creado con exito', responseApi.message ?? '');
         if (responseApi.success == true) {
           clearForm();
         }

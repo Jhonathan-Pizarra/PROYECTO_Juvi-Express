@@ -28,7 +28,7 @@ class AdminOrdersDetailController extends GetxController{
       ResponseApi responseApi = await ordersProvider.updateToDispatched(order);
       Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
       if (responseApi.success == true) {
-        Get.offNamedUntil('/restaurant/home', (route) => false);
+        Get.offNamedUntil('/admin/home', (route) => false);
       }
     }
     else {

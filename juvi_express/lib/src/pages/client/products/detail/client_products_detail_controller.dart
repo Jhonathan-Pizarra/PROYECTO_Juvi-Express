@@ -32,47 +32,52 @@ class ClientProductsDetailController extends GetxController{
     }
   }
 
+  void addToBag(Product product, var price, var counter) {
 
-  void addToBag(Product product, var price, var counter){
+    if (counter.value > 0) {
+      // VALIDAR SI EL PRODUCTO YA FUE AGREGADO CON GETSTORAGE A LA SESION DEL DISPOSITIVO
+      int index = selectedProducts.indexWhere((p) => p.id == product.id);
 
-    if(counter.value > 0 ){
-
-      //Valida si el prod fue agregado con getstorage
-    int index = selectedProducts.indexWhere((p)=> p.id == product.id );
-
-    if (index == -1) { //NO HA SIDO AGREGADO
-      if (product.quantity == null ) {
-        if(counter.value > 0){
-          product.quantity = counter.value;
-        }else{
-          product.quantity = 1;
+      if (index == -1 ) { // NO HA SIDO AGREGADO
+        if (product.quantity == null) {
+          if (counter.value > 0) {
+            product.quantity = counter.value;
+          }
+          else {
+            product.quantity = 1;
+          }
         }
+
+        selectedProducts.add(product);
       }
-      selectedProducts.add(product);
-    }else{
-      selectedProducts[index].quantity = counter.value;
-    }
+      else { // YA HA SIDOO AGREGADO EN STORAGE
+        selectedProducts[index].quantity = counter.value;
+      }
 
-    GetStorage().write('shopping_bag', selectedProducts);
-    Fluttertoast.showToast(msg: 'Producto agregado');
-    
-    } else{
-       Fluttertoast.showToast(msg: 'Debes seleccionar al menos un item para agregarlo');
-    }
+      GetStorage().write('shopping_bag', selectedProducts);
+      Fluttertoast.showToast(msg: 'Producto agregado');
 
+      productsListController.items.value = 0;
+      selectedProducts.forEach((p) {
+        productsListController.items.value = productsListController.items.value + p.quantity!;
+      });
+
+    }
+    else {
+      Fluttertoast.showToast(msg: 'Debes seleccionar al menos un item para agregar');
+    }
   }
 
-  void addItem(Product product, var price, var counter){
+  void addItem(Product product, var price, var counter) {
     counter.value = counter.value + 1;
     price.value = product.price! * counter.value;
   }
 
-  void removeItem(Product product, var price, var counter){
+  void removeItem(Product product, var price, var counter) {
     if (counter.value > 0) {
       counter.value = counter.value - 1;
       price.value = product.price! * counter.value;
     }
-   
   }
 
 }
