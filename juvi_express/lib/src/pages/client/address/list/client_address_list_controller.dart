@@ -34,6 +34,7 @@ class ClientAddressListController extends GetxController {
     return address;
   }
 
+  /*
   void createOrder() async {
       Address a = Address.fromJson(GetStorage().read('address') ?? {});
       print("Llegó aqui?");
@@ -54,7 +55,14 @@ class ClientAddressListController extends GetxController {
         print("Llegó aqui x3?");
         Get.toNamed('/client/payments/create');
       }
+  }*/
+
+  void goToPayments() async {
+      
+    Get.toNamed('/client/payments/create');
+      
   }
+    
     
   void handleRadioValueChange(int? value) {
     radioValue.value = value!;

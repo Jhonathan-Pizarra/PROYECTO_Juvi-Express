@@ -29,9 +29,15 @@ class CategoriesProvider extends GetConnect {
       return [];
     }
 
-    List<Category> categories = Category.fromJsonList(response.body);
-
+    List<Category> categories = [];
+    if (response.body != null && response.body is List) {
+      categories = Category.fromJsonList(response.body);
+    } else {
+      Get.snackbar('Error', 'No se pudo obtener los productos.');
+    }
+ 
     return categories;
+
   }
 
 

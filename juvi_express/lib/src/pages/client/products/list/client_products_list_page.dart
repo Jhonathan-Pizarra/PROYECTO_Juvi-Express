@@ -38,22 +38,32 @@ class ClientProductsListPage extends StatelessWidget {
         ),
         body: TabBarView(
           children: con.categories.map((Category category) {
-              return FutureBuilder(
-                //future: con.getProducts(category.id ?? '1'), 
+            return RefreshIndicator(
+              onRefresh: () async {
+                // Recargar los productos al hacer pull-to-refresh
+                await con.getProducts(category.id ?? '1', con.productName.value);
+              },
+              child: FutureBuilder(
                 future: con.getProducts(category.id ?? '1', con.productName.value),
                 builder: (context, AsyncSnapshot<List<Product>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
                   if (snapshot.hasData) {
                     if (snapshot.data!.length > 0) {
                       return ListView.builder(
-                      itemCount: snapshot.data?.length ?? 0,
-                      itemBuilder: (_, index){
-                        return _cardProduct(context, snapshot.data![index]);
+                        itemCount: snapshot.data?.length ?? 0,
+                        itemBuilder: (_, index) {
+                          return _cardProduct(context, snapshot.data![index]);
                         },
                       );
                     } else {
                       return NoDataWidget(
-                      text: 'No hay productos',
-                    );
+                        text: 'No hay productos',
+                      );
                     }
                   } else {
                     return NoDataWidget(
@@ -61,8 +71,9 @@ class ClientProductsListPage extends StatelessWidget {
                     );
                   }
                 }
-              );
-            }).toList(),
+              ),
+            );
+          }).toList(),
         )
       ),
     ));
@@ -74,7 +85,6 @@ class ClientProductsListPage extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            //margin: EdgeInsets.only(top: 5, left: 10, right: 10),
             child: ListTile(
               title: Text(
                 product.name ?? '',
@@ -117,7 +127,6 @@ class ClientProductsListPage extends StatelessWidget {
     );
   }
 
-
   Widget _iconShoppingBag() {
     return SafeArea(
       child: Container(
@@ -132,7 +141,6 @@ class ClientProductsListPage extends StatelessWidget {
                   size: 33,
                 )
             ),
-
             Positioned(
                 right: 4,
                 top: 12,
@@ -213,5 +221,4 @@ class ClientProductsListPage extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -141,7 +141,7 @@ class ClientAddressListPaige extends StatelessWidget {
       height: 50,
       margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: ElevatedButton(
-          onPressed: () => con.createOrder(),
+          onPressed: () => con.goToPayments(),
           style: ElevatedButton.styleFrom(
               padding: EdgeInsets.symmetric(vertical: 15)
           ),

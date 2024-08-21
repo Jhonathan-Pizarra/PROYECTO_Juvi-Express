@@ -15,43 +15,56 @@ class ProductsProvider extends GetConnect {
 
   User userSession = User.fromJson(GetStorage().read('user') ?? {});
   
-  Future<List<Product>> findByCategory(String idCategory) async {
-    Response response = await get(
+    Future<List<Product>> findByCategory(String idCategory) async {
+    try {
+      Response response = await get(
         '$url/findByCategory/$idCategory',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': userSession.sessionToken ?? ''
         }
-    ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
+      );
 
-    if (response.statusCode == 401) {
-      Get.snackbar('Peticion denegada', 'Tu usuario no tiene permitido leer esta informacion');
+      if (response.statusCode == 401) {
+        Get.snackbar('Petición denegada', 'Tu usuario no tiene permitido leer esta información');
+        return [];
+      }
+
+      if (response.body != null && response.body is List) {
+        return Product.fromJsonList(response.body);
+      } else {
+        return [];
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Ocurrió un error al cargar los productos.');
       return [];
     }
-
-    List<Product> products = Product.fromJsonList(response.body);
-
-    return products;
   }
 
-  
   Future<List<Product>> findByNameAndCategory(String idCategory, String name) async {
-    Response response = await get(
+    try {
+      Response response = await get(
         '$url/findByNameAndCategory/$idCategory/$name',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': userSession.sessionToken ?? ''
         }
-    ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
+      );
 
-    if (response.statusCode == 401) {
-      Get.snackbar('Peticion denegada', 'Tu usuario no tiene permitido leer esta informacion');
+      if (response.statusCode == 401) {
+        Get.snackbar('Petición denegada', 'Tu usuario no tiene permitido leer esta información');
+        return [];
+      }
+
+      if (response.body != null && response.body is List) {
+        return Product.fromJsonList(response.body);
+      } else {
+        return [];
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Ocurrió un error al cargar los productos.');
       return [];
     }
-
-    List<Product> products = Product.fromJsonList(response.body);
-
-    return products;
   }
 
   Future<Stream> create(Product product, List<File> images) async {

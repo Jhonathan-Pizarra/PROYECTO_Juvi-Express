@@ -66,7 +66,6 @@ class _MyAppState extends State<MyApp> {
         onSecondary: Colors.grey,
       ),
     ),
-      //initialRoute: '/client/payments/create',
       initialRoute: userSession.id != null ? userSession.roles!.length > 1 ? '/roles': '/client/home': '/',
       
       getPages: [
@@ -99,7 +98,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/client/address/list', page: ()=> ClientAddressListPaige()),
         
         //Payments
-        //GetPage(name: '/client/payments/create', page: () => ClientPaymentsCreatePage()),
+        GetPage(name: '/client/payments/create', page: () => ClientPaymentsCreatePage()),
 
       ],
       navigatorKey: Get.key,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/models/category.dart';
 import 'package:juvi_express/src/models/response_api.dart';
+import 'package:juvi_express/src/pages/admin/products/create/admin_products_create_controller.dart';
 import 'package:juvi_express/src/providers/categories_provider.dart';
 
 
@@ -31,6 +32,8 @@ class AdminCategoriesCreateController extends GetxController {
 
       if (responseApi.success == true) {
         clearForm();
+        // Emite una señal para actualizar las categorías
+         Get.find<AdminProductsCreateController>().getCategories();
       }
 
     }
