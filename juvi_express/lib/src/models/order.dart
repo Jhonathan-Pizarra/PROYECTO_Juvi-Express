@@ -18,6 +18,7 @@ class Order {
   double? lat;
   double? lng;
   int? timestamp;
+  String? image;
   List<Product>? products = [];
   User? client;
   User? delivery;
@@ -32,6 +33,7 @@ class Order {
     this.lat,
     this.lng,
     this.timestamp,
+    this.image,
     this.products,
     this.address,
     this.client,
@@ -49,6 +51,7 @@ class Order {
     lat: json["lat"],
     lng: json["lng"],
     timestamp: json["timestamp"],
+    image: json["image"],
     client: json['client'] is String ? userFromJson(json['client']) : json['client'] is User ? json['client'] : User.fromJson(json['client'] ?? {}),
     delivery: json['delivery'] is String ? userFromJson(json['delivery']) : json['delivery'] is User ? json['delivery'] : User.fromJson(json['delivery'] ?? {}),
     address: json['address'] is String ? addressFromJson(json['address']) : json['address'] is Address ? json['address'] : Address.fromJson(json['address'] ?? {}),
@@ -74,6 +77,7 @@ class Order {
     "lat": lat,
     "lng": lng,
     "timestamp": timestamp,
+    "image": image,
     "products": products,
     "client": client,
     "delivery": delivery,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart'; // Para formatear la fecha
+import 'package:juvi_express/src/pages/client/orders/create/client_orders_create_controller.dart';
 import 'package:juvi_express/src/pages/client/payments/create/client_payments_create_controller.dart';
+import 'package:path/path.dart';
 
 class ClientPaymentsCreatePage extends StatelessWidget {
   ClientPaymentsCreateController con = Get.put(ClientPaymentsCreateController());
@@ -33,10 +35,10 @@ class ClientPaymentsCreatePage extends StatelessWidget {
                 if (con.paymentMethod.value == 'transferencia') ...[
                   SizedBox(height: 20),
                   _buildBankAccountInfo(),
-                  TextField(
-                    decoration: InputDecoration(labelText: 'Sube el comprobante de transferencia'),
-                    onChanged: (value) => con.receipt = value,
+                  Text(
+                     'Sube el comprobante de transferencia',
                   ),
+                  _imageTextRow(context),
                   // Agrega aquí cualquier otro campo necesario para la transferencia
                 ],
                 RadioListTile(
@@ -54,7 +56,7 @@ class ClientPaymentsCreatePage extends StatelessWidget {
                 ],
                 SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () => con.processPayment(),
+                  onPressed: () => con.processPayment(context),
                   child: Text('Procesar Pago'),
                 ),
               ],
@@ -86,4 +88,46 @@ class ClientPaymentsCreatePage extends StatelessWidget {
       ],
     );
   }
+
+
+  Widget _imageTextRow(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        margin: EdgeInsets.only(top: 20),
+        //padding: EdgeInsets.symmetric(horizontal: 2), // Agrega padding horizontal
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _imagePayment(context),
+            //_imageCover(),
+            //SizedBox(width: 1), // Espacio entre la imagen y el texto
+          ],
+        ),
+      ),
+    );
+  }
+
+
+
+  Widget _imagePayment(BuildContext context){
+    return Container(
+      margin: EdgeInsets.only(top: 30),
+      alignment: Alignment.topCenter,
+      child: GestureDetector(
+        onTap: () => con.showAlertDialog(context),
+        child: GetBuilder<ClientPaymentsCreateController>(
+          builder: (value) => CircleAvatar(
+          backgroundImage: con.imageFile != null ?
+          FileImage(con.imageFile!)
+          : AssetImage('assets/img/user1.png') as ImageProvider,
+          radius: 60,
+          backgroundColor: Colors.white,
+          ),
+        )
+      ),
+
+    );
+  }
+
+
 }
