@@ -11,6 +11,14 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 
 
+
+Future<String> encodeImageToBase64(File image) async {
+  final bytes = await image.readAsBytes();
+  return base64Encode(bytes);
+}
+
+
+
 class OrdersProvider extends GetConnect {
 
   String url = Enviroment.API_URL + 'api/orders';
@@ -36,7 +44,32 @@ class OrdersProvider extends GetConnect {
   }
 
 
-  // Crear una orden con imagen
+
+  Future<ResponseApi> createWithImage(Order order, File image) async {
+    try {
+
+      FormData form = FormData({
+      'image': MultipartFile(image, filename: basename(image.path)),
+      'order': json.encode(order)
+      });
+    
+      Response response = await post('$url/createWithImage', form);
+
+      if (response.body == null) {
+      Get.snackbar('Error en la peticion', 'No se pudo crear el pedido');
+      return ResponseApi();
+      }
+      ResponseApi responseApi = ResponseApi.fromJson(response.body);
+      return responseApi;
+
+    } catch (e) {
+      print('Error al subir la imagen: $e');
+      throw Exception('Error al crear la orden con imagen');
+    }
+  }
+
+
+/*
   Future<Stream> createWithImage(Order order, File image) async {
   try {
     Uri uri = Uri.http(Enviroment.API_URL_OLD, '/api/orders/createWithImage');
@@ -66,6 +99,8 @@ class OrdersProvider extends GetConnect {
     throw Exception('Error al crear la orden con imagen');
   }
 }
+
+*/
 
 
   Future<List<Order>> findByStatus(String status) async {

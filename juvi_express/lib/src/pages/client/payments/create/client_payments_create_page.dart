@@ -109,6 +109,7 @@ class ClientPaymentsCreatePage extends StatelessWidget {
 
 
 
+
   Widget _imagePayment(BuildContext context){
     return Container(
       margin: EdgeInsets.only(top: 30),
@@ -119,7 +120,7 @@ class ClientPaymentsCreatePage extends StatelessWidget {
           builder: (value) => CircleAvatar(
           backgroundImage: con.imageFile != null ?
           FileImage(con.imageFile!)
-          : AssetImage('assets/img/user1.png') as ImageProvider,
+          : AssetImage('assets/img/upload-image2.png') as ImageProvider,
           radius: 60,
           backgroundColor: Colors.white,
           ),
@@ -128,6 +129,37 @@ class ClientPaymentsCreatePage extends StatelessWidget {
 
     );
   }
+  
+
+  /*
+  Widget _imagePayment(BuildContext context) {
+  return Container(
+    margin: EdgeInsets.only(top: 30),
+    alignment: Alignment.topCenter,
+    child: GestureDetector(
+      onTap: () => con.showAlertDialog(context),
+      child: GetBuilder<ClientPaymentsCreateController>(
+        builder: (value) => Container(
+          width: 120, // Ancho del contenedor (el doble del radio anterior)
+          height: 120, // Altura del contenedor (el doble del radio anterior)
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: con.imageFile != null
+                  ? FileImage(con.imageFile!)
+                  : AssetImage('assets/img/upload-image2.png') as ImageProvider,
+              fit: BoxFit.cover,
+            ),
+            borderRadius: BorderRadius.circular(1), // Esquinas redondeadas
+            color: Colors.white,
+          ),
+        ),
+      ),
+    ),
+  );
+}*/
+
+
+  
 
 
 }

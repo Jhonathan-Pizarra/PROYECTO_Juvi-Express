@@ -47,7 +47,10 @@ class Order {
     idAddress: json["id_address"],
     status: json["status"],
     //products: json["products"],
-    products: json["products"] != null ? List<Product>.from(json["products"].map((model) => model is Product ? model : Product.fromJson(model))) : [],
+    products: json["products"] != null 
+        ? List<Product>.from(json["products"].map((model) => 
+          model is Product ? model : Product.fromJson(model)))
+          : [],
     lat: json["lat"],
     lng: json["lng"],
     timestamp: json["timestamp"],
@@ -78,10 +81,15 @@ class Order {
     "lng": lng,
     "timestamp": timestamp,
     "image": image,
-    "products": products,
-    "client": client,
-    "delivery": delivery,
-    "address": address,
+    //"products": products,
+    // Serializar solo `id` y `quantity` de los productos
+    "products": products?.map((product) => {
+          'id': product.id,
+          'quantity': product.quantity,
+        }).toList(),
+    "client": client?.toJson(),
+    "delivery": delivery?.toJson(),
+    "address": address?.toJson(),
   };
 
 

@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,10 +11,9 @@ import 'package:juvi_express/src/models/response_api.dart';
 import 'package:juvi_express/src/models/user.dart';
 import 'package:juvi_express/src/providers/address_provider.dart';
 import 'package:juvi_express/src/providers/orders_provider.dart';
-
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class ClientPaymentsCreateController extends GetxController {
-
   List<Address> address = [];
   AddressProvider addressProvider = AddressProvider();
   OrdersProvider ordersProvider = OrdersProvider();
@@ -29,7 +26,7 @@ class ClientPaymentsCreateController extends GetxController {
   var paymentMethod = ''.obs;
   String receipt = '';
   String cashAmount = '';
-  var receiptPath = ''.obs; 
+  var receiptPath = ''.obs;
 
   void selectPaymentMethod(String? method) {
     paymentMethod.value = method ?? '';
@@ -50,35 +47,112 @@ class ClientPaymentsCreateController extends GetxController {
     }
   }
 
-
-
-
   void createPayment(BuildContext context) async {
+    print('User ID: ${user.id}');
+
     Address a = Address.fromJson(GetStorage().read('address') ?? {});
-    List<Product> products = Product.fromJsonList(GetStorage().read('shopping_bag'));
+    //List<Product> products = Product.fromJsonList(GetStorage().read('shopping_bag'));
+
+    List<dynamic> productJson = GetStorage().read('shopping_bag') ?? [];
+    List<Product> products;
+
+    if (productJson is List<Product>) {
+      products = productJson;
+    } else {
+      products = productJson.map((item) => Product.fromJson(item)).toList();
+    }
+
+    Order order = Order(idClient: user.id, idAddress: a.id, products: products);
+
+    ProgressDialog progressDialog = ProgressDialog(context: context);
+    progressDialog.show(max: 100, msg: "Registradno...");
+
+    print('ORDER ${order.toJson()}');
+    print('ID DEL CLIENTE? ${order.idClient}');
+    print('ID DEL DIRECCION? ${order.idAddress}');
+    print('PRODUCTOS? ${order.products?.map((p) => p.toJson()).toList()}');
+
+    if (imageFile != null) {
+      try {
+        ResponseApi responseApi =
+            await ordersProvider.createWithImage(order, imageFile!);
+
+        progressDialog.close();
+
+        print('Que respuesta es? ${responseApi}');
+        print('Que data es? ${responseApi.data}');
+
+        if (responseApi.success == true) {
+          GetStorage().write('order', responseApi.data);
+          //Get.toNamed('/client/payments/create');
+        } else {
+          Get.snackbar("Registro Fallido", responseApi.message ?? '');
+        }
+      } catch (e) {
+        progressDialog.close();
+        print('Error al crear el pedido con imagen: $e');
+        Get.snackbar("Error", "No se pudo crear el pedido con imagen");
+      }
+    } else {
+      try {
+        ResponseApi responseApi = await ordersProvider.create(order);
+        if (responseApi.success == true) {
+          GetStorage().write('order', responseApi.data);
+          //Get.toNamed('/client/payments/create');
+        } else {
+          Get.snackbar("Registro Fallido", responseApi.message ?? '');
+        }
+      } catch (e) {
+        print('Error al crear la orden sin imagen: $e');
+        Get.snackbar("Error", "No se pudo crear el pedido");
+      }
+    }
+  }
+
+  /*
+  //  v1
+  void createPayment(BuildContext context) async {
+    print('User ID: ${user.id}');
+ 
+    
+    Address a = Address.fromJson(GetStorage().read('address') ?? {});
+    //List<Product> products = Product.fromJsonList(GetStorage().read('shopping_bag'));
+
+    List<dynamic> productJson = GetStorage().read('shopping_bag') ?? [];
+    List<Product> products;
+
+    if (productJson is List<Product>) {
+      products = productJson;
+    } else {
+      products = productJson.map((item) => Product.fromJson(item)).toList();
+    }
 
     Order order = Order(
       idClient: user.id,
       idAddress: a.id,
-      products: products,
+      products: products
     );
 
+    ProgressDialog progressDialog = ProgressDialog(context: context);
+    progressDialog.show(max: 100, msg: "Registradno...");
+
+    print('ORDER ${order.toJson()}');
     print('ID DEL CLIENTE? ${order.idClient}');
     print('ID DEL DIRECCION? ${order.idAddress}');
-    print('PRODUCTOS? ${order.products}');
+    print('PRODUCTOS? ${order.products?.map((p) => p.toJson()).toList()}');
+    
 
     if (imageFile != null) {
-      print("Llego aqui? ${imageFile}");
       Stream stream = await ordersProvider.createWithImage(order, imageFile!);
-      print('steam? ${stream}');
       stream.listen((res) {
+        progressDialog.close();
         ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
 
-        print('Que respuesta es? ${responseApi.data}');
+        print('Que respuesta es? ${responseApi}');
+        print('Que data es? ${responseApi.data}');
 
         if (responseApi.success == true) {
           GetStorage().write('order', responseApi.data);
-          print('Y ESTO? ${responseApi.data}');
           //Get.toNamed('/client/payments/create');
         } else {
           Get.snackbar("Registro Fallido", responseApi.message ?? '');
@@ -95,33 +169,30 @@ class ClientPaymentsCreateController extends GetxController {
       }
     }
   }
-  
+  */
 
-void showAlertDialog(BuildContext context){
+  void showAlertDialog(BuildContext context) {
     Widget galleryButton = ElevatedButton(
-      onPressed: () {
-        Get.back();
-        selectImage(ImageSource.gallery);
-      }, 
-      child: Text('Galeria')
-      );
-      Widget cameraButton = ElevatedButton(
         onPressed: () {
-        Get.back();
-        selectImage(ImageSource.camera);
-      }, 
-        child: Text('Camara')
-        );
+          Get.back();
+          selectImage(ImageSource.gallery);
+        },
+        child: Text('Galeria'));
+    Widget cameraButton = ElevatedButton(
+        onPressed: () {
+          Get.back();
+          selectImage(ImageSource.camera);
+        },
+        child: Text('Camara'));
 
-        AlertDialog alertDialog = AlertDialog(
-          title: Text('Selecciona una opcion'),
-          actions: [
-            galleryButton,
-            cameraButton
-          ],
-        );
+    AlertDialog alertDialog = AlertDialog(
+      title: Text('Selecciona una opcion'),
+      actions: [galleryButton, cameraButton],
+    );
 
-        showDialog(context: context, builder: (BuildContext context){
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
           return alertDialog;
         });
   }
@@ -133,9 +204,5 @@ void showAlertDialog(BuildContext context){
       imageFile = File(image.path);
       update();
     }
-
   }
-
-
-
 }
