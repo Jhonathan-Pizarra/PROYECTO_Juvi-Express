@@ -45,8 +45,14 @@ class AdminOrdersDetailController extends GetxController{
   void getTotal() {
     total.value = 0.0;
     order.products!.forEach((product) {
-      total.value = total.value + (product.quantity! * product.price!);
+      //total.value = total.value + (product.quantity! * product.price!);
+      if (product.quantity == null || product.price == null) {
+      Fluttertoast.showToast(msg: 'Producto con cantidad o precio nulo', toastLength: Toast.LENGTH_SHORT);
+      } else {
+        total.value = total.value + (product.quantity! * product.price!);
+      }
     });
+    
   }
 
 

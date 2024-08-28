@@ -41,19 +41,7 @@ class ClientPaymentsCreatePage extends StatelessWidget {
                   _imageTextRow(context),
                   // Agrega aquí cualquier otro campo necesario para la transferencia
                 ],
-                RadioListTile(
-                  value: 'efectivo',
-                  groupValue: con.paymentMethod.value,
-                  onChanged: (value) => con.selectPaymentMethod(value),
-                  title: Text('Pago en Efectivo'),
-                ),
-                if (con.paymentMethod.value == 'efectivo') ...[
-                  TextField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: 'Monto disponible'),
-                    onChanged: (value) => con.cashAmount = value,
-                  ),
-                ],
+                
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () => con.processPayment(context),

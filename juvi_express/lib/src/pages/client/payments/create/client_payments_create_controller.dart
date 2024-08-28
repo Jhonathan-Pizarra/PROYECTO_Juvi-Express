@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import 'package:get_storage/get_storage.dart';
@@ -98,7 +99,8 @@ class ClientPaymentsCreateController extends GetxController {
         ResponseApi responseApi = await ordersProvider.create(order);
         if (responseApi.success == true) {
           GetStorage().write('order', responseApi.data);
-          //Get.toNamed('/client/payments/create');
+          Get.toNamed('/client/home');
+          Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
         } else {
           Get.snackbar("Registro Fallido", responseApi.message ?? '');
         }
