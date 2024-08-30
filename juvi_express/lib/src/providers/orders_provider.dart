@@ -143,9 +143,18 @@ class OrdersProvider extends GetConnect {
       return [];
     }
 
-    List<Order> orders = Order.fromJsonList(response.body);
-
+    List<Order> orders = [];
+    if (response.body != null && response.body is List) {
+      orders = Order.fromJsonList(response.body);
+    } else {
+      Get.snackbar('Error', 'No se pudo obtener los pedidos.');
+    }
+ 
     return orders;
+
+    //List<Order> orders = Order.fromJsonList(response.body);
+
+    //return orders;
   }
 
   Future<List<Order>> findByClientAndStatus(String idClient, String status) async {

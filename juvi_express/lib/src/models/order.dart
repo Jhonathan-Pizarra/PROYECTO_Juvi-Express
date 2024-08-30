@@ -86,6 +86,9 @@ class Order {
     "products": products?.map((product) => {
           'id': product.id,
           'quantity': product.quantity,
+          'name': product.name,
+          'image1': product.image1,
+          'price': product.price,  // Agregué para pasarlo aqui el price 
         }).toList(),
     "client": client?.toJson(),
     "delivery": delivery?.toJson(),

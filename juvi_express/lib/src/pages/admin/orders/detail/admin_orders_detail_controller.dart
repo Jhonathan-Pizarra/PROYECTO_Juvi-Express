@@ -1,6 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/models/order.dart';
+import 'package:juvi_express/src/models/product.dart';
 import 'package:juvi_express/src/models/response_api.dart';
 import 'package:juvi_express/src/models/user.dart';
 import 'package:juvi_express/src/providers/orders_provider.dart';
@@ -20,6 +21,7 @@ class AdminOrdersDetailController extends GetxController{
     print('Order: ${order.toJson()}');
     getDeliveryMen();
     getTotal();
+    
   } 
 
   void updateOrder() async {
@@ -42,18 +44,33 @@ class AdminOrdersDetailController extends GetxController{
     users.addAll(result);
   }
   
+  /*
   void getTotal() {
     total.value = 0.0;
     order.products!.forEach((product) {
-      //total.value = total.value + (product.quantity! * product.price!);
-      if (product.quantity == null || product.price == null) {
-      Fluttertoast.showToast(msg: 'Producto con cantidad o precio nulo', toastLength: Toast.LENGTH_SHORT);
-      } else {
-        total.value = total.value + (product.quantity! * product.price!);
-      }
+      total.value = total.value + (product.quantity! * product.price!);
+   
     });
     
+  }*/
+
+  void getTotal() {
+      total.value = 0.0;
+
+      order.products?.forEach((product) {
+        //print('PRODUCT QUATINTY? ${product.quantity}');
+        //print('PRODUCT PRICE? ${product.price}');
+        double quantity = (product.quantity ?? 0).toDouble(); // Convertir a double
+        double price = product.price ?? 0.0; // Si es null, asigna 0.0
+        total.value += quantity * price;
+      });
   }
 
 
 }
+
+   /*if (product.quantity == null || product.price == null) {
+      Fluttertoast.showToast(msg: 'Producto con cantidad o precio nulo', toastLength: Toast.LENGTH_SHORT);
+      } else {
+        total.value = total.value + (product.quantity! * product.price!);
+      }*/

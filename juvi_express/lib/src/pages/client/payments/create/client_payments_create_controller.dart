@@ -45,6 +45,7 @@ class ClientPaymentsCreateController extends GetxController {
       // Lógica para manejar el pago en efectivo
       print('Método de pago: Efectivo');
       print('Monto disponible: $cashAmount');
+      createPayment(context);
     }
   }
 
@@ -73,10 +74,11 @@ class ClientPaymentsCreateController extends GetxController {
     print('ID DEL DIRECCION? ${order.idAddress}');
     print('PRODUCTOS? ${order.products?.map((p) => p.toJson()).toList()}');
 
+    print('Imgen? ${imageFile}');
+
     if (imageFile != null) {
       try {
-        ResponseApi responseApi =
-            await ordersProvider.createWithImage(order, imageFile!);
+        ResponseApi responseApi = await ordersProvider.createWithImage(order, imageFile!);
 
         progressDialog.close();
 
@@ -85,7 +87,8 @@ class ClientPaymentsCreateController extends GetxController {
 
         if (responseApi.success == true) {
           GetStorage().write('order', responseApi.data);
-          //Get.toNamed('/client/payments/create');
+          Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
+          Get.toNamed('/client/home');
         } else {
           Get.snackbar("Registro Fallido", responseApi.message ?? '');
         }
