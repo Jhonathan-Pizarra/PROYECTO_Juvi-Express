@@ -16,7 +16,6 @@ class ClientOrdersDetailPage extends StatelessWidget {
         height: con.order.status == 'EN CAMINO'
             ? MediaQuery.of(context).size.height * 0.4
             : MediaQuery.of(context).size.height * 0.35,
-        // padding: EdgeInsets.only(top: 5),
         child: Column(
           children: [
             _dataDate(),
@@ -27,23 +26,22 @@ class ClientOrdersDetailPage extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.teal,
+        iconTheme: IconThemeData(color: Colors.white),
         title: Text(
-          'Order #${con.order.id}',
-          style: TextStyle(
-            color: Colors.black
-          ),
+          'Comanda #${con.order.id}',
+          style: TextStyle(color: Colors.white),
         ),
       ),
       body: con.order.products!.isNotEmpty
-      ? ListView(
-        children: con.order.products!.map((Product product) {
-          return _cardProduct(product);
-        }).toList(),
-      )
-      : Center(
-          child: NoDataWidget(text: 'No hay ningun producto agregado aun')
-      ),
+        ? ListView(
+            children: con.order.products!.map((Product product) {
+              return _cardProduct(product);
+            }).toList(),
+          )
+        : Center(
+            child: NoDataWidget(text: 'No hay ningún producto agregado aún'),
+          ),
     ));
   }
 
@@ -51,7 +49,7 @@ class ClientOrdersDetailPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: Text('Repartidor y Telefono'),
+        title: Text('Repartidor y Teléfono', style: TextStyle(color: Colors.teal)),
         subtitle: Text('${con.order.delivery?.name ?? 'No Asignado'} ${con.order.delivery?.lastname ?? ''} - ${con.order.delivery?.phone ?? '###'}'),
         trailing: Icon(Icons.person),
       ),
@@ -62,7 +60,7 @@ class ClientOrdersDetailPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: Text('Direccion de entrega'),
+        title: Text('Dirección de entrega', style: TextStyle(color: Colors.teal)),
         subtitle: Text(con.order.address?.address ?? ''),
         trailing: Icon(Icons.location_on),
       ),
@@ -73,7 +71,7 @@ class ClientOrdersDetailPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: Text('Fecha del pedido'),
+        title: Text('Fecha del pedido', style: TextStyle(color: Colors.teal)),
         subtitle: Text('${RelativeTimeUtil.getRelativeTime(con.order.timestamp ?? 0)}'),
         trailing: Icon(Icons.timer),
       ),
@@ -82,31 +80,40 @@ class ClientOrdersDetailPage extends StatelessWidget {
 
   Widget _cardProduct(Product product) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 7),
-      child: Row(
-        children: [
-          _imageProduct(product),
-          SizedBox(width: 15),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+      child: Card(
+        elevation: 3.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
             children: [
-              Text(
-                product.name ?? '',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold
-                ),
-              ),
-              SizedBox(height: 7),
-              Text(
-                'Cantidad: ${product.quantity}',
-                style: TextStyle(
-                    // fontWeight: FontWeight.bold
-                  fontSize: 13
+              _imageProduct(product),
+              SizedBox(width: 15),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product.name ?? '',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Cantidad: ${product.quantity}',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -115,7 +122,6 @@ class ClientOrdersDetailPage extends StatelessWidget {
     return Container(
       height: 50,
       width: 50,
-      // padding: EdgeInsets.all(2),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: FadeInImage(
@@ -124,7 +130,7 @@ class ClientOrdersDetailPage extends StatelessWidget {
               : AssetImage('assets/img/no-image.png') as ImageProvider,
           fit: BoxFit.cover,
           fadeInDuration: Duration(milliseconds: 50),
-          placeholder:  AssetImage('assets/img/no-image.png'),
+          placeholder: AssetImage('assets/img/no-image.png'),
         ),
       ),
     );
@@ -144,8 +150,9 @@ class ClientOrdersDetailPage extends StatelessWidget {
               Text(
                 'TOTAL: \$${con.total.value}',
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                  color: Colors.teal,
                 ),
               ),
               con.order.status == 'EN CAMINO'
@@ -153,8 +160,7 @@ class ClientOrdersDetailPage extends StatelessWidget {
                 : Container()
             ],
           ),
-        )
-
+        ),
       ],
     );
   }
@@ -163,18 +169,16 @@ class ClientOrdersDetailPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 30),
       child: ElevatedButton(
-          onPressed: () => con.goToOrderMap(),
-          style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.all(15)
-          ),
-          child: Text(
-            'RASTREAR PEDIDO',
-            style: TextStyle(
-                color: Colors.black
-            ),
-          )
+        onPressed: () => con.goToOrderMap(),
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(12),
+          backgroundColor: Colors.amber,
+        ),
+        child: Text(
+          'RASTREAR PEDIDO',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
     );
   }
-
 }

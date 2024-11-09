@@ -105,12 +105,32 @@ class ClientAddressListController extends GetxController {
       }
   }*/
 
-  
+  /*
   void goToPayments() async {
       
     Get.toNamed('/client/payments/create');
       
+  }*/
+
+  void goToPayments() async {
+  // Verifica si se ha seleccionado una dirección
+  if (radioValue.value < 0 || radioValue.value >= address.length) {
+    // Muestra un mensaje de error si no hay dirección seleccionada
+    Fluttertoast.showToast(
+      msg: 'Por favor, elije una dirección antes de continuar.',
+      toastLength: Toast.LENGTH_LONG,
+    );
+    return; // Sale de la función si no se ha seleccionado una dirección
   }
+
+  // Guardar la dirección seleccionada en GetStorage
+  Address selectedAddress = address[radioValue.value];
+  GetStorage().write('address', selectedAddress.toJson());
+
+  // Redirigir a la página de pagos
+  Get.toNamed('/client/payments/create');
+}
+
   
     
     

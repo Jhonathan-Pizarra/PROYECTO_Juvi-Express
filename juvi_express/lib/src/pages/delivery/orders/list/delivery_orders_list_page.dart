@@ -6,122 +6,111 @@ import 'package:juvi_express/src/utils/relative_time_util.dart';
 import 'package:juvi_express/src/widgets/no_data_widget.dart';
 
 class DeliveryOrdersListPage extends StatelessWidget {
-
   DeliveryOrdersListController con = Get.put(DeliveryOrdersListController());
-  
+
   @override
   Widget build(BuildContext context) {
-
     return Obx(() => DefaultTabController(
       length: con.status.length,
       child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(50),
-            child: AppBar(
-              bottom: TabBar(
-                isScrollable: true,
-                indicatorColor: Colors.amber,
-                labelColor: Colors.black,
-                unselectedLabelColor: Colors.grey[600],
-                tabs: List<Widget>.generate(con.status.length, (index) {
-                  return Tab(
-                    child: Text(con.status[index]),
-                  );
-                }),
-              ),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60),
+          child: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 2,
+            bottom: TabBar(
+              isScrollable: true,
+              indicatorColor: Colors.teal,
+              labelColor: Colors.teal,
+              unselectedLabelColor: Colors.grey[600],
+              tabs: List<Widget>.generate(con.status.length, (index) {
+                return Tab(
+                  child: Text(
+                    con.status[index],
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                );
+              }),
             ),
           ),
-          body: TabBarView(
-            children: con.status.map((String status) {
-              return FutureBuilder(
-                  future: con.getOrders(status),
-                  builder: (context, AsyncSnapshot<List<Order>> snapshot) {
-                    if (snapshot.hasData) {
-                      if (snapshot.data!.length > 0) {
-                        return ListView.builder(
-                            itemCount: snapshot.data?.length ?? 0,
-                            itemBuilder: (_, index) {
-                              return _cardOrder(snapshot.data![index]);
-                            }
-                        );
-                      }
-                      else {
-                        return Center(child: NoDataWidget(text: 'No hay ordenes'));
-                      }
-                    }
-                    else {
-                      return Center(child: NoDataWidget(text: 'No hay ordenes'));
-                    }
+        ),
+        body: TabBarView(
+          children: con.status.map((String status) {
+            return FutureBuilder(
+              future: con.getOrders(status),
+              builder: (context, AsyncSnapshot<List<Order>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasData) {
+                  if (snapshot.data!.length > 0) {
+                    return ListView.builder(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      itemCount: snapshot.data?.length ?? 0,
+                      itemBuilder: (_, index) {
+                        return _cardOrder(snapshot.data![index], context);
+                      },
+                    );
+                  } else {
+                    return Center(child: NoDataWidget(text: 'No hay pedidos'));
                   }
-              );
-            }).toList(),
-          )
+                } else {
+                  return Center(child: NoDataWidget(text: 'No hay pedidos'));
+                }
+              },
+            );
+          }).toList(),
+        ),
       ),
     ));
   }
 
-  Widget _cardOrder(Order order) {
+  Widget _cardOrder(Order order, BuildContext context) {
     return GestureDetector(
       onTap: () => con.goToOrderDetail(order),
       child: Container(
-        height: 150,
-        margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Card(
-          elevation: 3.0,
+          elevation: 4.0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15)
+            borderRadius: BorderRadius.circular(15),
           ),
-          child: Stack(
+          child: Row(
             children: [
-              Container(
-                height: 30,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
-                  )
-                ),
-                child: Container(
-                  margin: EdgeInsets.only(top: 5),
-                  child: Text(
-                    'Order #${order.id}',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                      color: Colors.amber
-                    ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 9.0, vertical: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Comanda #${order.id}',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.teal),
+                      ),
+                      SizedBox(height: 4),
+                      Text('Pedido: ${RelativeTimeUtil.getRelativeTime(order.timestamp ?? 0)}', style: TextStyle(fontSize: 14)),
+                      SizedBox(height: 4),
+                      Text('Cliente: ${order.client?.name ?? ''} ${order.client?.lastname ?? ''}', style: TextStyle(fontSize: 14)),
+                      SizedBox(height: 4),
+                      Text('Entregar en: ${order.address?.address ?? ''}', style: TextStyle(fontSize: 14)),
+                      SizedBox(height: 4),
+                      Text('Tipo de pago: ${order.image != null ? 'Transferido' : 'Efectivo'}', style: TextStyle(fontSize: 14)),
+                    ],
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 15, left: 20, right: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.only(top: 5),
-                        alignment: Alignment.centerLeft,
-                        child: Text('Pedido: ${ RelativeTimeUtil.getRelativeTime(order.timestamp ?? 0)}')
+              GestureDetector(
+                onTap: () => _showExpandedImage(context, order.image ?? 'https://cdn-icons-png.flaticon.com/512/2331/2331876.png'),
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: NetworkImage(order.image ?? 'https://cdn-icons-png.flaticon.com/512/2331/2331876.png'),
+                      fit: BoxFit.cover,
                     ),
-                    Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.only(top: 5),
-                        alignment: Alignment.centerLeft,
-                        child: Text('Cliente: ${order.client?.name ?? ''} ${order.client?.lastname ?? ''}'),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.only(top: 5),
-                      alignment: Alignment.centerLeft,
-                      child: Text('Entregar en: ${order.address?.address ?? ''}'),
-                    ),
-
-
-                  ],
+                  ),
                 ),
               ),
             ],
@@ -131,4 +120,36 @@ class DeliveryOrdersListPage extends StatelessWidget {
     );
   }
 
+  void _showExpandedImage(BuildContext context, String imageUrl) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: EdgeInsets.all(5),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Image.network(
+                      imageUrl,
+                      fit: BoxFit.contain,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.height * 0.9,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 }

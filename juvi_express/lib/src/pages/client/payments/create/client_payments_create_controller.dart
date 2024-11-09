@@ -10,6 +10,7 @@ import 'package:juvi_express/src/models/order.dart';
 import 'package:juvi_express/src/models/product.dart';
 import 'package:juvi_express/src/models/response_api.dart';
 import 'package:juvi_express/src/models/user.dart';
+import 'package:juvi_express/src/pages/client/home/client_home_page.dart';
 import 'package:juvi_express/src/providers/address_provider.dart';
 import 'package:juvi_express/src/providers/orders_provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
@@ -67,7 +68,7 @@ class ClientPaymentsCreateController extends GetxController {
     Order order = Order(idClient: user.id, idAddress: a.id, products: products);
 
     ProgressDialog progressDialog = ProgressDialog(context: context);
-    progressDialog.show(max: 100, msg: "Registradno...");
+    progressDialog.show(max: 100, msg: "Registrando...");
 
     print('ORDER ${order.toJson()}');
     print('ID DEL CLIENTE? ${order.idClient}');
@@ -88,7 +89,11 @@ class ClientPaymentsCreateController extends GetxController {
         if (responseApi.success == true) {
           GetStorage().write('order', responseApi.data);
           Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
-          Get.toNamed('/client/home');
+          //update();
+          //Get.toNamed('/client/home');
+          Get.offAll(ClientHomePage());
+          //Get.offNamed('/client/home');
+          //Get.toNamed('/client/products/list');
         } else {
           Get.snackbar("Registro Fallido", responseApi.message ?? '');
         }

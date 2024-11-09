@@ -1,69 +1,105 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart'; // Para formatear la fecha
-import 'package:juvi_express/src/pages/client/orders/create/client_orders_create_controller.dart';
+import 'package:intl/intl.dart';
 import 'package:juvi_express/src/pages/client/payments/create/client_payments_create_controller.dart';
-import 'package:path/path.dart';
 
 class ClientPaymentsCreatePage extends StatelessWidget {
-  ClientPaymentsCreateController con = Get.put(ClientPaymentsCreateController());
+  final ClientPaymentsCreateController con = Get.put(ClientPaymentsCreateController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Método de Pago'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Seleccione el método de pago:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Obx(() => Column(
-              children: [
-                RadioListTile(
-                  value: 'transferencia',
-                  groupValue: con.paymentMethod.value,
-                  onChanged: (value) => con.selectPaymentMethod(value),
-                  title: Text('Transferencia Bancaria'),
-                ),
-                if (con.paymentMethod.value == 'transferencia') ...[
-                  SizedBox(height: 20),
-                  _buildBankAccountInfo(),
-                  Text(
-                     'Sube el comprobante de transferencia',
-                  ),
-                  _imageTextRow(context),
-                  // Agrega aquí cualquier otro campo necesario para la transferencia
-                ],
-                RadioListTile(
-                  value: 'efectivo',
-                  groupValue: con.paymentMethod.value,
-                  onChanged: (value) => con.selectPaymentMethod(value),
-                  title: Text('Pago en efectivo'),
-                ),
-                if (con.paymentMethod.value == 'efectivo') ...[
-                  TextField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: 'Monto disponible'),
-                    onChanged: (value) => con.cashAmount = value,
-                  ),
-                ],
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () => con.processPayment(context),
-                  child: Text('Procesar Pago'),
-                ),
-              ],
-            )),
-          ],
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Colors.teal,
+        title: Text(
+          'Método de pago',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Seleccione el método de pago:',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 20),
+              Obx(() => Column(
+                children: [
+                  _buildRadioTile(
+                    'Transferencia Bancaria',
+                    'transferencia',
+                    context,
+                  ),
+                  if (con.paymentMethod.value == 'transferencia') ...[
+                    SizedBox(height: 20),
+                    _buildBankAccountInfo(),
+                    SizedBox(height: 20),
+                    Text(
+                      'Sube el comprobante de transferencia',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(height: 10),
+                    _imageTextRow(context),
+                  ],
+                  _buildRadioTile(
+                    'Pago en efectivo',
+                    'efectivo',
+                    context,
+                  ),
+                  if (con.paymentMethod.value == 'efectivo') ...[
+                    SizedBox(height: 10),
+                    TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: 'Monto disponible',
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                      ),
+                      onChanged: (value) => con.cashAmount = value,
+                    ),
+                  ],
+                  SizedBox(height: 40),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () => con.processPayment(context),
+                      child: Text(
+                        'Procesar Pago',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal, // Color de fondo teal
+                        padding: EdgeInsets.symmetric(vertical: 15), // Aumenta el padding vertical
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30), // Bordes redondeados
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRadioTile(String title, String value, BuildContext context) {
+    return RadioListTile(
+      value: value,
+      groupValue: con.paymentMethod.value,
+      onChanged: (value) => con.selectPaymentMethod(value),
+      title: Text(
+        title,
+        style: TextStyle(fontSize: 16),
+      ),
+      activeColor: Colors.teal, // Color del radio cuando está seleccionado
     );
   }
 
@@ -84,64 +120,29 @@ class ClientPaymentsCreatePage extends StatelessWidget {
         Text('Tipo de Cuenta: Ahorros'),
         Text('Cédula: 1726368626'),
         Text('Fecha: $currentDate'),
-        SizedBox(height: 20),
       ],
     );
   }
 
-
   Widget _imageTextRow(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        margin: EdgeInsets.only(top: 20),
-        //padding: EdgeInsets.symmetric(horizontal: 2), // Agrega padding horizontal
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _imagePayment(context),
-            //_imageCover(),
-            //SizedBox(width: 1), // Espacio entre la imagen y el texto
-          ],
-        ),
-      ),
-    );
-  }
-
-
-
-
-  Widget _imagePayment(BuildContext context){
     return Container(
-      margin: EdgeInsets.only(top: 30),
-      alignment: Alignment.topCenter,
-      child: GestureDetector(
-        onTap: () => con.showAlertDialog(context),
-        child: GetBuilder<ClientPaymentsCreateController>(
-          builder: (value) => CircleAvatar(
-          backgroundImage: con.imageFile != null ?
-          FileImage(con.imageFile!)
-          : AssetImage('assets/img/upload-image2.png') as ImageProvider,
-          radius: 60,
-          backgroundColor: Colors.white,
-          ),
-        )
+      margin: EdgeInsets.only(top: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _imagePayment(context),
+        ],
       ),
-
     );
   }
-  
 
-  /*
   Widget _imagePayment(BuildContext context) {
-  return Container(
-    margin: EdgeInsets.only(top: 30),
-    alignment: Alignment.topCenter,
-    child: GestureDetector(
+    return GestureDetector(
       onTap: () => con.showAlertDialog(context),
       child: GetBuilder<ClientPaymentsCreateController>(
         builder: (value) => Container(
-          width: 120, // Ancho del contenedor (el doble del radio anterior)
-          height: 120, // Altura del contenedor (el doble del radio anterior)
+          width: 120,
+          height: 120,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: con.imageFile != null
@@ -149,17 +150,12 @@ class ClientPaymentsCreatePage extends StatelessWidget {
                   : AssetImage('assets/img/upload-image2.png') as ImageProvider,
               fit: BoxFit.cover,
             ),
-            borderRadius: BorderRadius.circular(1), // Esquinas redondeadas
+            borderRadius: BorderRadius.circular(10), // Cambiar a cuadrado
             color: Colors.white,
+            border: Border.all(color: Colors.grey.shade300), // Borde para destacar la imagen
           ),
         ),
       ),
-    ),
-  );
-}*/
-
-
-  
-
-
+    );
+  }
 }

@@ -64,7 +64,7 @@ class ClientProductsDetailController extends GetxController{
 
     }
     else {
-      Fluttertoast.showToast(msg: 'Debes seleccionar al menos un item para agregar');
+      Fluttertoast.showToast(msg: 'Debes seleccionar al menos un prodcuto para agregar');
     }
   }
 

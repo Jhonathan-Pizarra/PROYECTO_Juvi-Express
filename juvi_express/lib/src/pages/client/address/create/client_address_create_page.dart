@@ -3,162 +3,117 @@ import 'package:get/get.dart';
 import 'package:juvi_express/src/pages/client/address/create/client_address_create_controller.dart';
 
 class ClientAddressCreatePage extends StatelessWidget {
-
-  ClientAddressCreateController con = Get.put(ClientAddressCreateController());
-
+  final ClientAddressCreateController con = Get.put(ClientAddressCreateController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        // POSICIONAR ELEMENTOS UNO ENCIMA DEL OTRO
-        children: [
-          _backgroundCover(context),
-          _boxForm(context),
-          _textNewAddress(context),
-          _iconBack()
-        ],
-      ),
-    );
-  }
-
-  Widget _iconBack() {
-    return SafeArea(
-      child: Container(
-        margin: EdgeInsets.only(left: 15),
-        child: IconButton(
-            onPressed: () => Get.back(),
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 30,
-            )),
-      ),
-    );
-  }
-
-  Widget _backgroundCover(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.35,
-      color: Colors.amber,
-    );
-  }
-
-  Widget _boxForm(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.45,
-      margin: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * 0.3, left: 50, right: 50),
-      decoration: BoxDecoration(color: Colors.white, boxShadow: <BoxShadow>[
-        BoxShadow(
-            color: Colors.black54, blurRadius: 15, offset: Offset(0, 0.75))
-      ]),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            _textYourInfo(),
-            _textFieldAddress(),
-            _textFieldNeighborhood(),
-            _textFieldRefPoint(context),
-            SizedBox(height: 20),
-            _buttonCreate(context)
-          ],
+      appBar: AppBar(
+        backgroundColor: Colors.teal,
+        iconTheme: IconThemeData(
+            color: Colors.white
+        ),
+        title: Text(
+          'Nueva Dirección',
+          style: TextStyle(
+              color: Colors.white
+          ),
         ),
       ),
-    );
-  }
-
-  Widget _textFieldAddress() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
-      child: TextField(
-        controller: con.addressController,
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-            hintText: 'Direccion', prefixIcon: Icon(Icons.location_on)),
-      ),
-    );
-  }
-
-  Widget _textFieldNeighborhood() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
-      child: TextField(
-        controller: con.neighborhoodController,
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-            hintText: 'Barrio', prefixIcon: Icon(Icons.location_city)),
-      ),
-    );
-  }
-
-  Widget _textFieldRefPoint(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
-      child: TextField(
-        onTap: () => con.openGoogleMaps(context),
-        controller: con.refPointController,
-        autofocus: false,
-        focusNode: AlwaysDisabledFocusNode(),
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-            hintText: 'Punto de referencia', prefixIcon: Icon(Icons.map)),
-      ),
-    );
-  }
-
-  Widget _buttonCreate(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-      child: ElevatedButton(
-          onPressed: () {
-            con.createAddress();
-          },
-          style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 15)),
-          child: Text(
-            'CREAR DIRECCION',
-            style: TextStyle(color: Colors.black),
-          )),
-    );
-  }
-
-  Widget _textNewAddress(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        margin: EdgeInsets.only(top: 15),
-        alignment: Alignment.topCenter,
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(Icons.location_on, size: 100),
-            Text(
-              'NUEVA DIRECCION',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+            _buildTextField(
+              controller: con.addressController,
+              labelText: 'Dirección',
+              icon: Icons.location_on,
             ),
+            SizedBox(height: 16),
+            _buildTextField(
+              controller: con.neighborhoodController,
+              labelText: 'Barrio',
+              icon: Icons.location_city,
+            ),
+            SizedBox(height: 16),
+            _buildTextField(
+              controller: con.refPointController,
+              labelText: 'Punto de referencia',
+              icon: Icons.map,
+              onTap: () => con.openGoogleMaps(context),
+              focusNode: AlwaysDisabledFocusNode(),
+            ),
+            SizedBox(height: 24),
+            _buildSubmitButton(),
           ],
         ),
       ),
     );
   }
 
-  Widget _textYourInfo() {
-    return Container(
-      margin: EdgeInsets.only(top: 40, bottom: 30),
-      child: Text(
-        'INGRESA ESTA INFORMACION',
-        style: TextStyle(
-          color: Colors.black,
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String labelText,
+    required IconData icon,
+    VoidCallback? onTap,
+    FocusNode? focusNode,
+  }) {
+    return TextField(
+      controller: controller,
+      onTap: onTap,
+      focusNode: focusNode,
+      decoration: InputDecoration(
+        labelText: labelText,
+        prefixIcon: Icon(icon, color: Colors.teal), // Icono en teal
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Colors.grey.shade300),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Colors.amber),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Colors.grey.shade300),
+        ),
+      ),
+      cursorColor: Colors.teal,
+    );
+  }
+
+  Widget _buildSubmitButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () {
+          con.createAddress();
+        },
+        style: ElevatedButton.styleFrom(
+          //primary: Colors.teal, // Botón en teal
+          //onPrimary: Colors.amber, // Texto del botón en amber
+          padding: EdgeInsets.symmetric(vertical: 15),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          backgroundColor: Colors.amber
+        ),
+        child: Text(
+          'Crear Dirección',
+          style: TextStyle(
+            fontSize: 16,
+            //fontWeight: FontWeight.bold,
+            color: Colors.black
+          ),
         ),
       ),
     );
-
   }
 }
 
-//Clase par ala refrenecia
+// Clase para la referencia
 class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;
 }
-

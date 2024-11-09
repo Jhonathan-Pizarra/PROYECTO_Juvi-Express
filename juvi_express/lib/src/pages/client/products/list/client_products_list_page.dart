@@ -15,17 +15,20 @@ class ClientProductsListPage extends StatelessWidget {
       length: con.categories.length,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100),
+          preferredSize: Size.fromHeight(120), // Ajustar altura del AppBar
           child: AppBar(
-            flexibleSpace: Wrap(
-              direction: Axis.horizontal,
-              children: [
-                _searchBarWithIcons(context),
-              ]
+            flexibleSpace: Padding(
+              padding: EdgeInsets.only(top: 16), // Espaciado superior
+              child: Wrap(
+                direction: Axis.horizontal,
+                children: [
+                  _searchBarWithIcons(context),
+                ]
+              ),
             ),
             bottom: TabBar(
               isScrollable: true,
-              indicatorColor: Colors.amber,
+              indicatorColor: Colors.teal,
               labelColor: Colors.black,
               unselectedLabelColor: Colors.grey[400],
               tabs: List<Widget>.generate(con.categories.length, (index) {
@@ -61,13 +64,17 @@ class ClientProductsListPage extends StatelessWidget {
                         },
                       );
                     } else {
-                      return NoDataWidget(
-                        text: 'No hay productos',
+                      return Center( // Centrar el NoDataWidget
+                        child: NoDataWidget(
+                          text: 'No hay productos',
+                        ),
                       );
                     }
                   } else {
-                    return NoDataWidget(
-                      text: 'No hay productos',
+                    return Center( // Centrar el NoDataWidget
+                      child: NoDataWidget(
+                        text: 'No hay productos',
+                      ),
                     );
                   }
                 }
@@ -100,7 +107,11 @@ class ClientProductsListPage extends StatelessWidget {
                   maxLines: 2,
                   ),
                   Text(
-                    '\$${product.price.toString()}'
+                    '\$${product.price.toString()}',
+                    style: TextStyle(
+                      color: Colors.teal, // Cambiar color del precio
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ],
               ),
@@ -127,6 +138,54 @@ class ClientProductsListPage extends StatelessWidget {
     );
   }
 
+  Widget _iconShoppingBag() {
+  return SafeArea(
+    child: Container(
+      margin: EdgeInsets.only(left: 10),
+      child: con.items.value > 0
+      ? Stack(
+        children: [
+          IconButton(
+            onPressed: () => con.goToOrderCreate(),
+            icon: Icon(
+              Icons.shopping_bag_outlined,
+              size: 33,
+            )
+          ),
+          Positioned(
+            right: 4,
+            top: 12,
+            child: Container(
+              width: 16,
+              height: 16,
+              alignment: Alignment.center,
+              child: Text(
+                '${con.items.value}',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.white, // Cambiar el color del número si es necesario
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.red, // Fondo rojo para la burbujita
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+              ),
+            ),
+          )
+        ],
+      )
+      : IconButton(
+          onPressed: () => con.goToOrderCreate(),
+          icon: Icon(
+            Icons.shopping_bag_outlined,
+            size: 30,
+          )
+      ),
+    ),
+  );
+}
+
+/*
   Widget _iconShoppingBag() {
     return SafeArea(
       child: Container(
@@ -172,6 +231,9 @@ class ClientProductsListPage extends StatelessWidget {
       ),
     );
   }
+*/
+
+  
 
   Widget _searchBarWithIcons(BuildContext context){
     return SafeArea(
@@ -179,12 +241,13 @@ class ClientProductsListPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           children: [
-            Icon(Icons.menu, color: Colors.grey), // Icono en la parte izquierda
-            SizedBox(width: 10),
+            //_iconOrders(),
+            //Icon(Icons.menu, color: Colors.grey), // Icono en la parte izquierda
+            SizedBox(width: 5),
             Expanded(
               child: _textFieldSearch(context),
             ),
-            SizedBox(width: 10),
+           
             _iconShoppingBag() // Icono de la bolsa de compras en la parte derecha
           ],
         ),

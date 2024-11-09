@@ -137,9 +137,16 @@ class ClientAddressMapController extends GetxController {
   }
 
 
+  /*
   void onMapCreate(GoogleMapController controller){
     mapController.complete(controller);
+  }*/
+
+  void onMapCreate(GoogleMapController controller) {
+  if (!mapController.isCompleted) {
+    mapController.complete(controller);
   }
+}
 
 
   

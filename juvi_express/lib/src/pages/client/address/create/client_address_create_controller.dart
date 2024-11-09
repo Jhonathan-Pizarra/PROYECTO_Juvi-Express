@@ -22,7 +22,7 @@ class ClientAddressCreateController extends GetxController{
   AddressProvider addressProvider = AddressProvider();
   ClientAddressListController clientAddressListController = Get.find();
 
-
+  /*
   void openGoogleMaps(BuildContext context) async {
 
     Map<String, dynamic> refPointMap = await showMaterialModalBottomSheet(
@@ -38,8 +38,66 @@ class ClientAddressCreateController extends GetxController{
     latRefPoint = refPointMap['lat'];
     lngRefPoint = refPointMap['lng'];
     
+  }*/
+
+  void openGoogleMaps(BuildContext context) async {
+  Map<String, dynamic>? refPointMap = await showMaterialModalBottomSheet(
+      context: context, 
+      builder: (context) => ClientAddressMapPage(),
+      isDismissible: false,
+      enableDrag: false
+    );
+
+    if (refPointMap != null) {
+      print('ref point map ${refPointMap}');
+      refPointController.text = refPointMap['address'] ?? '';
+      latRefPoint = refPointMap['lat'] ?? 0.0;
+      lngRefPoint = refPointMap['lng'] ?? 0.0;
+    } else {
+      print('No data returned from bottom sheet.');
+      // Maneja el caso donde refPointMap es null, si es necesario
+    }
   }
 
+  void createAddress() async {
+  String addressName = addressController.text;
+  String neighborhood = neighborhoodController.text;
+
+  if (isValidForm(addressName, neighborhood)) {
+    Address address = Address(
+      address: addressName,
+      neighborhood: neighborhood,
+      lat: latRefPoint,
+      lng: lngRefPoint,
+      idUser: user.id,
+    );
+
+    ResponseApi? responseApi = await addressProvider.create(address);
+
+    if (responseApi != null) {
+      Fluttertoast.showToast(
+          msg: responseApi.message ?? '',
+          toastLength: Toast.LENGTH_LONG,
+      );
+
+      if (responseApi.success == true) {
+        address.id = responseApi.data;
+        GetStorage().write('address', address.toJson());
+
+        clientAddressListController.update();
+
+        Get.back();
+      }
+    } else {
+      Fluttertoast.showToast(
+          msg: 'Error: No se pudo crear la dirección',
+          toastLength: Toast.LENGTH_LONG,
+      );
+    }
+  }
+}
+
+  /*
   void createAddress() async {
     String addressName = addressController.text;
     String neighborhood = neighborhoodController.text;
@@ -66,7 +124,7 @@ class ClientAddressCreateController extends GetxController{
       }
 
     }
-  }
+  }*/
 
   bool isValidForm(String address, String neighborhood) {
     if (address.isEmpty){

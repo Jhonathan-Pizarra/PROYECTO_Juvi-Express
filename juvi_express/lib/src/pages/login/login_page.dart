@@ -139,7 +139,7 @@ class LoginPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 40, bottom: 10),
       child: Text(
-        "Iniciar Sesion",
+        "Iniciar Sesión",
         style: TextStyle(
           fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black,
         )
@@ -250,7 +250,7 @@ class LoginPage extends StatelessWidget {
           backgroundColor: Colors.amber,
         ),
         child: Text(
-          "Login",
+          "Ingresar",
           style: TextStyle(
             color: Colors.black,
           ),

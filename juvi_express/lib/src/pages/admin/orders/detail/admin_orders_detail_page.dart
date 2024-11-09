@@ -15,7 +15,7 @@ class AdminOrdersDetailPage extends StatelessWidget {
       bottomNavigationBar: Container(
         color: Color.fromRGBO(245, 245, 245, 1),
         height: con.order.status == 'PAGADO'
-            ? MediaQuery.of(context).size.height * 0.50
+            ? MediaQuery.of(context).size.height * 0.54
             : MediaQuery.of(context).size.height * 0.45,
         // padding: EdgeInsets.only(top: 5),
         child: Column(
@@ -29,11 +29,11 @@ class AdminOrdersDetailPage extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        title: Text('Order #${con.order.id}',
-        style: TextStyle(
-            color: Colors.black
-          ),
+        backgroundColor: Colors.teal,
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text(
+          'Orden #${con.order.id}',
+          style: TextStyle(color: Colors.white),
         ),
       ),
       body: con.order.products!.isNotEmpty
@@ -49,6 +49,7 @@ class AdminOrdersDetailPage extends StatelessWidget {
   }
 
 
+  /*
   Widget _cardProduct(Product product) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 7),
@@ -76,6 +77,48 @@ class AdminOrdersDetailPage extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }*/
+
+  Widget _cardProduct(Product product) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+      child: Card(
+        elevation: 3.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            children: [
+              _imageProduct(product),
+              SizedBox(width: 15),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product.name ?? '',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Cantidad: ${product.quantity}',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -114,6 +157,7 @@ class AdminOrdersDetailPage extends StatelessWidget {
             'ASIGNAR REPARTIDOR',
             style: TextStyle(
               fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.bold,
               color: Colors.amber
             ),
           ),
@@ -131,17 +175,19 @@ class AdminOrdersDetailPage extends StatelessWidget {
                 'TOTAL: \$${con.total.value}',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 17
+                    fontSize: 17,
+                    color: Colors.teal
                 ),
               ),
               con.order.status == 'PAGADO'
               ? Container(
-                margin: EdgeInsets.symmetric(horizontal: 30),
+                margin: EdgeInsets.symmetric(horizontal: 24),
                 child: ElevatedButton(
                     //onPressed: () {},
                     onPressed: () => con.updateOrder(),
                     style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(15)
+                        padding: EdgeInsets.all(12),
+                        backgroundColor: Colors.amber
                     ),
                     child: Text(
                       'DESPACHAR ORDEN',
@@ -165,7 +211,9 @@ class AdminOrdersDetailPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: Text('Cliente y Telefono'),
+        title: Text('Cliente y Telefono',
+        style: TextStyle(color: Colors.teal),
+        ),
         subtitle: Text('${con.order.client?.name ?? ''} ${con.order.client?.lastname ?? ''} - ${con.order.client?.phone ?? ''}'),
         trailing: Icon(Icons.person),
       ),
@@ -176,7 +224,9 @@ class AdminOrdersDetailPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: Text('Direccion de entrega'),
+        title: Text('Direccion de entrega',
+        style: TextStyle(color: Colors.teal),
+        ),
         subtitle: Text(con.order.address?.address ?? ''),
         trailing: Icon(Icons.location_on),
       ),
@@ -187,7 +237,9 @@ class AdminOrdersDetailPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: Text('Fecha del pedido'),
+        title: Text('Fecha del pedido',
+        style: TextStyle(color: Colors.teal),
+        ),
         subtitle: Text('${RelativeTimeUtil.getRelativeTime(con.order.timestamp ?? 0)}'),
         trailing: Icon(Icons.timer),
       ),
@@ -200,9 +252,12 @@ class AdminOrdersDetailPage extends StatelessWidget {
     ? Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: Text('Repartidor asignado'),
+        title: Text('Repartidor asignado',
+        style: TextStyle(color: Colors.teal),
+        ),
         subtitle: Text('${con.order.delivery?.name ?? ''} ${con.order.delivery?.lastname ?? ''} - ${con.order.delivery?.phone ?? ''}'),
         trailing: Icon(Icons.delivery_dining),
+        
       ),
     )
     : Container();

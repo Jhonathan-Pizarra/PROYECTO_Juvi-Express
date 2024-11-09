@@ -85,8 +85,24 @@ class ClientOrdersCreateController extends GetxController {
     });
   }
 
+  /*
   void goToAddressList() {
     Get.toNamed('/client/address/list');
+  }*/
+
+  void goToAddressList() {
+  // Verifica si hay productos seleccionados y si el total es mayor que cero
+  if (selectedProducts.isNotEmpty && total.value > 0) {
+    Get.toNamed('/client/address/list');
+  } else {
+    // Muestra un mensaje de error o advertencia
+    Get.snackbar(
+      'Carrito vacío',
+      'Debe agregar productos al carrito antes de continuar.',
+      snackPosition: SnackPosition.BOTTOM,
+    );
   }
+}
+
   
 }

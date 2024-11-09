@@ -10,10 +10,11 @@ class ClientAddressMapPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
           appBar: AppBar(
-            iconTheme: IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.white),
+            backgroundColor: Colors.teal,
             title: Text(
               'Ubica tu direccion en el mapa',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.white),
             ),
           ),
           body: Stack(
@@ -31,7 +32,7 @@ class ClientAddressMapPage extends StatelessWidget {
     return Container(
       alignment: Alignment.bottomCenter,
       width: double.infinity,
-      margin: EdgeInsets.only(bottom: 30),
+      margin: EdgeInsets.only(bottom: 60),
       child: ElevatedButton(
         onPressed: () => con.selectRefPoint(context),
         child: Text(
@@ -39,12 +40,15 @@ class ClientAddressMapPage extends StatelessWidget {
           style: TextStyle(color: Colors.black),
         ),
         style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30)
-            ),
-            padding: EdgeInsets.all(15)),
+        //primary: Colors.amber, // Color de fondo del botón
+        //onPrimary: Colors.black, // Color del texto del botón
+        backgroundColor: Colors.amber,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        padding: EdgeInsets.all(15),
       ),
-    );
+    ));
   }
 
   Widget _cardAddress() {

@@ -46,7 +46,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
         onPressed: () => Get.back(),
         icon: Icon(
           Icons.arrow_back_ios,
-          color: Colors.white,
+          color: Colors.black,
           size: 30,
         ),
       ),
@@ -103,7 +103,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
 
   Widget _cardOrderInfo(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: MediaQuery.of(context).size.height * 0.45,
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.grey[900],

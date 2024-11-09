@@ -46,13 +46,13 @@ class AdminHomePage extends StatelessWidget {
           ),
         BottomNavyBarItem(
           icon: Icon(Icons.category), 
-          title: Text('Categoria'),
+          title: Text('Categorias'),
           activeColor: Colors.white,
           inactiveColor: Colors.black
           ),
         BottomNavyBarItem(
           icon: Icon(Icons.restaurant), 
-          title: Text('Producto'),
+          title: Text('Productos'),
           activeColor: Colors.white,
           inactiveColor: Colors.black
           ),

@@ -7,53 +7,53 @@ class RolesPage extends StatelessWidget {
 
   RolesController con = Get.put(RolesController());
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Seleccionar el rol",
+          "Selecciona tu rol",
           style: TextStyle(
             color: Colors.black
           ),
         ),
       ),
-        body: Container(
-          margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.17),
-          child: ListView(
-            children: con.user.roles != null ? con.user.roles!.map((Rol rol){
-              return _cardRol(rol);
-            }).toList() : [],
-          ),
+      body: Container(
+        margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.10),
+        child: ListView(
+          children: con.user.roles != null ? con.user.roles!.map((Rol rol){
+            return _cardRol(rol);
+          }).toList() : [],
         ),
+      ),
     );
   }
 
-  Widget _cardRol(Rol rol){
+  Widget _cardRol(Rol rol) {
     return GestureDetector(
       onTap: () => con.goToPageRol(rol),
       child: Column(
         children: [
+          SizedBox(height: 10),
           Container(
-            margin: EdgeInsets.only(bottom: 15),
+            margin: EdgeInsets.only(bottom: 5),
             height: 100,
             child: FadeInImage(
               image: NetworkImage(rol.image!),
               fit: BoxFit.contain,
               fadeInDuration: Duration(milliseconds: 50),
               placeholder: AssetImage('assets/img/no-image.png'),
-              ),
+            ),
           ),
           Text(
             rol.name ?? '',
             style: TextStyle(
               fontSize: 16,
-              color: Colors.black
+              color: Colors.black,
             ),
-          )
+          ),
+          SizedBox(height: 10),  // Espaciado debajo del texto
         ],
-      
       ),
     );
   }

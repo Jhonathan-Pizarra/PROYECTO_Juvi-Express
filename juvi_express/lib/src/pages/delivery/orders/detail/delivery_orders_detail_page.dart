@@ -14,7 +14,6 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
       bottomNavigationBar: Container(
         color: Color.fromRGBO(245, 245, 245, 1),
         height: MediaQuery.of(context).size.height * 0.4,
-        // padding: EdgeInsets.only(top: 5),
         child: Column(
           children: [
             _dataDate(),
@@ -25,12 +24,11 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.teal,
+        iconTheme: IconThemeData(color: Colors.white),
         title: Text(
-          'Order #${con.order.id}',
-          style: TextStyle(
-            color: Colors.black
-          ),
+          'Orden #${con.order.id}',
+          style: TextStyle(color: Colors.white),
         ),
       ),
       body: con.order.products!.isNotEmpty
@@ -49,8 +47,12 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: Text('Cliente y Telefono'),
+        title: Text(
+          'Cliente y Teléfono',
+          style: TextStyle(color: Colors.teal),
+        ),
         subtitle: Text('${con.order.client?.name ?? ''} ${con.order.client?.lastname ?? ''} - ${con.order.client?.phone ?? ''}'),
+        //trailing: Icon(Icons.person, color: Colors.teal),
         trailing: Icon(Icons.person),
       ),
     );
@@ -60,9 +62,14 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: Text('Direccion de entrega'),
+        title: Text(
+          'Dirección de entrega',
+          style: TextStyle(color: Colors.teal),
+        ),
         subtitle: Text(con.order.address?.address ?? ''),
+        //trailing: Icon(Icons.location_on, color: Colors.teal),
         trailing: Icon(Icons.location_on),
+        
       ),
     );
   }
@@ -71,8 +78,12 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: Text('Fecha del pedido'),
+        title: Text(
+          'Fecha del pedido',
+          style: TextStyle(color: Colors.teal),
+        ),
         subtitle: Text('${RelativeTimeUtil.getRelativeTime(con.order.timestamp ?? 0)}'),
+        //trailing: Icon(Icons.timer, color: Colors.teal),
         trailing: Icon(Icons.timer),
       ),
     );
@@ -80,31 +91,42 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
 
   Widget _cardProduct(Product product) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 7),
-      child: Row(
-        children: [
-          _imageProduct(product),
-          SizedBox(width: 15),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+      child: Card(
+        elevation: 3.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
             children: [
-              Text(
-                product.name ?? '',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold
-                ),
-              ),
-              SizedBox(height: 7),
-              Text(
-                'Cantidad: ${product.quantity}',
-                style: TextStyle(
-                    // fontWeight: FontWeight.bold
-                  fontSize: 13
+              _imageProduct(product),
+              SizedBox(width: 15),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product.name ?? '',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Cantidad: ${product.quantity}',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -113,7 +135,6 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
     return Container(
       height: 50,
       width: 50,
-      // padding: EdgeInsets.all(2),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: FadeInImage(
@@ -122,7 +143,7 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
               : AssetImage('assets/img/no-image.png') as ImageProvider,
           fit: BoxFit.cover,
           fadeInDuration: Duration(milliseconds: 50),
-          placeholder:  AssetImage('assets/img/no-image.png'),
+          placeholder: AssetImage('assets/img/no-image.png'),
         ),
       ),
     );
@@ -143,7 +164,8 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
                 'TOTAL: \$${con.total.value}',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 17
+                    fontSize: 17,
+                    color: Colors.teal // Cambiar color a teal
                 ),
               ),
               con.order.status == 'DESPACHADO'
@@ -154,18 +176,18 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
             ],
           ),
         )
-
       ],
     );
   }
 
   Widget _buttonUpdateOrder() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30),
+      margin: EdgeInsets.symmetric(horizontal: 32),
       child: ElevatedButton(
           onPressed: () => con.updateOrder(),
           style: ElevatedButton.styleFrom(
               padding: EdgeInsets.all(15),
+              backgroundColor: Colors.amber
           ),
           child: Text(
             'INICIAR ENTREGA',
@@ -179,11 +201,12 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
 
   Widget _buttonGoToOrderMap() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30),
+      margin: EdgeInsets.symmetric(horizontal: 27),
       child: ElevatedButton(
           onPressed: () => con.goToOrderMap(),
           style: ElevatedButton.styleFrom(
               padding: EdgeInsets.all(15),
+              backgroundColor: Colors.amber
           ),
           child: Text(
             'VOLVER AL MAPA',
@@ -194,6 +217,4 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
       ),
     );
   }
-
-  
 }

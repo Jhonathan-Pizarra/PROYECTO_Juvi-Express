@@ -15,13 +15,14 @@ class ClientAddressListPaige extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: _buttonNext(context),
       appBar: AppBar(
+        backgroundColor: Colors.teal,
         iconTheme: IconThemeData(
-            color: Colors.black
+            color: Colors.white
         ),
         title: Text(
           'Mis Direcciones',
           style: TextStyle(
-              color: Colors.black
+              color: Colors.white
           ),
         ),
         actions: [
@@ -129,7 +130,7 @@ class ClientAddressListPaige extends StatelessWidget {
       onPressed: () => con.goToAddressCreate(), 
       icon: Icon(
         Icons.add,
-        color: Colors.black,
+        color: Colors.white,
       )
     );
   }
@@ -143,7 +144,8 @@ class ClientAddressListPaige extends StatelessWidget {
       child: ElevatedButton(
           onPressed: () => con.goToPayments(),
           style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 15)
+              padding: EdgeInsets.symmetric(vertical: 15),
+              backgroundColor: Colors.amber
           ),
           child: Text(
             'CONTINUAR',
@@ -154,7 +156,6 @@ class ClientAddressListPaige extends StatelessWidget {
       ),
     );
   }
-
 
 
 }

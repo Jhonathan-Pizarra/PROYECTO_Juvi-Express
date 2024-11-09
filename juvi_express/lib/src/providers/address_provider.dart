@@ -40,9 +40,30 @@ class AddressProvider extends GetConnect {
         }
     ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
 
-    ResponseApi responseApi = ResponseApi.fromJson(response.body);
+    //ResponseApi responseApi = ResponseApi.fromJson(response.body);
+    //return responseApi;
 
-    return responseApi;
+    // Verificar si response.body no es nulo
+  if (response.body != null) {
+    // Asegurarse de que response.body es un Map
+    if (response.body is Map<String, dynamic>) {
+      // Convertir la respuesta en ResponseApi si es válida
+      ResponseApi responseApi = ResponseApi.fromJson(response.body);
+      return responseApi;
+    } else {
+      // Manejar el caso en que el cuerpo de la respuesta no sea un Map
+      return ResponseApi(
+        success: false,
+        message: 'Respuesta del servidor no válida',
+      );
+    }
+  } else {
+    // Manejar el caso en que response.body sea nulo
+    return ResponseApi(
+      success: false,
+      message: 'No se recibió ninguna respuesta del servidor',
+    );
+  }
   }
 
 }

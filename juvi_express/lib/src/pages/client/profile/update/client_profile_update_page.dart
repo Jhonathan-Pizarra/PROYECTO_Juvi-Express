@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import 'package:juvi_express/src/pages/client/profile/update/client_profile_update_controller.dart';
 
 class ClientProfileUpdatePage extends StatelessWidget {
-
-  ClientProfileUpdateController con = Get.put(ClientProfileUpdateController());
+  final ClientProfileUpdateController con = Get.put(ClientProfileUpdateController());
 
   @override
   Widget build(BuildContext context) {
@@ -14,287 +13,173 @@ class ClientProfileUpdatePage extends StatelessWidget {
           _backgroundCover(context),
           _boxForm(context),
           _buttonBack(),
-          Column(
-            children: [
-              _imageTextRow(context), // Cambiamos esto
-            ],
-          )
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.15,
+            left: MediaQuery.of(context).size.width * 0.35, // Ajustado para mover la imagen a la derecha
+            child: _imageUser(context),
+          ),
         ],
       ),
     );
   }
 
-//ELEMENTOS GENERALES
   Widget _backgroundCover(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.32,
-      color: Colors.amber,
+      height: MediaQuery.of(context).size.height * 0.40,
+      decoration: BoxDecoration(
+        color: Colors.blueGrey.shade800,
+      ),
     );
   }
 
-  Widget _imageTextRow(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        margin: EdgeInsets.only(top: 20),
-        //padding: EdgeInsets.symmetric(horizontal: 2), // Agrega padding horizontal
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _imageUser(context),
-            //_imageCover(),
-            //SizedBox(width: 1), // Espacio entre la imagen y el texto
-          ],
+  Widget _imageUser(BuildContext context) {
+    return GestureDetector(
+      onTap: () => con.showAlertDialog(context),
+      child: GetBuilder<ClientProfileUpdateController>(
+        builder: (controller) => Container(
+          width: 120,
+          height: 120,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.blueGrey.shade700, width: 4),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                blurRadius: 15,
+                offset: Offset(0, 5),
+              ),
+            ],
+          ),
+          child: CircleAvatar(
+            backgroundImage: con.imageFile != null
+                ? FileImage(con.imageFile!)
+                : con.user.image != null
+                    ? NetworkImage(con.user.image!)
+                    : AssetImage('assets/img/user1.png') as ImageProvider,
+            backgroundColor: Colors.blueGrey.shade900,
+            child: Icon(
+              Icons.camera_alt,
+              color: Colors.white,
+              size: 30,
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget _imageUser(BuildContext context){
-    return Container(
-      margin: EdgeInsets.only(top: 30),
-      alignment: Alignment.topCenter,
-      child: GestureDetector(
-        onTap: () => con.showAlertDialog(context),
-        child: GetBuilder<ClientProfileUpdateController>(
-          builder: (value) => CircleAvatar(
-            backgroundImage: con.imageFile != null 
-              ? FileImage(con.imageFile!)
-              : con.user.image == null 
-                ? NetworkImage(con.user.image!)
-                : AssetImage('assets/img/user1.png') as ImageProvider,
-          radius: 60,
-          backgroundColor: Colors.white,
-          ),
-        )
-      ),
-
-    );
-  }
-
-  /*
-  Widget _imageUser(BuildContext context){
-    return Container(
-      margin: EdgeInsets.only(top: 30),
-      alignment: Alignment.topCenter,
-      child: GestureDetector(
-        onTap: () => con.showAlertDialog(context),
-        child: GetBuilder<ClientProfileUpdateController>(
-          builder: (value) => CircleAvatar(
-          backgroundImage: con.imageFile != null ?
-          FileImage(con.imageFile!)
-          : AssetImage('assets/img/user1.png') as ImageProvider,
-          radius: 60,
-          backgroundColor: Colors.white,
-          ),
-        )
-      ),
-
-    );
-  }
-  */
-
-  Widget _buttonBack(){
+  Widget _buttonBack() {
     return SafeArea(
-      child: Container(
-        margin: EdgeInsets.only(left: 2),
-        child: IconButton(
-          onPressed: () => Get.back(),
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-            //size: 30,
-            ),
-          ),
-      )
-      
+      child: IconButton(
+        onPressed: () => Get.back(),
+        icon: Icon(Icons.arrow_back, color: Colors.white),
+        padding: EdgeInsets.all(16),
+      ),
     );
   }
-//FORMULARIO REGISTRO
 
-  Widget _boxForm(BuildContext context){
-    
+  Widget _boxForm(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height*0.55,
-      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.22,left: 50, right: 50),
+      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.30, left: 20, right: 20),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: <BoxShadow>[
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
           BoxShadow(
-            color: Colors.black54,
-            blurRadius: 15,
-            offset: Offset(0,0.75) 
-          )
-        ]
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 10,
+            offset: Offset(0, 5),
+          ),
+        ],
       ),
       child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _textYourInfo(),
+            Text(
+              "Actualizar Información",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueGrey.shade800,
+              ),
+            ),
+            SizedBox(height: 20),
             _textFieldName(),
             _textFieldLastName(),
             _textFieldPhone(),
-            _buttonUpdate(context)
+            SizedBox(height: 20),
+            _buttonUpdate(context),
           ],
         ),
       ),
-
-    );
-
-  }
-
-  Widget _textYourInfo() {
-    return Container(
-      margin: EdgeInsets.only(top: 40, bottom: 10),
-      child: Text("Actualizar datos",
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          )),
     );
   }
-
-
-/*
-  Widget _textFieldEmail() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10), // Agregar margen vertical
-      child: Theme(
-        data: ThemeData(
-          primaryColor: Colors.amber, // Cambiar el color principal
-          inputDecorationTheme: InputDecorationTheme(
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.amber),
-            ),
-            prefixIconColor: MaterialStateColor.resolveWith(
-              (states) => states.contains(MaterialState.focused) ? Colors.amber : Colors.grey,
-            ),
-          ),
-        ),
-        child: TextField(
-          controller: con.emailController,
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            hintText: "Correo electrónico",
-            prefixIcon: Icon(Icons.email),
-            contentPadding: EdgeInsets.symmetric(vertical: 15), // Ajustar el padding vertical
-          ),
-          style: TextStyle(fontSize: 14), // Ajustar el tamaño del texto
-        ),
-      ),
-    );
-  }
-
-  */
-
 
   Widget _textFieldName() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10), // Agregar margen vertical
-      child: Theme(
-        data: ThemeData(
-          primaryColor: Colors.amber, // Cambiar el color principal
-          inputDecorationTheme: InputDecorationTheme(
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.amber),
-            ),
-            prefixIconColor: MaterialStateColor.resolveWith(
-              (states) => states.contains(MaterialState.focused) ? Colors.amber : Colors.grey,
-            ),
-          ),
-        ),
-        child: TextField(
-          controller: con.nameController,
-          keyboardType: TextInputType.text,
-          decoration: InputDecoration(
-            hintText: "Nombre",
-            prefixIcon: Icon(Icons.person),
-            contentPadding: EdgeInsets.symmetric(vertical: 15), // Ajustar el padding vertical
-          ),
-          style: TextStyle(fontSize: 14), // Ajustar el tamaño del texto
-        ),
-      ),
+    return _buildTextField(
+      controller: con.nameController,
+      icon: Icons.person,
+      hintText: "Nombre",
     );
   }
 
   Widget _textFieldLastName() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10), // Agregar margen vertical
-      child: Theme(
-        data: ThemeData(
-          primaryColor: Colors.amber, // Cambiar el color principal
-          inputDecorationTheme: InputDecorationTheme(
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.amber),
-            ),
-            prefixIconColor: MaterialStateColor.resolveWith(
-              (states) => states.contains(MaterialState.focused) ? Colors.amber : Colors.grey,
-            ),
-          ),
-        ),
-        child: TextField(
-          controller: con.lastNameController,
-          keyboardType: TextInputType.text,
-          decoration: InputDecoration(
-            hintText: "Apellido",
-            prefixIcon: Icon(Icons.person_outline),
-            contentPadding: EdgeInsets.symmetric(vertical: 15), // Ajustar el padding vertical
-          ),
-          style: TextStyle(fontSize: 14), // Ajustar el tamaño del texto
-        ),
-      ),
+    return _buildTextField(
+      controller: con.lastNameController,
+      icon: Icons.person_outline,
+      hintText: "Apellido",
     );
   }
 
   Widget _textFieldPhone() {
+    return _buildTextField(
+      controller: con.phoneController,
+      icon: Icons.phone,
+      hintText: "Teléfono",
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required IconData icon,
+    required String hintText,
+  }) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10), // Agregar margen vertical
-      child: Theme(
-        data: ThemeData(
-          primaryColor: Colors.amber, // Cambiar el color principal
-          inputDecorationTheme: InputDecorationTheme(
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.amber),
-            ),
-            prefixIconColor: MaterialStateColor.resolveWith(
-              (states) => states.contains(MaterialState.focused) ? Colors.amber : Colors.grey,
-            ),
+      margin: EdgeInsets.symmetric(vertical: 8),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          prefixIcon: Icon(icon, color: Colors.blueGrey.shade700),
+          hintText: hintText,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
           ),
-        ),
-        child: TextField(
-          controller: con.phoneController,
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            hintText: "Teléfono",
-            prefixIcon: Icon(Icons.phone),
-            contentPadding: EdgeInsets.symmetric(vertical: 15), // Ajustar el padding vertical
-          ),
-          style: TextStyle(fontSize: 14), // Ajustar el tamaño del texto
+          contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         ),
       ),
     );
   }
 
-
-  Widget _buttonUpdate(BuildContext context){
-    return Container(
+  Widget _buttonUpdate(BuildContext context) {
+    return SizedBox(
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
       child: ElevatedButton(
         onPressed: () => con.updateInfo(context),
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 15),
-          backgroundColor: Colors.amber,
+          backgroundColor: Colors.amber, // Color de fondo ámbar
+          padding: EdgeInsets.symmetric(vertical: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
         ),
         child: Text(
           "Actualizar",
-          style: TextStyle(
-            color: Colors.black,
-          ),
+          style: TextStyle(color: Colors.white),
         ),
       ),
     );
   }
-
 }

@@ -91,6 +91,7 @@ class ClientProductsListController extends GetxController {
     Get.toNamed('/client/orders/create');
   }
 
+
   void openBottomSheet(BuildContext context, Product product) async{
 
     showMaterialModalBottomSheet(
