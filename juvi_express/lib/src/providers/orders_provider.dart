@@ -18,7 +18,6 @@ Future<String> encodeImageToBase64(File image) async {
 }
 
 
-
 class OrdersProvider extends GetConnect {
 
   String url = Enviroment.API_URL + 'api/orders';
@@ -43,8 +42,6 @@ class OrdersProvider extends GetConnect {
     }
   }
 
-
-
   Future<ResponseApi> createWithImage(Order order, File image) async {
     try {
 
@@ -67,7 +64,6 @@ class OrdersProvider extends GetConnect {
       throw Exception('Error al crear la orden con imagen');
     }
   }
-
 
 /*
   Future<Stream> createWithImage(Order order, File image) async {
@@ -101,7 +97,6 @@ class OrdersProvider extends GetConnect {
 }
 
 */
-
 
   Future<List<Order>> findByStatus(String status) async {
     Response response = await get(

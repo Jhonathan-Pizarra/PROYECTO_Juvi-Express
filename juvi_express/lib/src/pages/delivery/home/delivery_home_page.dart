@@ -27,22 +27,22 @@ class DeliveryHomePage extends StatelessWidget {
   Widget _bottomBar() {
     return Obx(() => CustomAnimatedBottomBar(
       containerHeight: 70,
-      backgroundColor: Colors.amber,
-      showElevation: true,
+      //backgroundColor: Colors.amber,
+      //showElevation: true,
       itemCornerRadius: 24,
-      curve: Curves.easeIn,
+      //curve: Curves.easeIn,
       selectedIndex: con.indexTab.value,
       onItemSelected: (index) => con.changeTab(index),
       items: [
         BottomNavyBarItem(
             icon: Icon(Icons.list),
-            title: Text('Pedidos'),
+            title: 'Pedidos',
             activeColor: Colors.white,
             inactiveColor: Colors.black
         ),
         BottomNavyBarItem(
             icon: Icon(Icons.person),
-            title: Text('Perfil'),
+            title: 'Perfil',
             activeColor: Colors.white,
             inactiveColor: Colors.black
         ),

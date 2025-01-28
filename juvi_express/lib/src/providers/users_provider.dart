@@ -1,5 +1,3 @@
-//import 'dart:js_interop';
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:get_storage/get_storage.dart';
@@ -11,166 +9,136 @@ import 'package:juvi_express/src/models/response_api.dart';
 import 'package:juvi_express/src/models/user.dart';
 
 class UsersProvider extends GetConnect {
+  final String _url = '${Enviroment.API_URL}api/users';
+  final User _userSession = User.fromJson(GetStorage().read('user') ?? {});
 
-  String url = Enviroment.API_URL + "api/users";
+  Map<String, String> get _headers => {
+        'Content-Type': 'application/json',
+        'Authorization': _userSession.sessionToken ?? '',
+      };
 
-  User userSession = User.fromJson(GetStorage().read('user') ?? {});
-
-  Future<Response> create (User user) async {
-    Response response = await post(
-      '$url/create',
+  Future<Response> create(User user) async {
+    return await post(
+      '$_url/create',
       user.toJson(),
-      headers: {
-        'Content-Type': "application/json"
-      }
+      headers: {'Content-Type': 'application/json'},
     );
-
-    return response;
   }
 
   Future<Stream> createWithImage(User user, File image) async {
-    Uri uri = Uri.http(Enviroment.API_URL_OLD, '/api/users/createWithImage');
-    final request = http.MultipartRequest('POST', uri);
-    request.files.add(http.MultipartFile(
-      'image',
-      http.ByteStream(image.openRead().cast()),
-      await image.length(),
-      filename: basename(image.path)
-    ));
-    request.fields['user'] = json.encode(user);
+    final uri = Uri.http(Enviroment.API_URL_OLD, '/api/users/createWithImage');
+    final request = http.MultipartRequest('POST', uri)
+      ..files.add(http.MultipartFile(
+        'image',
+        http.ByteStream(image.openRead().cast()),
+        await image.length(),
+        filename: basename(image.path),
+      ))
+      ..fields['user'] = json.encode(user);
     final response = await request.send();
     return response.stream.transform(utf8.decoder);
   }
 
-  //Actualizar datos sin imgange
-  Future<ResponseApi> update (User user) async {
-    Response response = await put(
-      '$url/updateWithoutImage',
+  Future<ResponseApi> update(User user) async {
+    final response = await put(
+      '$_url/updateWithoutImage',
       user.toJson(),
-      headers: {
-        'Content-Type': "application/json",
-        'Authorization': userSession.sessionToken ?? ''
-      }
+      headers: _headers,
     );
 
-    if (response.body == null) {
-      Get.snackbar('Error', 'No se pudo actualizar el usuario');
+    if (response.body == null || response.statusCode == 401) {
+      Get.snackbar('Error', response.statusCode == 401 ? 'No autorizado' : 'Error de actualización');
       return ResponseApi();
     }
 
-    if (response.statusCode == 401) {
-      Get.snackbar('Error', 'No está autorizado para completar esta operación');
-      return ResponseApi();
-    }
-
-    ResponseApi responseApi = ResponseApi.fromJson(response.body);
-    return responseApi;
-
+    return ResponseApi.fromJson(response.body);
   }
 
   Future<Stream> updateWithImage(User user, File image) async {
-    Uri uri = Uri.http(Enviroment.API_URL_OLD, '/api/users/update');
-    final request = http.MultipartRequest('PUT', uri);
-    request.headers['Authorization'] = userSession.sessionToken ?? '';
-    request.files.add(http.MultipartFile(
-      'image',
-      http.ByteStream(image.openRead().cast()),
-      await image.length(),
-      filename: basename(image.path)
-    ));
-    request.fields['user'] = json.encode(user);
+    final uri = Uri.http(Enviroment.API_URL_OLD, '/api/users/update');
+    final request = http.MultipartRequest('PUT', uri)
+      ..headers['Authorization'] = _userSession.sessionToken ?? ''
+      ..files.add(http.MultipartFile(
+        'image',
+        http.ByteStream(image.openRead().cast()),
+        await image.length(),
+        filename: basename(image.path),
+      ))
+      ..fields['user'] = json.encode(user);
     final response = await request.send();
     return response.stream.transform(utf8.decoder);
   }
 
-  /*
-  Future<ResponseApi> updateNotificationToken(String id, String token) async {
-    Response response = await put(
-        '$url/updateNotificationToken',
-        {
-          'id': id,
-          'token': token
-        },
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': userSession.sessionToken ?? ''
-        }
-    ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
-
-    if (response.body == null) {
-      Get.snackbar('Error', 'No se pudo actualizar la informacion');
-      return ResponseApi();
-    }
-
-    if (response.statusCode == 401) {
-      Get.snackbar('Error', 'No estas autorizado para realizar esta peticion');
-      return ResponseApi();
-    }
-
-    ResponseApi responseApi = ResponseApi.fromJson(response.body);
-
-    return responseApi;
-  }
-  */
-  
-  //Code: metodo que nos permite registrar usuario con imagen
   Future<ResponseApi> createUserWithImageGetX(User user, File image) async {
-    FormData form = FormData({
+    final form = FormData({
       'image': MultipartFile(image, filename: basename(image.path)),
-      'user': json.encode(user)
+      'user': json.encode(user),
     });
-    Response response = await post('$url/createWithImage', form);
+    final response = await post('$_url/createWithImage', form);
 
     if (response.body == null) {
-      Get.snackbar('Error en la peticion', 'No se pudo crear el usuario');
+      Get.snackbar('Error', 'No se pudo crear el usuario');
       return ResponseApi();
     }
-    ResponseApi responseApi = ResponseApi.fromJson(response.body);
-    return responseApi;
+
+    return ResponseApi.fromJson(response.body);
   }
 
-  Future<ResponseApi> login (String email, String password) async {
-    Response response = await post(
-      '$url/login',
-      {
-        'email': email,
-        'password': password
-
-      },
-      headers: {
-        'Content-Type': "application/json"
-      }
+  Future<ResponseApi> login(String email, String password) async {
+    final response = await post(
+      '$_url/login',
+      {'email': email, 'password': password},
+      headers: {'Content-Type': 'application/json'},
     );
 
     if (response.body == null) {
-
       Get.snackbar('Error', 'No se pudo ejecutar la petición');
       return ResponseApi();
-      
     }
 
-    ResponseApi responseApi = ResponseApi.fromJson(response.body);
-
-    return responseApi;
+    return ResponseApi.fromJson(response.body);
   }
 
   Future<List<User>> findDeliveryMen() async {
-    Response response = await get(
-        '$url/findDeliveryMen',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': userSession.sessionToken ?? ''
-        }
-    ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
+    final response = await get(
+      '$_url/findDeliveryMen',
+      headers: _headers,
+    );
 
     if (response.statusCode == 401) {
-      Get.snackbar('Peticion denegada', 'Tu usuario no tiene permitido leer esta informacion');
+      Get.snackbar('Petición denegada', 'No tienes acceso a esta información');
       return [];
     }
 
-    List<User> users = User.fromJsonList(response.body);
-
-    return users;
+    return User.fromJsonList(response.body);
   }
-  
+
+  Future<List<User>> findAllUsers() async {
+    final response = await get(
+      _url,
+      headers: _headers,
+    );
+
+    if (response.statusCode == 401 || response.body == null) {
+      Get.snackbar('Error', response.statusCode == 401 ? 'No autorizado' : 'No se encontraron usuarios');
+      return [];
+    }
+
+    final data = response.body['data'] ?? [];
+    return User.fromJsonList(data);
+  }
+
+  Future<bool> updateUser(User user) async {
+    try {
+      final response = await http.put(
+        Uri.parse('$_url/${user.id}'),
+        headers: _headers,
+        body: json.encode(user),
+      );
+      return response.statusCode == 200;
+    } catch (e) {
+      print('Error actualizando usuario: $e');
+      return false;
+    }
+  }
 }
