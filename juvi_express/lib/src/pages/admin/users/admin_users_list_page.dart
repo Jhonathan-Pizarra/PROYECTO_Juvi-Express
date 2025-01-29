@@ -5,7 +5,7 @@ import 'package:juvi_express/src/models/rol.dart'; // Asegúrate de que el model
 import 'package:juvi_express/src/pages/admin/users/admin_users_list_controller.dart';
 
 class AdminUsersListPage extends StatelessWidget {
-  final AdminUsersCreateController controller = Get.put(AdminUsersCreateController());
+  final AdminUsersListController controller = Get.put(AdminUsersListController());
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +42,7 @@ class AdminUsersListPage extends StatelessWidget {
                       IconButton(
                         icon: Icon(Icons.edit),
                         onPressed: () {
+                          controller.goToEditUserPage(user);
                         },
                       ),
                     ],
