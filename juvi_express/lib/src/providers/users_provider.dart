@@ -128,6 +128,7 @@ class UsersProvider extends GetConnect {
     return User.fromJsonList(data);
   }
 
+  /*
   Future<bool> updateUser(User user) async {
     try {
       final response = await http.put(
@@ -140,5 +141,66 @@ class UsersProvider extends GetConnect {
       print('Error actualizando usuario: $e');
       return false;
     }
+  }*/
+
+  /*
+  Future<ResponseApi> updateUser(User user, List<String> roleIds) async {
+  final body = json.encode({
+    "id": user.id,
+    "email": user.email,
+    "name": user.name,
+    "lastname": user.lastname,
+    "phone": user.phone,
+    "image": user.image,
+    "roles": json.encode(roleIds), // Convierte la lista de roles a un string JSON
+  });
+
+  final response = await put(
+    '$_url/updateWithRoles',
+    body,
+    headers: _headers,
+  );
+
+  if (response.body == null || response.statusCode == 400) {
+    Get.snackbar('Error', 'No se pudo actualizar el usuario');
+    return ResponseApi();
   }
+
+  return ResponseApi.fromJson(response.body);
+}*/
+
+Future<ResponseApi> updateUser(User user, List<String> roleIds) async {
+  final body = {
+    "user": {
+      "id": user.id,
+      "email": user.email,
+      "name": user.name,
+      "lastname": user.lastname,
+      "phone": user.phone,
+      "image": user.image,
+      "password": user.password, // Asegúrate de incluir la contraseña si el backend la requiere
+    },
+    "roles": roleIds.map((id) => {"id": int.parse(id)}).toList(),
+  };
+
+  print("JSON enviado al backend: ${json.encode(body)}"); // Debug
+
+  final response = await put(
+    '$_url/updateWithRoles',
+    json.encode(body), // Convierte a JSON antes de enviarlo
+    headers: _headers,
+  );
+
+  if (response.body == null || response.statusCode == 400) {
+    print("Error en la respuesta: ${response.body}");
+    Get.snackbar('Error', 'No se pudo actualizar el usuario');
+    return ResponseApi();
+  }
+
+  return ResponseApi.fromJson(response.body);
+}
+
+
+
+
 }

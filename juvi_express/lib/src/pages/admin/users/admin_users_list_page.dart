@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/models/user.dart';
-import 'package:juvi_express/src/models/rol.dart'; // Asegúrate de que el modelo Rol esté importado
 import 'package:juvi_express/src/pages/admin/users/admin_users_list_controller.dart';
 
 class AdminUsersListPage extends StatelessWidget {
@@ -31,21 +30,17 @@ class AdminUsersListPage extends StatelessWidget {
             ],
             rows: controller.users.map((user) {
               return DataRow(cells: [
-                DataCell(Text(user.id ?? '')),
+                DataCell(Text(user.id?.toString() ?? '')),
                 DataCell(Text(user.name ?? '')),
                 DataCell(Text(user.email ?? '')),
                 DataCell(Text(user.phone ?? '')),
-                DataCell(Text(user.roles != null && user.roles!.isNotEmpty? user.roles!.map((role) {return role.name ?? 'Sin nombre';}).join(', ') : 'Sin rol')),
+                DataCell(Text(user.roles != null && user.roles!.isNotEmpty
+                    ? user.roles!.map((role) => role.name ?? 'Sin nombre').join(', ')
+                    : 'Sin rol')),
                 DataCell(
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () {
-                          controller.goToEditUserPage(user);
-                        },
-                      ),
-                    ],
+                  ElevatedButton(
+                    onPressed: () => controller.goToEditUserPage(user), //  Llama a la función correctamente
+                    child: Text('Editar'),
                   ),
                 ),
               ]);
@@ -55,7 +50,4 @@ class AdminUsersListPage extends StatelessWidget {
       }),
     );
   }
-
-
-
 }

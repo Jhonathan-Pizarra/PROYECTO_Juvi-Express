@@ -10,6 +10,11 @@ class AdminUserEditController extends GetxController {
 
   final formKey = GlobalKey<FormState>();
 
+  RxString id = ''.obs;
+  RxString lastname = ''.obs;
+  RxString image = ''.obs;
+  RxString password = ''.obs;
+
   RxString name = ''.obs;
   RxString email = ''.obs;
   RxString phone = ''.obs;
@@ -20,13 +25,15 @@ class AdminUserEditController extends GetxController {
 
   void loadUserData(User user) {
     this.user = user;
+    id.value = user.id ?? '0';
+    lastname.value = user.lastname ?? '';
+    image.value = user.image ?? '';
     name.value = user.name ?? '';
     email.value = user.email ?? '';
     phone.value = user.phone ?? '';
 
     // Cargar roles del usuario
     roles.value = getAllRoles(); // Método para obtener todos los roles del sistema
-    //selectedRoles.value = user.roles ?? []; // Marcar roles ya asignados
     // Marcar los roles que ya tiene el usuario como seleccionados
     selectedRoles.value = roles.where((role) {
       return user.roles?.any((userRole) => userRole.id == role.id) ?? false;
@@ -41,23 +48,26 @@ class AdminUserEditController extends GetxController {
     }
   }
 
-  void updateUser() async {
+   Future<void> updateUser() async {
     if (!formKey.currentState!.validate()) return;
 
-    user.name = name.value;
-    user.email = email.value;
-    user.phone = phone.value;
+    final updatedUser = User(
+      id: id.value,
+      email: email.value,
+      name: name.value,
+      lastname: lastname.value,
+      phone: phone.value,
+      image: image.value,
+    );
 
-    // Actualizar roles del usuario
-    user.roles = selectedRoles;
+    final roleIds = selectedRoles.map((role) => role.id ?? '').where((id) => id.isNotEmpty).toList();
+    final responseUser = await userProvider.updateUser(updatedUser, roleIds);
 
-    final response = await userProvider.updateUser(user);
-
-    if (response) {
-      Get.snackbar('Éxito', 'Usuario actualizado correctamente.');
-      Get.back(); // Volver a la lista
+    if (responseUser.success = true) {
+      Get.snackbar("Éxito", "Usuario actualizado correctamente");
+      //Get.back(result: true);
     } else {
-      Get.snackbar('Error', 'No se pudo actualizar el usuario.');
+      Get.snackbar("Error", "No se pudo actualizar el usuario");
     }
   }
 
