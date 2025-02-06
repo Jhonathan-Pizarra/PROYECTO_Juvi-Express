@@ -6,7 +6,74 @@ import 'package:juvi_express/src/pages/admin/orders/list/admin_orders_list_page.
 import 'package:juvi_express/src/pages/admin/products/create/admin_products_create_page.dart';
 import 'package:juvi_express/src/pages/admin/users/admin_users_list_page.dart';
 import 'package:juvi_express/src/pages/client/profile/info/client_profile_info_page.dart';
-import 'package:juvi_express/src/utils/custom_animated_bottom_bar.dart';
+import 'package:juvi_express/src/utils/custom_animated_bottom_bar.dart'; // Importando la versión de utils
+
+/*
+class AdminHomePage extends StatelessWidget {
+  final AdminHomeController con = Get.put(AdminHomeController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: _bottomBar(),
+      body: Obx(
+        () => IndexedStack(
+          index: con.indexTab.value,
+          children: [
+            AdminOrdersListPage(),
+            AdminCategoriesCreatePage(),
+            AdminProductsCreatePage(),
+            ClientProfileInfoPage(),
+            AdminUsersListPage(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _bottomBar() {
+    return Obx(() => CustomAnimatedBottomBar(
+        containerHeight: 70,
+        itemCornerRadius: 24,
+        selectedIndex: con.indexTab.value,
+        onItemSelected: (index) => con.changeTab(index),
+        items: [
+          BottomNavyBarItem(
+            icon: Icon(Icons.apps),
+            title: 'Pedidos',
+            activeColor: Colors.white,
+            inactiveColor: Colors.black,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.category),
+            title: 'Categorías',
+            activeColor: Colors.white,
+            inactiveColor: Colors.black,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.restaurant),
+            title: 'Productos',
+            activeColor: Colors.white,
+            inactiveColor: Colors.black,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.person),
+            title: 'Perfil',
+            activeColor: Colors.white,
+            inactiveColor: Colors.black,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.people),
+            title: 'Usuario',
+            activeColor: Colors.white,
+            inactiveColor: Colors.black,
+          ),
+        ],
+      ),
+    );
+  }
+}*/
+
 
 class AdminHomePage extends StatelessWidget {
   final AdminHomeController con = Get.put(AdminHomeController());
@@ -73,6 +140,7 @@ class AdminHomePage extends StatelessWidget {
     );
   }
 }
+
 
 class CustomAnimatedBottomBar extends StatelessWidget {
   CustomAnimatedBottomBar({
@@ -167,6 +235,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
     );
   }
 }
+
 
 class BottomNavyBarItem {
   BottomNavyBarItem({

@@ -22,6 +22,66 @@ class LoginController extends GetxController{
   }
 
   void login() async {
+  String email = emailController.text.trim();
+  String password = passwordController.text.trim();
+
+  print('Email ${email}');
+  print('Password ${password}');
+
+  if (isValidForm(email, password)) {
+      ResponseApi responseApi = await usersProvider.login(email, password);
+      print('Respuesta API: ${responseApi.toJson()}');
+
+      if (responseApi.success == true) {
+        GetStorage().write('user', responseApi.data);
+
+        User myUser = User.fromJson(GetStorage().read('user') ?? {});
+
+        print('Roles length: ${myUser.roles!.length}');
+
+        if (myUser.roles!.length > 1) {
+          goToRolesPage();
+        } else if (myUser.roles!.isNotEmpty) { 
+          // Si tiene un solo rol, verificamos cuál es
+          String roleId = myUser.roles![0].id ?? "";
+
+          print("Rol obtenido: $roleId"); // Verificar en la consola
+
+          if (roleId == "1") {
+            goToAdminHomePage();
+          } else if (roleId == "2") {
+            goToDeliveryHomePage();
+          } else {
+            goToClientHomePage();
+          }
+        } else {
+          Get.snackbar("Error", "No se encontraron roles para este usuario");
+        }
+      } else {
+        Get.snackbar('Error de sesión', responseApi.message ?? '');        
+      }
+    }
+  }
+
+  void goToAdminHomePage() {
+    Get.offNamedUntil('/admin/home', (route) => false);
+  }
+
+  void goToDeliveryHomePage() {
+    Get.offNamedUntil('/delivery/home', (route) => false);
+  }
+
+  void goToClientHomePage() {
+    Get.offNamedUntil('/client/home', (route) => false);
+  }
+
+  void goToRolesPage(){
+    Get.offNamedUntil('/roles', (route) => false);
+  }
+
+
+  /*
+  void login() async {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
@@ -60,7 +120,7 @@ class LoginController extends GetxController{
     
     }
 
-  }
+  }*/
 
   /*
   void goToHomePage(){
@@ -68,13 +128,14 @@ class LoginController extends GetxController{
   }
   */
 
+  /*
   void goToClientHomePage() {
     Get.offNamedUntil('/client/home', (route) => false);
   }
 
   void goToRolesPage(){
     Get.offNamedUntil('/roles',(route) => false);
-  }
+  }*/
   
   bool isValidForm(String email, String password){
 
