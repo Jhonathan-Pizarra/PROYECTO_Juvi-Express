@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:get/get_connect/connect.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
@@ -201,6 +202,23 @@ Future<ResponseApi> updateUser(User user, List<String> roleIds) async {
 }
 
 
+Future<ResponseApi> updateNotificationToken(String id, String token) async {
+    final response = await put(
+      '$_url/updateNotificationToken',
+      {
+        'id': id,
+        'token': token
+      },
+      headers: _headers,
+    );
+
+    if (response.body == null || response.statusCode == 401) {
+      Get.snackbar('Error', response.statusCode == 401 ? 'No autorizado' : 'Error de actualización');
+      return ResponseApi();
+    }
+
+    return ResponseApi.fromJson(response.body);
+  }
 
 
 }

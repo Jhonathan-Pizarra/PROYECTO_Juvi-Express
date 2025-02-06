@@ -25,6 +25,7 @@ class ClientHomePage extends StatelessWidget {
     ));
   }
 
+  
   Widget _bottonBar(){
     return Obx(()=> CustomAnimatedBottomBar(
       containerHeight: 70, 

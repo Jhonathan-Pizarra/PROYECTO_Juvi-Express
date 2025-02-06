@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -24,11 +26,37 @@ import 'package:juvi_express/src/pages/home/home_page.dart';
 import 'package:juvi_express/src/pages/login/login_page.dart';
 import 'package:juvi_express/src/pages/register/register_page.dart';
 import 'package:juvi_express/src/pages/roles/roles_page.dart';
+import 'package:juvi_express/src/providers/push_notifications_provider.dart';
+import 'package:juvi_express/src/utils/firebase_config.dart';
 
 User userSession = User.fromJson(GetStorage().read('user') ?? {});
 
+//PushNotificationsProvider pushNotificationsProvider = PushNotificationsProvider();
+
+/*
 void main() async {
   await GetStorage.init();
+  runApp(const MyApp());
+}*/
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  PushNotificationsProvider pushNotificationsProvider = PushNotificationsProvider();
+  await Firebase.initializeApp(options: FirebaseConfig.currentPlatform);
+  print('Recibiendo notificacion en segundo plano ${message.messageId}');
+  pushNotificationsProvider.showNotification(message);
+}
+
+void main() async {
+  await GetStorage.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: FirebaseConfig.currentPlatform,
+  );
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  PushNotificationsProvider pushNotificationsProvider = PushNotificationsProvider();
+  pushNotificationsProvider.initPushNotifications(); // Llamada correcta
   runApp(const MyApp());
 }
 
@@ -45,6 +73,9 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print('EL TOKEN DE SESION DEL USUARIO: ${userSession.sessionToken}');
+     PushNotificationsProvider pushNotificationsProvider = PushNotificationsProvider();
+    pushNotificationsProvider.onMessageListener();
   }
 
   @override
@@ -105,52 +136,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-
-//Version 1
-/*
-theme: ThemeData(
-        primaryColor: Colors.amber,
-        colorScheme: ColorScheme(
-          primary: Colors.amber,
-          secondary: Colors.amberAccent,
-          onBackground: Colors.grey,
-          brightness: Brightness.light,
-          onPrimary: Colors.amber,
-          surface: Colors.white,
-          onSurface: Colors.grey,
-          error: Colors.red,
-          onError: Colors.red,
-          onSecondary: Colors.amber,
-          //background: Colors.grey,
-        )
-*/
-
-//Version 2
-/*
- theme: ThemeData(
-      primaryColor: Colors.amber,
-      colorScheme: const ColorScheme(
-        primary: Colors.amber,
-        secondary: Colors.amberAccent,
-        brightness: Brightness.light,
-        onPrimary: Colors.grey,
-        surface: Colors.grey,
-        onSurface: Colors.grey,
-        error: Colors.grey,
-        onError: Colors.grey,
-        onSecondary: Colors.grey,
-      ),
-    ),
-*/ 
-
-/*
-theme: ThemeData(
-        primaryColor: Colors.amber, // Color principal de la aplicación
-        inputDecorationTheme: InputDecorationTheme(
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.amber), // Color del borde cuando está enfocado
-          ),
-        ),
-      ),
-*/

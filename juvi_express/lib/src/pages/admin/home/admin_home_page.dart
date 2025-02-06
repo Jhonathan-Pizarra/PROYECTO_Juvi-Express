@@ -23,7 +23,7 @@ class AdminHomePage extends StatelessWidget {
             AdminCategoriesCreatePage(),
             AdminProductsCreatePage(),
             ClientProfileInfoPage(),
-            AdminUsersListPage(),//Vamos a crear una nueva interfaz para usuarios
+            AdminUsersListPage(),
           ],
         ),
       ),

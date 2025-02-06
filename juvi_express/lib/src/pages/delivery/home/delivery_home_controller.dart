@@ -1,22 +1,24 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:juvi_express/src/models/user.dart';
+import 'package:juvi_express/src/providers/push_notifications_provider.dart';
 
 class DeliveryHomeController extends GetxController {
 
   var indexTab = 0.obs;
-  //PushNotificationsProvider pushNotificationsProvider = PushNotificationsProvider();
+  PushNotificationsProvider pushNotificationsProvider = PushNotificationsProvider();
   User user = User.fromJson(GetStorage().read('user') ?? {});
 
   DeliveryHomeController() {
-    //saveToken();
+    saveToken();
   }
 
   void saveToken() {
     if (user.id != null) {
-      //pushNotificationsProvider.saveToken(user.id!);
+      pushNotificationsProvider.saveToken(user.id!);
     }
   }
+  
 
 
   void changeTab(int index){

@@ -115,7 +115,7 @@ class ClientPaymentsCreatePage extends StatelessWidget {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 10),
-        Text('Cuenta: xxx.xxxx.xxx'),
+        Text('Cuenta: 12186193799'),
         Text('Banco: Produbanco'),
         Text('Tipo de Cuenta: Ahorros'),
         Text('Cédula: 1726368626'),

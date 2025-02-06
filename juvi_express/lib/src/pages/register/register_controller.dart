@@ -35,13 +35,13 @@ class RegisterController extends GetxController {
     print('Email ${email}');
     print('Password ${password}');
 
-    Get.snackbar('Email', email);
-    Get.snackbar('Password', password);
+    //Get.snackbar('Email', email);
+    //Get.snackbar('Password', password);
 
     if (isValidForm(email, name, lastName, phone, password, confirmPassword)) {
       
       ProgressDialog progressDialog = ProgressDialog(context: context);
-      progressDialog.show(max: 100, msg: "Registradno...");
+      progressDialog.show(max: 100, msg: "Registrando...");
 
       User user = User(
         email: email,

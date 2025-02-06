@@ -1,26 +1,31 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:juvi_express/src/models/user.dart';
+import 'package:juvi_express/src/providers/push_notifications_provider.dart';
 
 class ClientHomeController extends GetxController {
 
   var indexTab = 0.obs;
-  //PushNotificationsProvider pushNotificationsProvider = PushNotificationsProvider();
+  PushNotificationsProvider pushNotificationsProvider = PushNotificationsProvider();
   User user = User.fromJson(GetStorage().read('user') ?? {});
 
+  var userRoles = ['Administrador', 'Repartidor', 'Cliente']; // El usuario tiene dos roles: "delivery" y "client"
+
   ClientHomeController() {
-    //saveToken();
+    saveToken();
+  }
+
+  void saveToken(){
+    
+    if(user.id != null){
+      pushNotificationsProvider.saveToken(user.id!);
+    }
+
   }
 
 
   void changeTab(int index){
     indexTab.value = index;
-  }
-
-  void saveToken() {
-    if (user.id != null) {
-      //pushNotificationsProvider.saveToken(user.id!);
-    }
   }
 
   

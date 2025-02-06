@@ -85,10 +85,6 @@ class ClientOrdersCreateController extends GetxController {
     });
   }
 
-  /*
-  void goToAddressList() {
-    Get.toNamed('/client/address/list');
-  }*/
 
   void goToAddressList() {
   // Verifica si hay productos seleccionados y si el total es mayor que cero

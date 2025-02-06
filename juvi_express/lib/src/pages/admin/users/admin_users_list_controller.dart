@@ -29,10 +29,12 @@ void goToEditUserPage(User user) async {
   //final result = await Get.to(() => AdminUsersListPage());
 
    print("Resultado de la edición: $result"); // Verifica lo que se está retornando
+   print("Resultado de la edición x2: $user"); // Verifica lo que se está retornando
 
 
     if (result == null) { // Si el usuario se editó, recargar la lista
       fetchUsers();
+      //print("l usuario fue editado.");
     
     }else {
     print("l usuario no fue editado.");

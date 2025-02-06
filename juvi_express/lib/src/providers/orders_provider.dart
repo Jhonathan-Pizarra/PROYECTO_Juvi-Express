@@ -117,7 +117,8 @@ class OrdersProvider extends GetConnect {
     if (response.body != null && response.body is List) {
       orders = Order.fromJsonList(response.body);
     } else {
-      Get.snackbar('Error', 'No se pudo obtener los pedidos.');
+      //Get.snackbar('Error', 'No se pudo obtener los pedidos.');
+      print("No se puede obtener los pedidos");
     }
  
     return orders;
@@ -142,7 +143,8 @@ class OrdersProvider extends GetConnect {
     if (response.body != null && response.body is List) {
       orders = Order.fromJsonList(response.body);
     } else {
-      Get.snackbar('Error', 'No se pudo obtener los pedidos.');
+      //Get.snackbar('Error', 'No se pudo obtener los pedidos.');
+      print("No se pudo obtener los pedidos.");
     }
  
     return orders;
@@ -171,7 +173,8 @@ class OrdersProvider extends GetConnect {
     if (response.body != null && response.body is List) {
       orders = Order.fromJsonList(response.body);
     } else {
-      Get.snackbar('Error', 'No se pudo obtener los productos.');
+      //Get.snackbar('Error', 'No se pudo obtener los productos.');
+      print("No se pudo obtener los pedidos.");
     }
  
 

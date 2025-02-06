@@ -43,75 +43,6 @@ class ClientAddressListController extends GetxController {
   }
 
 
-
-
-/*
-  void goToPayments(BuildContext context) async {
-  Address a = Address.fromJson(GetStorage().read('address') ?? {});
-  List<Product> products = Product.fromJsonList(GetStorage().read('shopping_bag'));
-
-  Order order = Order(
-    idClient: user.id,
-    idAddress: a.id,
-    products: products,
-  );
-
-  if (imageFile != null) {
-    Stream stream = await ordersProvider.createWithImage(order, imageFile!);
-    stream.listen((res) {
-      ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
-
-      if (responseApi.success == true) {
-        GetStorage().write('order', responseApi.data);
-        Get.toNamed('/client/payments/create');
-      } else {
-        Get.snackbar("Registro Fallido", responseApi.message ?? '');
-      }
-    });
-  } else {
-    // Manejar el caso en que no se ha seleccionado una imagen
-    ResponseApi responseApi = await ordersProvider.create(order);
-    if (responseApi.success == true) {
-      GetStorage().write('order', responseApi.data);
-      Get.toNamed('/client/payments/create');
-    } else {
-      Get.snackbar("Registro Fallido", responseApi.message ?? '');
-    }
-  }
-}
-*/
-
-
-  /*
-  void createOrder() async {
-      Address a = Address.fromJson(GetStorage().read('address') ?? {});
-      print("Llegó aqui?");
-      List<Product> products = Product.fromJsonList(GetStorage().read('shopping_bag'));
-      print("LLegó acá?? + ${products}");
-      Order order = Order(
-        idClient: user.id,
-        idAddress: a.id,
-        products: products
-      );
-
-      ResponseApi responseApi = await ordersProvider.create(order);
-      //Get.toNamed('/client/payments/create');
-      //Get.snackbar('Orden creada', responseApi.message ?? '');
-      print("Llegó aqui x2?");
-      Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
-      if (responseApi.success == true) {
-        print("Llegó aqui x3?");
-        Get.toNamed('/client/payments/create');
-      }
-  }*/
-
-  /*
-  void goToPayments() async {
-      
-    Get.toNamed('/client/payments/create');
-      
-  }*/
-
   void goToPayments() async {
   // Verifica si se ha seleccionado una dirección
   if (radioValue.value < 0 || radioValue.value >= address.length) {
@@ -132,8 +63,7 @@ class ClientAddressListController extends GetxController {
 }
 
   
-    
-    
+      
   void handleRadioValueChange(int? value) {
     radioValue.value = value!;
     print('VALOR SELECCIONADO ${value}');
