@@ -99,7 +99,7 @@ class AdminCategoriesCreatePage extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 16),
           backgroundColor: Colors.teal,
         ),
-        child: Text('Crear Categoría', style: TextStyle(fontSize: 16)),
+        child: Text('Crear Categoría', style: TextStyle(color: Colors.white, fontSize: 16)),
       ),
     );
   }

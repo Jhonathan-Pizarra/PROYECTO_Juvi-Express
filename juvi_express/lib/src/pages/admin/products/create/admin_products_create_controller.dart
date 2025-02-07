@@ -63,7 +63,19 @@ class AdminProductsCreateController extends GetxController {
         progressDialog.close();
 
         ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
-        Get.snackbar('Creado con éxito', responseApi.message ?? '');
+        //Get.snackbar('Creado con éxito', responseApi.message ?? '');
+        Get.snackbar(
+        'Creado con éxito', 
+        'Tu producto se creó exitosamente',
+        backgroundColor: Colors.green,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
+
         if (responseApi.success == true) {
           clearForm();
         }
@@ -73,23 +85,73 @@ class AdminProductsCreateController extends GetxController {
 
   bool isValidForm(String name, String description, String price) {
     if (name.isEmpty) {
-      Get.snackbar('Formulario no válido', 'Ingrese un nombre');
+      Get.snackbar(
+        'Formulario no válido', 'Ingrese un nombre para el producto',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
+      //Get.snackbar('Formulario no válido', 'Ingrese un nombre');
       return false;
     }
     if (description.isEmpty) {
-      Get.snackbar('Formulario no válido', 'Ingrese la descripción');
+      Get.snackbar(
+        'Formulario no válido', 'Ingrese una descripción para el producto',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       return false;
     }
     if (price.isEmpty) {
-      Get.snackbar('Formulario no válido', 'Ingrese un precio');
+      //Get.snackbar('Formulario no válido', 'Ingrese un precio');
+      Get.snackbar(
+        'Formulario no válido', 'Ingrese un precio para el producto',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       return false;
     }
     if (idCategory.value.isEmpty) {
-      Get.snackbar('Formulario no válido', 'Seleccione una categoría');
+      Get.snackbar(
+        'Formulario no válido', 'Seleccione una categoría',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
+      //Get.snackbar('Formulario no válido', 'Seleccione una categoría');
       return false;
     }
     if (imageFile1.value == null && imageFile2.value == null && imageFile3.value == null) {
-      Get.snackbar('Formulario no válido', 'Ingrese al menos una imagen');
+      //Get.snackbar('Formulario no válido', 'Ingrese al menos una imagen');
+      Get.snackbar(
+        'Formulario no válido', 'Sube al menos una imagen',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
+      //Get.s
       return false;
     }
 

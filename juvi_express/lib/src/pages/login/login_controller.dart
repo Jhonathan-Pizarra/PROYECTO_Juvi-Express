@@ -25,19 +25,16 @@ class LoginController extends GetxController{
   String email = emailController.text.trim();
   String password = passwordController.text.trim();
 
-  print('Email ${email}');
-  print('Password ${password}');
-
   if (isValidForm(email, password)) {
       ResponseApi responseApi = await usersProvider.login(email, password);
-      print('Respuesta API: ${responseApi.toJson()}');
+      //print('Respuesta API: ${responseApi.toJson()}');
 
       if (responseApi.success == true) {
         GetStorage().write('user', responseApi.data);
 
         User myUser = User.fromJson(GetStorage().read('user') ?? {});
 
-        print('Roles length: ${myUser.roles!.length}');
+        //print('Roles length: ${myUser.roles!.length}');
 
         if (myUser.roles!.length > 1) {
           goToRolesPage();
@@ -45,7 +42,7 @@ class LoginController extends GetxController{
           // Si tiene un solo rol, verificamos cuál es
           String roleId = myUser.roles![0].id ?? "";
 
-          print("Rol obtenido: $roleId"); // Verificar en la consola
+          //print("Rol obtenido: $roleId"); // Verificar en la consola
 
           if (roleId == "1") {
             goToAdminHomePage();
@@ -55,10 +52,30 @@ class LoginController extends GetxController{
             goToClientHomePage();
           }
         } else {
-          Get.snackbar("Error", "No se encontraron roles para este usuario");
+          //Get.snackbar("Error", "No se encontraron roles para este usuario");
+          Get.snackbar(
+          'Error de sesión', 'No se encontraron roles para este usuario',
+          backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+          colorText: Colors.white,  // Color del texto
+          snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+          borderRadius: 8,  // Bordes redondeados
+          margin: EdgeInsets.all(10),  // Márgenes alrededor
+          animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+          duration: Duration(seconds: 3),  // Duración visible
+        );
         }
       } else {
-        Get.snackbar('Error de sesión', responseApi.message ?? '');        
+        Get.snackbar(
+        'Error de sesión', responseApi.message ?? '',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
+      //Get.snackbar('Error de sesión', responseApi.message ?? '');        
       }
     }
   }
@@ -140,17 +157,47 @@ class LoginController extends GetxController{
   bool isValidForm(String email, String password){
 
     if (email.isEmpty) {
-      Get.snackbar("Formulario no válido", "Debes ingresar un email");
+      Get.snackbar(
+        'Formulario no valido', 'Debes ingresar un email',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
+      //Get.snackbar("Formulario no válido", "Debes ingresar un email");
       return false;
     }
 
     if (!GetUtils.isEmail(email)) {
-      Get.snackbar("Formulario no válido", "Debes ingresar un email válido");
+      Get.snackbar(
+        'Formulario no valido', 'Ese mail no es válido',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
+      //Get.snackbar("Formulario no válido", "Debes ingresar un email válido");
       return false;   
     }
 
     if (password.isEmpty) {
-      Get.snackbar("Formulario no válido", "Debes ingresar tu clave");
+      Get.snackbar(
+        'Formulario no valido', 'Debes ingresar tu clave',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
+      //Get.snackbar("Formulario no válido", "Debes ingresar tu clave");
       return false;
     }
 

@@ -9,7 +9,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Container(
-        height: 50,
+        height: 70, // Ajustado para incluir el mensaje de soporte
         child: _textDontHaveAccount(),
       ),
       body: Stack(
@@ -18,7 +18,7 @@ class LoginPage extends StatelessWidget {
           _boxForm(context),
           Column(
             children: [
-              _imageAndTextRow(context), // Cambiamos esto
+              _imageAndTextRow(context),
             ],
           )
         ],
@@ -26,7 +26,6 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-//SCREEN GENERAL
   Widget _backgroundCover(BuildContext context) {
     return Container(
       width: double.infinity,
@@ -62,12 +61,10 @@ class LoginPage extends StatelessWidget {
     return SafeArea(
       child: Container(
         margin: EdgeInsets.only(top: 20),
-        //padding: EdgeInsets.symmetric(horizontal: 2), // Agrega padding horizontal
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _imageCover(),
-            //SizedBox(width: 1), // Espacio entre la imagen y el texto
             _textAppName(),
           ],
         ),
@@ -76,49 +73,53 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget _textDontHaveAccount() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
       children: [
-        Text(
-          "¿No tienes cuenta?",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 17,
-          ),
-        ),
-        SizedBox(
-          width: 7,
-        ),
-        GestureDetector(
-          onTap: () => con.goToRegisterPage(),
-          child: Text(
-            "Regístrate aquí",
-            style: TextStyle(
-              color: Colors.amber,
-              fontWeight: FontWeight.bold,
-              fontSize: 17,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "¿No tienes cuenta?",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 17,
+              ),
             ),
-          ),
+            SizedBox(
+              width: 7,
+            ),
+            GestureDetector(
+              onTap: () => con.goToRegisterPage(),
+              child: Text(
+                "Regístrate aquí",
+                style: TextStyle(
+                  color: Colors.amber,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                ),
+              ),
+            ),
+          ],
         ),
+        SizedBox(height: 5), // Espacio entre los textos
+        _textSupportMessage(), // Mensaje de soporte agregado aquí
       ],
     );
   }
 
-//LOGIN SECTION
-  Widget _boxForm(BuildContext context){
-    
+  Widget _boxForm(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height*0.45,
-      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.35,left: 50, right: 50),
+      height: MediaQuery.of(context).size.height * 0.45,
+      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.35, left: 50, right: 50),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.black54,
             blurRadius: 15,
-            offset: Offset(0,0.75) 
-          )
-        ]
+            offset: Offset(0, 0.75),
+          ),
+        ],
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -126,48 +127,51 @@ class LoginPage extends StatelessWidget {
             _textYourInfo(),
             _textFieldEmail(),
             _textFieldPassword(),
-            _buttonLogin()
+            _buttonLogin(),
           ],
         ),
       ),
-
     );
-
   }
 
-  Widget _textYourInfo(){
+  Widget _textSupportMessage() {
+    return Container(
+      margin: EdgeInsets.only(top: 5, bottom: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.help_outline, color: Colors.blue, size: 18),
+          SizedBox(width: 5),
+          Text(
+            "¿Problemas? Llama al 0990803120",
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.blue,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _textYourInfo() {
     return Container(
       margin: EdgeInsets.only(top: 40, bottom: 10),
       child: Text(
         "Iniciar Sesión",
         style: TextStyle(
           fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black,
-        )
-      ),
-    );
-  }
-
-/*
-  Widget _textFieldEmail(){
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
-      child: TextField(
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          hintText: "Correo electronico",
-          prefixIcon: Icon(Icons.email)
         ),
       ),
     );
   }
-*/
 
   Widget _textFieldEmail() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10), // Agregar margen vertical
+      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       child: Theme(
         data: ThemeData(
-          primaryColor: Colors.amber, // Cambiar el color principal
+          primaryColor: Colors.amber,
           inputDecorationTheme: InputDecorationTheme(
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.amber),
@@ -183,9 +187,9 @@ class LoginPage extends StatelessWidget {
           decoration: InputDecoration(
             hintText: "Correo electrónico",
             prefixIcon: Icon(Icons.email),
-            contentPadding: EdgeInsets.symmetric(vertical: 15), // Ajustar el padding vertical
+            contentPadding: EdgeInsets.symmetric(vertical: 15),
           ),
-          style: TextStyle(fontSize: 14), // Ajustar el tamaño del texto
+          style: TextStyle(fontSize: 14),
         ),
       ),
     );
@@ -193,10 +197,10 @@ class LoginPage extends StatelessWidget {
 
   Widget _textFieldPassword() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 5), // Agregar margen vertical
+      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 5),
       child: Theme(
         data: ThemeData(
-          primaryColor: Colors.amber, // Cambiar el color principal
+          primaryColor: Colors.amber,
           inputDecorationTheme: InputDecorationTheme(
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.amber),
@@ -213,33 +217,15 @@ class LoginPage extends StatelessWidget {
           decoration: InputDecoration(
             hintText: "Contraseña",
             prefixIcon: Icon(Icons.lock),
-            contentPadding: EdgeInsets.symmetric(vertical: 15), // Ajustar el padding vertical
+            contentPadding: EdgeInsets.symmetric(vertical: 15),
           ),
-          style: TextStyle(fontSize: 14), // Ajustar el tamaño del texto
+          style: TextStyle(fontSize: 14),
         ),
       ),
     );
   }
 
-/*
-  Widget _textFieldPassword(){
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
-      child: TextField(
-        keyboardType: TextInputType.text,
-        obscureText: true,
-        decoration: InputDecoration(
-          hintText: "Contraseña",
-          prefixIcon: Icon(Icons.lock),
-          contentPadding: EdgeInsets.symmetric(vertical: 15), // Ajustar el padding vertical
-        ),
-        style: TextStyle(fontSize: 14), // Ajustar el tamaño del texto
-      ),
-    );
-  }
-  */
-
-  Widget _buttonLogin(){
+  Widget _buttonLogin() {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
@@ -258,7 +244,4 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
-
-
-
 }

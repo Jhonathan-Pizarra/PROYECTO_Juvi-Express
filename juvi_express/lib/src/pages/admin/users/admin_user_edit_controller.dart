@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/models/user.dart';
 import 'package:juvi_express/src/models/rol.dart';
@@ -64,10 +65,31 @@ class AdminUserEditController extends GetxController {
     final responseUser = await userProvider.updateUser(updatedUser, roleIds);
 
     if (responseUser.success = true) {
-      Get.snackbar("Éxito", "Usuario actualizado correctamente");
+      //Get.snackbar("Éxito", "Usuario actualizado correctamente");
+      Get.snackbar(
+        'Proceso terminado', 
+       'Usuario actualizado correctamente',
+        backgroundColor: Colors.green,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       //Get.back(result: true);
     } else {
-      Get.snackbar("Error", "No se pudo actualizar el usuario");
+      //Get.snackbar("Error", "No se pudo actualizar el usuario");
+      Get.snackbar(
+        'Formulario no valido', 'La edición no se completo, revisa el mail o número único',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
     }
   }
 

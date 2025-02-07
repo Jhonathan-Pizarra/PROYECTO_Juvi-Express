@@ -146,7 +146,7 @@ class AdminProductsCreatePage extends StatelessWidget {
         ),
         child: Text(
           'Crear Producto',
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(color: Colors.white, fontSize: 18),
         ),
       ),
     );

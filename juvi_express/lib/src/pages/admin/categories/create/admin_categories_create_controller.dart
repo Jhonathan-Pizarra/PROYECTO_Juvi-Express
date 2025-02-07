@@ -28,7 +28,19 @@ class AdminCategoriesCreateController extends GetxController {
       );
 
       ResponseApi responseApi = await categoriesProvider.create(category);
-      Get.snackbar('Proceso terminado', responseApi.message ?? '');
+      //Get.snackbar('Proceso terminado', responseApi.message ?? '');
+       // Personalizamos el diseño del Snackbar
+      Get.snackbar(
+        'Proceso terminado', 
+        responseApi.message ?? '',
+        backgroundColor: Colors.green,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
 
       if (responseApi.success == true) {
         clearForm();
@@ -38,7 +50,17 @@ class AdminCategoriesCreateController extends GetxController {
 
     }
     else {
-      Get.snackbar('Formulario no valido', 'Ingresa todos los campos para crear la categoria');
+      //Get.snackbar('Formulario no valido', 'Ingresa todos los campos para crear la categoria');
+      Get.snackbar(
+        'Formulario no valido', 'Ingresa todos los campos para crear la categoria',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
     }
 
   }
