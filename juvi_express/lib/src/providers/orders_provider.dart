@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:juvi_express/src/enviroment/enviroment.dart';
@@ -53,7 +54,17 @@ class OrdersProvider extends GetConnect {
       Response response = await post('$url/createWithImage', form);
 
       if (response.body == null) {
-      Get.snackbar('Error en la peticion', 'No se pudo crear el pedido');
+      //Get.snackbar('Error en la peticion', 'No se pudo crear el pedido');
+        Get.snackbar(
+          'Error en la peticion', 'No se pudo crear el pedido',
+          backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+          colorText: Colors.white,  // Color del texto
+          snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+          borderRadius: 8,  // Bordes redondeados
+          margin: EdgeInsets.all(10),  // Márgenes alrededor
+          animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+          duration: Duration(seconds: 3),  // Duración visible
+        );
       return ResponseApi();
       }
       ResponseApi responseApi = ResponseApi.fromJson(response.body);
@@ -108,7 +119,17 @@ class OrdersProvider extends GetConnect {
     ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
 
     if (response.statusCode == 401) {
-      Get.snackbar('Peticion denegada', 'Tu usuario no tiene permitido leer esta informacion');
+      //Get.snackbar('Peticion denegada', 'Tu usuario no tiene permitido leer esta informacion');
+        Get.snackbar(
+          'Peticion denegada', 'Tu usuario no tiene permitido leer esta informacion',
+          backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+          colorText: Colors.white,  // Color del texto
+          snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+          borderRadius: 8,  // Bordes redondeados
+          margin: EdgeInsets.all(10),  // Márgenes alrededor
+          animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+          duration: Duration(seconds: 3),  // Duración visible
+        );
       return [];
     }
 
@@ -135,7 +156,17 @@ class OrdersProvider extends GetConnect {
     ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
 
     if (response.statusCode == 401) {
-      Get.snackbar('Peticion denegada', 'Tu usuario no tiene permitido leer esta informacion');
+      //Get.snackbar('Peticion denegada', 'Tu usuario no tiene permitido leer esta informacion');
+       Get.snackbar(
+          'Peticion denegada', 'Tu usuario no tiene permitido leer esta información',
+          backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+          colorText: Colors.white,  // Color del texto
+          snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+          borderRadius: 8,  // Bordes redondeados
+          margin: EdgeInsets.all(10),  // Márgenes alrededor
+          animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+          duration: Duration(seconds: 3),  // Duración visible
+        );
       return [];
     }
 

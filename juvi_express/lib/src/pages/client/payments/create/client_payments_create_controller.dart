@@ -95,12 +95,23 @@ class ClientPaymentsCreateController extends GetxController {
           //Get.offNamed('/client/home');
           //Get.toNamed('/client/products/list');
         } else {
-          Get.snackbar("Registro Fallido", responseApi.message ?? '');
+         // Get.snackbar("Registro Fallido", responseApi.message ?? '');
+          Get.snackbar(
+            'Registro Fallido', responseApi.message ?? '',
+            backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+            colorText: Colors.white,  // Color del texto
+            snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+            borderRadius: 8,  // Bordes redondeados
+            margin: EdgeInsets.all(10),  // Márgenes alrededor
+            animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+            duration: Duration(seconds: 3),  // Duración visible
+          );
+          
         }
       } catch (e) {
         progressDialog.close();
         print('Error al crear el pedido con imagen: $e');
-        Get.snackbar("Error", "No se pudo crear el pedido con imagen");
+        //Get.snackbar("Error", "No se pudo crear el pedido con imagen");
       }
     } else {
       try {
@@ -110,11 +121,22 @@ class ClientPaymentsCreateController extends GetxController {
           Get.toNamed('/client/home');
           Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
         } else {
-          Get.snackbar("Registro Fallido", responseApi.message ?? '');
+          //Get.snackbar("Registro Fallido", responseApi.message ?? '');
+          Get.snackbar(
+            'Registro Fallido', responseApi.message ?? '',
+            backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+            colorText: Colors.white,  // Color del texto
+            snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+            borderRadius: 8,  // Bordes redondeados
+            margin: EdgeInsets.all(10),  // Márgenes alrededor
+            animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+            duration: Duration(seconds: 3),  // Duración visible
+          );
+          
         }
       } catch (e) {
         print('Error al crear la orden sin imagen: $e');
-        Get.snackbar("Error", "No se pudo crear el pedido");
+        //Get.snackbar("Error", "No se pudo crear el pedido");
       }
     }
   }

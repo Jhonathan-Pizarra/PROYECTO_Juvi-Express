@@ -70,7 +70,7 @@ class ClientPaymentsCreatePage extends StatelessWidget {
                       onPressed: () => con.processPayment(context),
                       child: Text(
                         'Procesar Pago',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.teal, // Color de fondo teal
@@ -115,7 +115,7 @@ class ClientPaymentsCreatePage extends StatelessWidget {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 10),
-        Text('Cuenta: 12186193799'),
+        Text('Cuenta: 12186133789'),
         Text('Banco: Produbanco'),
         Text('Tipo de Cuenta: Ahorros'),
         Text('Cédula: 1726368626'),

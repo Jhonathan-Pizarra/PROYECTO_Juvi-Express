@@ -162,19 +162,6 @@ class ClientOrdersMapController extends GetxController {
     }
   }
 
-/*
-void updateToDelivered() async {
-    if (distanceBetween <= 200) {
-      ResponseApi responseApi = await ordersProvider.updateToDelivered(order);
-      Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
-      if (responseApi.success == true) {
-        Get.offNamedUntil('/delivery/home', (route) => false);
-      }
-    }
-    else {
-      Get.snackbar('Operacion no permitida', 'Debes estar mas cerca a la posicion de entrega del pedidio');
-    }
-  }*/
 
   Future animateCameraPosition(double lat, double lng) async {
     GoogleMapController controller = await mapController.future;

@@ -202,7 +202,17 @@ class DeliveryOrdersMapController extends GetxController {
         }
       }
       else {
-        Get.snackbar('Operacion no permitida', 'Debes estar mas cerca a la posicion de entrega del pedidio');
+        //Get.snackbar('Operacion no permitida', 'Debes estar mas cerca a la posicion de entrega del pedidio');
+        Get.snackbar(
+        'Operación no permitida','Debes estar mas cerca a la posicion de entrega del pedidio?',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       }
     }
 

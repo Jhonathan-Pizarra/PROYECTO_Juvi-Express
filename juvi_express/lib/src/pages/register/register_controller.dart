@@ -62,7 +62,18 @@ class RegisterController extends GetxController {
           goToHomePage();
 
         }else{
-          Get.snackbar("Registro Fallido", responseApi.message ?? '');
+          //Get.snackbar("Registro Fallido", responseApi.message ?? '');
+          Get.snackbar(
+            'Registro Fallido', responseApi.message ?? '',
+            backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+            colorText: Colors.white,  // Color del texto
+            snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+            borderRadius: 8,  // Bordes redondeados
+            margin: EdgeInsets.all(10),  // Márgenes alrededor
+            animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+            duration: Duration(seconds: 3),  // Duración visible
+          );
+          
         }
 
       });
@@ -78,47 +89,138 @@ class RegisterController extends GetxController {
   bool isValidForm(String email, String name, String lastName, String phone, String password, String confirmPassword) {
 
     if (email.isEmpty) {
-      Get.snackbar("Formulario no válido", "Debes ingresar un email");
+      //Get.snackbar("Formulario no válido", "Debes ingresar un email");
+      Get.snackbar(
+        'Formulario no válido', 'Debes ingresar un email',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       return false;
     }
 
     if (!GetUtils.isEmail(email)) {
-      Get.snackbar("Formulario no válido", "Debes ingresar un email válido");
+      //Get.snackbar("Formulario no válido", "Debes ingresar un email válido");
+      Get.snackbar(
+        'Formulario no válido', 'Debes ingresar un email válido',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       return false;
     }
 
     if (name.isEmpty) {
-      Get.snackbar("Formulario no válido", "Debes ingresar un nombre");
+      //Get.snackbar("Formulario no válido", "Debes ingresar un nombre");
+      Get.snackbar(
+        'Formulario no válido', 'Debes ingresar un nombre',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       return false;
     }
 
     if (lastName.isEmpty) {
-      Get.snackbar("Formulario no válido", "Debes ingresar un apellido");
+      //Get.snackbar("Formulario no válido", "Debes ingresar un apellido");
+      Get.snackbar(
+        'Formulario no válido', 'Debes ingresar un apellido',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
+      
       return false;
     }
 
     if (phone.isEmpty) {
-      Get.snackbar("Formulario no válido", "Debes ingresar un telefono");
+      //Get.snackbar("Formulario no válido", "Debes ingresar un telefono");
+      Get.snackbar(
+        'Formulario no válido', 'Debes ingresar un teléfono',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       return false;
     }
 
     if (password.isEmpty) {
-      Get.snackbar("Formulario no válido", "Debes ingresar tu clave");
+      //Get.snackbar("Formulario no válido", "Debes ingresar tu clave");
+      Get.snackbar(
+        'Formulario no válido', 'Debes ingresar un tu clave',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       return false;
     }
 
     if (confirmPassword.isEmpty) {
-      Get.snackbar("Formulario no válido", "Debes ingresar tu clave");
+      //Get.snackbar("Formulario no válido", "Debes ingresar tu clave");
+      Get.snackbar(
+        'Formulario no válido', 'Debes ingresar la clave confirmación',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       return false;
     }
 
     if (password != confirmPassword) {
-      Get.snackbar("Formulario no válido", "Contraseñas no coinciden");
+      //Get.snackbar("Formulario no válido", "Contraseñas no coinciden");
+      Get.snackbar(
+        'Formulario no válido', 'Contraseñas no coinciden',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       return false;
     }
 
     if(imageFile == null){
-      Get.snackbar("Formulario no válido", "Debe seleccionar una imagen de perfil");
+      //Get.snackbar("Formulario no válido", "Debe seleccionar una imagen de perfil");
+      Get.snackbar(
+        'Formulario no válido', 'Debe seleccionar una imagen de perfil',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       return false;
     }
 
@@ -165,7 +267,7 @@ class RegisterController extends GetxController {
   }
 
   void goToHomePage(){
-    Get.offNamedUntil('/client/products/list',(route) => false);
+    Get.offNamedUntil('/client/home',(route) => false);
   }
   
 }

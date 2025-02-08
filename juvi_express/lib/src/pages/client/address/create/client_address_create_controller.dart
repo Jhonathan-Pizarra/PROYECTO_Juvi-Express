@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -128,19 +129,61 @@ class ClientAddressCreateController extends GetxController{
 
   bool isValidForm(String address, String neighborhood) {
     if (address.isEmpty){
-      Get.snackbar('Formulario no valido', 'Ingresa el nombre de la direccion');
+      //Get.snackbar('Formulario no valido', 'Ingresa el nombre de la direccion');
+      Get.snackbar(
+        'Formulario no valido', 'Ingresa un nombre a la direccion',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
+      
       return false;
     }
     if (neighborhood.isEmpty){
-      Get.snackbar('Formulario no valido', 'Ingresa el nombre del barrio');
+      //Get.snackbar('Formulario no valido', 'Ingresa el nombre del barrio');
+      Get.snackbar(
+        'Formulario no valido', 'Ingresa el nombre del barrio',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
+      
       return false;
     }
     if (latRefPoint == 0){
-      Get.snackbar('Formulario no valido', 'Selecciona el punto de referencia');
+      //Get.snackbar('Formulario no valido', 'Selecciona el punto de referencia');
+      Get.snackbar(
+        'Formulario no valido', 'Selecciona el punto de referencia',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       return false;
     }
     if (lngRefPoint == 0){
-      Get.snackbar('Formulario no valido', 'Selecciona el punto de referencia');
+      //Get.snackbar('Formulario no valido', 'Selecciona el punto de referencia');
+      Get.snackbar(
+        'Formulario no valido', 'Selecciona el punto de referencia',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       return false;
     }
 

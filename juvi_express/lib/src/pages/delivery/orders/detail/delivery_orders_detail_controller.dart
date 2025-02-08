@@ -30,11 +30,19 @@ class DeliveryOrdersDetailController extends GetxController{
       }
   }
 
+  /*
   void goToOrderMap() {
     Get.toNamed('/delivery/orders/map', arguments: {
       'order': order.toJson()
     });
-  }
+  }*/
+  void goToOrderMap() async {
+  Get.toNamed('/delivery/orders/map', arguments: {
+    'order': order.toJson()
+  })?.then((_) {
+    Get.offNamedUntil('/delivery/home', (route) => false);
+  });
+}
   
   void getTotal() {
     total.value = 0.0;

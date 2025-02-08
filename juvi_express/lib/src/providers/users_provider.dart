@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:get/get_connect/connect.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:path/path.dart';
@@ -48,7 +49,17 @@ class UsersProvider extends GetConnect {
     );
 
     if (response.body == null || response.statusCode == 401) {
-      Get.snackbar('Error', response.statusCode == 401 ? 'No autorizado' : 'Error de actualización');
+      //Get.snackbar('Error', response.statusCode == 401 ? 'No autorizado' : 'Error de actualización');
+       Get.snackbar(
+          'Error', response.statusCode == 401 ? 'No autorizado' : 'Error de actualización',
+          backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+          colorText: Colors.white,  // Color del texto
+          snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+          borderRadius: 8,  // Bordes redondeados
+          margin: EdgeInsets.all(10),  // Márgenes alrededor
+          animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+          duration: Duration(seconds: 3),  // Duración visible
+        );
       return ResponseApi();
     }
 
@@ -56,7 +67,9 @@ class UsersProvider extends GetConnect {
   }
 
   Future<Stream> updateWithImage(User user, File image) async {
-    final uri = Uri.http(Enviroment.API_URL_OLD, '/api/users/update');
+    final uri = Uri.http(Enviroment.API_URL_OLD, '/api/users/updateWithImage');
+    //print("Entro aqui??");
+    //final uri = Uri.parse('${Enviroment.API_URL_OLD}api/users/updateWithImage');
     final request = http.MultipartRequest('PUT', uri)
       ..headers['Authorization'] = _userSession.sessionToken ?? ''
       ..files.add(http.MultipartFile(
@@ -78,7 +91,17 @@ class UsersProvider extends GetConnect {
     final response = await post('$_url/createWithImage', form);
 
     if (response.body == null) {
-      Get.snackbar('Error', 'No se pudo crear el usuario');
+      //Get.snackbar('Error', 'No se pudo crear el usuario');
+       Get.snackbar(
+          'Error', 'No se pudo crear el usuario',
+          backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+          colorText: Colors.white,  // Color del texto
+          snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+          borderRadius: 8,  // Bordes redondeados
+          margin: EdgeInsets.all(10),  // Márgenes alrededor
+          animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+          duration: Duration(seconds: 3),  // Duración visible
+        );
       return ResponseApi();
     }
 
@@ -93,7 +116,17 @@ class UsersProvider extends GetConnect {
     );
 
     if (response.body == null) {
-      Get.snackbar('Error', 'No se pudo ejecutar la petición');
+      //Get.snackbar('Error', 'No se pudo ejecutar la petición');
+       Get.snackbar(
+          'Error','No se pudo ejecutar la petición',
+          backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+          colorText: Colors.white,  // Color del texto
+          snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+          borderRadius: 8,  // Bordes redondeados
+          margin: EdgeInsets.all(10),  // Márgenes alrededor
+          animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+          duration: Duration(seconds: 3),  // Duración visible
+        );
       return ResponseApi();
     }
 
@@ -107,7 +140,17 @@ class UsersProvider extends GetConnect {
     );
 
     if (response.statusCode == 401) {
-      Get.snackbar('Petición denegada', 'No tienes acceso a esta información');
+      //Get.snackbar('Petición denegada', 'No tienes acceso a esta información');
+       Get.snackbar(
+          'Petición denegada', 'No tienes acceso a esta información',
+          backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+          colorText: Colors.white,  // Color del texto
+          snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+          borderRadius: 8,  // Bordes redondeados
+          margin: EdgeInsets.all(10),  // Márgenes alrededor
+          animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+          duration: Duration(seconds: 3),  // Duración visible
+        );
       return [];
     }
 
@@ -121,7 +164,17 @@ class UsersProvider extends GetConnect {
     );
 
     if (response.statusCode == 401 || response.body == null) {
-      Get.snackbar('Error', response.statusCode == 401 ? 'No autorizado' : 'No se encontraron usuarios');
+      //Get.snackbar('Error', response.statusCode == 401 ? 'No autorizado' : 'No se encontraron usuarios');
+      Get.snackbar(
+        'Error', response.statusCode == 401 ? 'No autorizado' : 'No se encontraron usuarios',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       return [];
     }
 
@@ -194,7 +247,17 @@ Future<ResponseApi> updateUser(User user, List<String> roleIds) async {
 
   if (response.body == null || response.statusCode == 400) {
     print("Error en la respuesta: ${response.body}");
-    Get.snackbar('Error', 'No se pudo actualizar el usuario');
+    //Get.snackbar('Error', 'No se pudo actualizar el usuario');
+    Get.snackbar(
+        'Error', 'No se pudo actualizar el usuario',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
     return ResponseApi();
   }
 
@@ -213,7 +276,17 @@ Future<ResponseApi> updateNotificationToken(String id, String token) async {
     );
 
     if (response.body == null || response.statusCode == 401) {
-      Get.snackbar('Error', response.statusCode == 401 ? 'No autorizado' : 'Error de actualización');
+      //Get.snackbar('Error', response.statusCode == 401 ? 'No autorizado' : 'Error de actualización');
+      Get.snackbar(
+        'Error', response.statusCode == 401 ? 'No autorizado' : 'Error de actualización',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       return ResponseApi();
     }
 

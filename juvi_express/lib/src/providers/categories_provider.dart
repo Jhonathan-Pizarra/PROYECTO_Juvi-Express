@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:juvi_express/src/enviroment/enviroment.dart';
@@ -25,7 +26,17 @@ class CategoriesProvider extends GetConnect {
 
     if (response.statusCode == 401) {
 
-      Get.snackbar('Peticion denegada', 'Inicie sesión para continuar');
+      //Get.snackbar('Peticion denegada', 'Inicie sesión para continuar');
+      Get.snackbar(
+        'Peticion denegada', 'Inicie sesión para continuar',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
       return [];
     }
 
@@ -33,7 +44,17 @@ class CategoriesProvider extends GetConnect {
     if (response.body != null && response.body is List) {
       categories = Category.fromJsonList(response.body);
     } else {
-      Get.snackbar('Error', 'No se pudo obtener los productos.');
+      //Get.snackbar('Error', 'No se pudo obtener los productos.');
+      Get.snackbar(
+        'Peticion denegada', 'Parece que el stock está vacío, vuelve más tarde',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
     }
  
     return categories;

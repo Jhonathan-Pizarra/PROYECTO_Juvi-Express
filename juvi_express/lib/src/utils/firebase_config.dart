@@ -31,24 +31,26 @@ class FirebaseConfig {
     databaseURL: 'https://react-native-firebase-testing.firebaseio.com',
     storageBucket: 'juvistorage.appspot.com',
     measurementId: 'G-RF9GF9MQ1F',
+    //vapidKey: 'oxkuZiO-oEwYhhQybbQT9XpWKbpidN8ZWhysKR0SNAs',
   );
 
+
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBT00a5nTPN5aFMCg1ksVe095WiAElnXYM',
-    appId: '1:918189321058:android:7d0c6eab90728f378fda3b',
-    messagingSenderId: '918189321058',
-    projectId: 'udemy-delivery-mysql',
+    apiKey: 'AIzaSyClfmO5_2BVeHW9nLwhe32wbdYZ7pqF5AU',
+    appId: '1:139126774084:android:d6e7c05abc0317064f5f11',
+    messagingSenderId: '139126774084',
+    projectId: 'juvistorage',
     databaseURL: 'https://react-native-firebase-testing.firebaseio.com',
-    storageBucket: 'udemy-delivery-mysql.appspot.com',
+    storageBucket: 'juvistorage.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAHAsf51D0A407EklG1bs-5wA7EbyfNFg0',
-    appId: '1:448618578101:ios:0b11ed8263232715ac3efc',
-    messagingSenderId: '448618578101',
-    projectId: 'react-native-firebase-testing',
+    apiKey: 'AIzaSyClfmO5_2BVeHW9nLwhe32wbdYZ7pqF5AU',
+    appId: '1:139126774084:android:d6e7c05abc0317064f5f11',
+    messagingSenderId: '139126774084',
+    projectId: 'juvistorage',
     databaseURL: 'https://react-native-firebase-testing.firebaseio.com',
-    storageBucket: 'react-native-firebase-testing.appspot.com',
+    storageBucket: 'juvistorage.appspot.com',
     androidClientId:
     '448618578101-a9p7bj5jlakabp22fo3cbkj7nsmag24e.apps.googleusercontent.com',
     iosClientId:

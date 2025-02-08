@@ -94,17 +94,47 @@ class ClientProfileUpdateController extends GetxController {
       */
 
       if (name.isEmpty) {
-        Get.snackbar("Formulario no válido", "Debes ingresar un nombre");
+        //Get.snackbar("Formulario no válido", "Debes ingresar un nombre");
+        Get.snackbar(
+            'Formulario no válido','Debes ingresar un nombre',
+            backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+            colorText: Colors.white,  // Color del texto
+            snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+            borderRadius: 8,  // Bordes redondeados
+            margin: EdgeInsets.all(10),  // Márgenes alrededor
+            animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+            duration: Duration(seconds: 3),  // Duración visible
+          );
         return false;
       }
 
       if (lastName.isEmpty) {
-        Get.snackbar("Formulario no válido", "Debes ingresar un apellido");
+        //Get.snackbar("Formulario no válido", "Debes ingresar un apellido");
+        Get.snackbar(
+            'Formulario no válido','Debes ingresar un apellido',
+            backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+            colorText: Colors.white,  // Color del texto
+            snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+            borderRadius: 8,  // Bordes redondeados
+            margin: EdgeInsets.all(10),  // Márgenes alrededor
+            animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+            duration: Duration(seconds: 3),  // Duración visible
+          );
         return false;
       }
 
       if (phone.isEmpty) {
-        Get.snackbar("Formulario no válido", "Debes ingresar un telefono");
+        //Get.snackbar("Formulario no válido", "Debes ingresar un telefono");
+        Get.snackbar(
+            'Formulario no válido','Debes ingresar un telefono',
+            backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+            colorText: Colors.white,  // Color del texto
+            snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+            borderRadius: 8,  // Bordes redondeados
+            margin: EdgeInsets.all(10),  // Márgenes alrededor
+            animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+            duration: Duration(seconds: 3),  // Duración visible
+          );
         return false;
       }
 
@@ -160,17 +190,43 @@ class ClientProfileUpdateController extends GetxController {
     if (imageFile == null) {
       ResponseApi responseApi  = await usersProvider.update(myUser);
       print("Response API Update ${responseApi.data}");
-      Get.snackbar('Proceso terminado',responseApi.message ?? '');
+      //Get.snackbar('Proceso terminado',responseApi.message ?? '');
+      /*Get.snackbar(
+        'Proceso terminado',responseApi.message ?? '',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );*/
       progressDialog.close();
       if (responseApi.success == true) {
-        //user.name = name;
-        //user.lastname = lastName;
-        //user.phone = phone;
-
         GetStorage().write('user', responseApi.data);
         //clientProfileInfoController.user = User.fromJson(responseApi.data); 
         clientProfileInfoController.user.value = User.fromJson(GetStorage().read('user') ?? {});  
- 
+        Get.snackbar(
+          'Proceso terminado',responseApi.message ?? '',
+          backgroundColor: Colors.green,  // Color de fondo del Snackbar
+          colorText: Colors.white,  // Color del texto
+          snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+          borderRadius: 8,  // Bordes redondeados
+          margin: EdgeInsets.all(10),  // Márgenes alrededor
+          animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+          duration: Duration(seconds: 3),  // Duración visible
+        );
+      }else{
+         Get.snackbar(
+          'Proceso fallido',responseApi.message ?? '',
+          backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+          colorText: Colors.white,  // Color del texto
+          snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+          borderRadius: 8,  // Bordes redondeados
+          margin: EdgeInsets.all(10),  // Márgenes alrededor
+          animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+          duration: Duration(seconds: 3),  // Duración visible
+        );
       }
     }else{
 
@@ -179,7 +235,17 @@ class ClientProfileUpdateController extends GetxController {
 
         progressDialog.close();
         ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
-        Get.snackbar('Proceso terminado',responseApi.message ?? '');
+        //Get.snackbar('Proceso terminado',responseApi.message ?? '');
+        Get.snackbar(
+        'Proceso terminado',responseApi.message ?? '',
+        backgroundColor: Colors.green,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
         print("Response API Update ${responseApi.data}");
 
         if(responseApi.success == true){
@@ -193,7 +259,17 @@ class ClientProfileUpdateController extends GetxController {
           //clientProfileInfoController.user = User.fromJson(responseApi.data);
 
         }else{
-          Get.snackbar("Registro Fallido", responseApi.message ?? '');
+          //Get.snackbar("Registro Fallido", responseApi.message ?? '');
+          Get.snackbar(
+            'Registro fallido',responseApi.message ?? '',
+            backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+            colorText: Colors.white,  // Color del texto
+            snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+            borderRadius: 8,  // Bordes redondeados
+            margin: EdgeInsets.all(10),  // Márgenes alrededor
+            animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+            duration: Duration(seconds: 3),  // Duración visible
+          );
         }
 
       });

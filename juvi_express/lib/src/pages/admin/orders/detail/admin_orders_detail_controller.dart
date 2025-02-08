@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/models/order.dart';
@@ -34,7 +35,17 @@ class AdminOrdersDetailController extends GetxController{
       }
     }
     else {
-      Get.snackbar('Peticion denegada', 'Debes asignar el repartidor');
+      //Get.snackbar('Peticion denegada', 'Debes asignar el repartidor');
+      Get.snackbar(
+        'Operación denegada', 'Debes asignar el repartidor',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
     }
   }
 

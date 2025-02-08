@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:juvi_express/src/models/product.dart';
@@ -93,10 +94,16 @@ class ClientOrdersCreateController extends GetxController {
   } else {
     // Muestra un mensaje de error o advertencia
     Get.snackbar(
-      'Carrito vacío',
-      'Debe agregar productos al carrito antes de continuar.',
-      snackPosition: SnackPosition.BOTTOM,
-    );
+        'Carrito vacío', 'Debe agregar productos al carrito antes de continuar',
+        backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+        colorText: Colors.white,  // Color del texto
+        snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+        borderRadius: 8,  // Bordes redondeados
+        margin: EdgeInsets.all(10),  // Márgenes alrededor
+        animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+        duration: Duration(seconds: 3),  // Duración visible
+      );
+    
   }
 }
 

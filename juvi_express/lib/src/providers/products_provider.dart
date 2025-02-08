@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:juvi_express/src/enviroment/enviroment.dart';
 import 'package:juvi_express/src/models/product.dart';
@@ -26,7 +27,17 @@ class ProductsProvider extends GetConnect {
       );
 
       if (response.statusCode == 401) {
-        Get.snackbar('Petición denegada', 'Tu usuario no tiene permitido leer esta información');
+        //Get.snackbar('Petición denegada', 'Tu usuario no tiene permitido leer esta información');
+         Get.snackbar(
+          'Peticion denegada', 'Tu usuario no tiene permitido leer esta información',
+          backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+          colorText: Colors.white,  // Color del texto
+          snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+          borderRadius: 8,  // Bordes redondeados
+          margin: EdgeInsets.all(10),  // Márgenes alrededor
+          animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+          duration: Duration(seconds: 3),  // Duración visible
+        );
         return [];
       }
 
@@ -36,7 +47,17 @@ class ProductsProvider extends GetConnect {
         return [];
       }
     } catch (e) {
-      Get.snackbar('Error', 'Ocurrió un error al cargar los productos.');
+      //Get.snackbar('Error', 'Ocurrió un error al cargar los productos.');
+      Get.snackbar(
+          'Error', 'Ocurrió un error al cargar los productos.',
+          backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+          colorText: Colors.white,  // Color del texto
+          snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+          borderRadius: 8,  // Bordes redondeados
+          margin: EdgeInsets.all(10),  // Márgenes alrededor
+          animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+          duration: Duration(seconds: 3),  // Duración visible
+        );
       return [];
     }
   }
@@ -52,7 +73,17 @@ class ProductsProvider extends GetConnect {
       );
 
       if (response.statusCode == 401) {
-        Get.snackbar('Petición denegada', 'Tu usuario no tiene permitido leer esta información');
+        //Get.snackbar('Petición denegada', 'Tu usuario no tiene permitido leer esta información');
+        Get.snackbar(
+          'Petición denegada', 'Tu usuario no tiene permitido leer esta información',
+          backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+          colorText: Colors.white,  // Color del texto
+          snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+          borderRadius: 8,  // Bordes redondeados
+          margin: EdgeInsets.all(10),  // Márgenes alrededor
+          animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+          duration: Duration(seconds: 3),  // Duración visible
+        );
         return [];
       }
 
@@ -62,7 +93,17 @@ class ProductsProvider extends GetConnect {
         return [];
       }
     } catch (e) {
-      Get.snackbar('Error', 'Ocurrió un error al cargar los productos.');
+      //Get.snackbar('Error', 'Ocurrió un error al cargar los productos.');
+      Get.snackbar(
+          'Error', 'Ocurrió un error al cargar los productos.',
+          backgroundColor: Colors.deepPurple,  // Color de fondo del Snackbar
+          colorText: Colors.white,  // Color del texto
+          snackPosition: SnackPosition.BOTTOM,  // Posición del Snackbar
+          borderRadius: 8,  // Bordes redondeados
+          margin: EdgeInsets.all(10),  // Márgenes alrededor
+          animationDuration: Duration(milliseconds: 300),  // Duración de la animación
+          duration: Duration(seconds: 3),  // Duración visible
+        );
       return [];
     }
   }
