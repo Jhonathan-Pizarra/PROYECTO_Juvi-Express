@@ -132,18 +132,18 @@ realizados por <strong><a href="https://www.tiktok.com/@juvyexpress/video/725054
 </ul>
 
 <p align="center">
-  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/main/images/Inconcerto-Home.jpg" width="100" height="250" />
-  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/main/images/Inconcerto-Login.jpg" width="200" height="400" />
-  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/main/images/Inconcerto-Festivals.jpg" width="100" height="250" />
+  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Login.jpg" width="100" height="250" />
+  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_MainDesktop.jpg" width="200" height="400" />
+  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Register.jpg" width="100" height="250" />
 </p>
 
 <p align="center">
-  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/main/images/Inconcerto-Users.jpg" width="130" height="250" />
-  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/main/images/Inconcerto_Validate-1.jpg" width="130" height="250" />
-  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/main/images/Inconcerto_Validate-2.jpg" width="130" height="250" />
+  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Forms.jpg" width="130" height="250" />
+  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Roles.jpg" width="130" height="250" />
+  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Payments.jpg" width="130" height="250" />
   <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/main/images/Inconcerto-CRUD.jpg" width="125" height="250" />
-  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/main/images/Inconcerto_Validate-3.jpg" width="130" height="250" />
-  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/main/images/Inconcerto_Validate-4.jpg" width="130" height="250" />
+  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Rutas.jpg" width="130" height="250" />
+  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Maps.jpg" width="130" height="250" />
 </p>
 
 <h2>Patrocinador</h2>
