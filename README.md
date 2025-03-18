@@ -138,12 +138,12 @@ realizados por <strong><a href="https://www.tiktok.com/@juvyexpress/video/725054
 </p>
 
 <p align="center">
-  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Forms.jpg" width="130" height="250" />
-  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Roles.jpg" width="130" height="250" />
-  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Payments.jpg" width="130" height="250" />
-  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Order.jpg" width="125" height="250" />
-  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Rutas.jpg" width="130" height="250" />
-  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Maps.jpg" width="130" height="250" />
+  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Forms.jpg" width="130" height="270" />
+  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Roles.jpg" width="130" height="270" />
+  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Payments.jpg" width="130" height="270" />
+  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Order.jpg" width="125" height="270" />
+  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Rutas.jpg" width="130" height="270" />
+  <img align="center" alt="Tools" src="https://raw.githubusercontent.com/Jhonathan-Pizarra/Dilinger-README/refs/heads/main/images/Juvi_Maps.jpg" width="130" height="270" />
 </p>
 
 <h2>Patrocinador</h2>
@@ -154,12 +154,12 @@ realizados por <strong><a href="https://www.tiktok.com/@juvyexpress/video/725054
 
 <p>Por último, la app se encuentra desplegada y disponible en:</p>
 <blockquote>
-    <code>Vercel:</code> <i><a href="https://inconcerto.vercel.app" target="_blank">https://inconcerto.vercel.app</a></i>
+    <code>Google:</code> <i><a href="https://drive.google.com/file/d/1v7r3V8SgB-JMGqsrTbItUwqxb22LPqYE/view?usp=sharing" target="_blank">https://google.app</a></i>
 </blockquote>
 
 <p>Su API está disponible en:</p>
 <blockquote>
-    <code>Heroku:</code> <i><a href="https://inconcerto.herokuapp.com/api/festivals" target="_blank">https://inconcerto.herokuapp.com/api/festivals</a></i>
+    <code>Render:</code> <i><a href="https://juviexpresapp-2025.onrender.com" target="_blank">https://juviexpresapp.onrender.com</a></i>
 </blockquote>
 
 
@@ -170,7 +170,7 @@ realizados por <strong><a href="https://www.tiktok.com/@juvyexpress/video/725054
 <p>Recomiendo utilizar dispositivo físico</p>
 
 <h2>Video Demo</h2>
-<p>Disponible en <a href="https://www.youtube.com/watch?v=8ahZ1ijLmMY">YouTube</a></p>
+<p>Disponible en <a href="https://youtu.be/zH7pHOYZicY">YouTube</a></p>
 
 <h2>Licencia</h2>
 <p align="center">
